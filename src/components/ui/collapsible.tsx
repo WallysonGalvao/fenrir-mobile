@@ -1,7 +1,10 @@
+import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
+
 import { SymbolView } from 'expo-symbols';
-import { PropsWithChildren, useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+
+import { Pressable, StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -15,8 +18,10 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
   return (
     <ThemedView>
       <Pressable
+        accessibilityRole="button"
         style={({ pressed }) => [styles.heading, pressed && styles.pressedHeading]}
-        onPress={() => setIsOpen((value) => !value)}>
+        onPress={() => setIsOpen((value) => !value)}
+      >
         <ThemedView type="backgroundElement" style={styles.button}>
           <SymbolView
             name={{ ios: 'chevron.right', android: 'chevron_right', web: 'chevron_right' }}
@@ -29,13 +34,13 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
 
         <ThemedText type="small">{title}</ThemedText>
       </Pressable>
-      {isOpen && (
+      {isOpen ? (
         <Animated.View entering={FadeIn.duration(200)}>
           <ThemedView type="backgroundElement" style={styles.content}>
             {children}
           </ThemedView>
         </Animated.View>
-      )}
+      ) : null}
     </ThemedView>
   );
 }

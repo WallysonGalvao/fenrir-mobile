@@ -1,0 +1,7 @@
+node_modules
+.expo
+dist
+.yarn
+yarn.lock
+ios
+android
