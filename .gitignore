@@ -69,3 +69,5 @@ maestro/screenshots/
 
 !locales/ios/es.json
 !locales/ios/pt-BR.json
+
+.env.local
