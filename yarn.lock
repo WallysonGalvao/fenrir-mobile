@@ -1102,7 +1102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.25.0":
+"@babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.29.2":
   version: 7.29.2
   resolution: "@babel/runtime@npm:7.29.2"
   checksum: d5548d1165de8995f8afc93a5694b8625409be16cd1f2250ac13e331335858ddac3cb9fd278e6c43956a130101a2203f09417938a1a96f9fb70f02b4b4172e1d
@@ -5902,6 +5902,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-localization@npm:~55.0.9":
+  version: 55.0.9
+  resolution: "expo-localization@npm:55.0.9"
+  dependencies:
+    rtl-detect: ^1.0.2
+  peerDependencies:
+    expo: "*"
+    react: "*"
+  checksum: fb5f7b211d6f8acba62d3721f93d4701919ed673f9845aa9220aa64c28b146995108eb62c9e8fce246efa7ea453fb952e4f09f2b855ef1651f775d1f44157ac4
+  languageName: node
+  linkType: hard
+
 "expo-modules-autolinking@npm:55.0.11":
   version: 55.0.11
   resolution: "expo-modules-autolinking@npm:55.0.11"
@@ -6256,12 +6268,14 @@ __metadata:
     expo-glass-effect: ~55.0.8
     expo-image: ~55.0.6
     expo-linking: ~55.0.8
+    expo-localization: ~55.0.9
     expo-router: ~55.0.7
     expo-splash-screen: ~55.0.12
     expo-status-bar: ~55.0.4
     expo-symbols: ~55.0.5
     expo-system-ui: ~55.0.10
     expo-web-browser: ~55.0.10
+    i18next: ^25.10.5
     knip: ^6.0.1
     nativewind: preview
     postcss: ^8.5.8
@@ -6269,6 +6283,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.7.2
     react: 19.2.0
     react-dom: 19.2.0
+    react-i18next: ^16.6.2
     react-native: 0.83.2
     react-native-css: ^3.0.6
     react-native-gesture-handler: ~2.30.0
@@ -6783,6 +6798,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: 3.1.0
+  checksum: 334fdebd4b5c355dba8e95284cead6f62bf865a2359da2759b039db58c805646350016d2017875718bc3c4b9bf81a0d11be5ee0cf4774a3a5a7b97cde21cfd67
+  languageName: node
+  linkType: hard
+
 "http-cache-semantics@npm:^4.1.1":
   version: 4.2.0
   resolution: "http-cache-semantics@npm:4.2.0"
@@ -6827,6 +6851,20 @@ __metadata:
   version: 1.1.0
   resolution: "hyphenate-style-name@npm:1.1.0"
   checksum: b9ed74e29181d96bd58a2d0e62fc4a19879db591dba268275829ff0ae595fcdf11faafaeaa63330a45c3004664d7db1f0fc7cdb372af8ee4615ed8260302c207
+  languageName: node
+  linkType: hard
+
+"i18next@npm:^25.10.5":
+  version: 25.10.5
+  resolution: "i18next@npm:25.10.5"
+  dependencies:
+    "@babel/runtime": ^7.29.2
+  peerDependencies:
+    typescript: ^5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 0832b27761106ea4a7ba86bddbf54fed2d4d377d5d7611ceac43bdf781cc946952fe49029aafe3e50291ef1448f4c3f07d13362d337311034c34f90f925482c6
   languageName: node
   linkType: hard
 
@@ -9415,6 +9453,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^16.6.2":
+  version: 16.6.2
+  resolution: "react-i18next@npm:16.6.2"
+  dependencies:
+    "@babel/runtime": ^7.29.2
+    html-parse-stringify: ^3.0.1
+    use-sync-external-store: ^1.6.0
+  peerDependencies:
+    i18next: ">= 25.6.2"
+    react: ">= 16.8.0"
+    typescript: ^5
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+    typescript:
+      optional: true
+  checksum: d0e9993774166e06c0eb1b7f5765e91eb5c98e931b16a770972bbc4311f101ed586c4c2572a11bdda2475da5b2b5dbed6560bb98a76fc3ecfc31affe7ccbcd12
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -9907,6 +9967,13 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
+  languageName: node
+  linkType: hard
+
+"rtl-detect@npm:^1.0.2":
+  version: 1.1.2
+  resolution: "rtl-detect@npm:1.1.2"
+  checksum: 4a43a1e5df0617eb86d5485640b318787d12b86acf53d840a3b2ff701ee941e95479d4e9ae97e907569ec763d1c47218cb87639bc87bcdad60a85747e5270cf0
   languageName: node
   linkType: hard
 
@@ -11059,7 +11126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.5.0":
+"use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:
@@ -11114,6 +11181,13 @@ __metadata:
   version: 1.0.1
   resolution: "vlq@npm:1.0.1"
   checksum: 67ab6dd35c787eaa02c0ff1a869dd07a230db08722fb6014adaaf432634808ddb070765f70958b47997e438c331790cfcf20902411b0d6453f1a2a5923522f55
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: 0390f818107fa8fce55bb0a5c3f661056001c1d5a2a48c28d582d4d847347c2ab5b7f8272314cac58acf62345126b6b09bea623a185935f6b1c3bbce0dfd7f7f
   languageName: node
   linkType: hard
 
