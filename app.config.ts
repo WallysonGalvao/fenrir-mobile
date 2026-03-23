@@ -16,6 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: 'com.wallyson.fenrir-app',
   },
   android: {
+    package: 'com.wallyson.fenrirapp',
     adaptiveIcon: {
       backgroundColor: '#E6F4FE',
       foregroundImage: './assets/images/android-icon-foreground.png',

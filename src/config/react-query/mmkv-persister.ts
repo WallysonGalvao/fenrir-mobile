@@ -1,23 +1,28 @@
 import type { PersistedClient, Persister } from '@tanstack/react-query-persist-client';
 import Constants from 'expo-constants';
 import type { MMKV } from 'react-native-mmkv';
-import { createMMKV } from 'react-native-mmkv';
 
 import { Platform } from 'react-native';
 
 import { ONE_WEEK_IN_MS } from '@/constants';
 
-let queryStorage: MMKV | null = null;
-try {
-  queryStorage = createMMKV({
-    id: `${Constants.expoConfig?.slug || 'sportidia'}.query-cache`,
-    // encryptionKey is not supported on web platform
-    ...(Platform.OS !== 'web' && {
-      encryptionKey: Constants.expoConfig?.slug || 'sportidia',
-    }),
-  });
-} catch {
-  // MMKV not available on this platform (e.g., web)
+export let queryStorage: MMKV | null = null;
+
+function getQueryStorage(): MMKV | null {
+  if (queryStorage) return queryStorage;
+  if (Platform.OS === 'web' && typeof window === 'undefined') return null;
+  try {
+    const { createMMKV } = require('react-native-mmkv');
+    queryStorage = createMMKV({
+      id: `${Constants.expoConfig?.slug || 'sportidia'}.query-cache`,
+      ...(Platform.OS !== 'web' && {
+        encryptionKey: Constants.expoConfig?.slug || 'sportidia',
+      }),
+    });
+  } catch {
+    // MMKV not available on this platform
+  }
+  return queryStorage;
 }
 
 export const createMMKVPersister = (): Persister => {
@@ -25,17 +30,19 @@ export const createMMKVPersister = (): Persister => {
 
   return {
     persistClient: async (client: PersistedClient) => {
-      if (!queryStorage) return;
+      const storage = getQueryStorage();
+      if (!storage) return;
       try {
-        queryStorage.set(CACHE_KEY, JSON.stringify(client));
+        storage.set(CACHE_KEY, JSON.stringify(client));
       } catch (error) {
         console.error('[MMKV Persister] Error persisting client:', error);
       }
     },
     restoreClient: async () => {
-      if (!queryStorage) return undefined;
+      const storage = getQueryStorage();
+      if (!storage) return undefined;
       try {
-        const cached = queryStorage.getString(CACHE_KEY);
+        const cached = storage.getString(CACHE_KEY);
         if (!cached) return undefined;
 
         const client = JSON.parse(cached) as PersistedClient;
@@ -44,7 +51,7 @@ export const createMMKVPersister = (): Persister => {
         const now = Date.now();
 
         if (now - client.timestamp > maxAge) {
-          queryStorage.remove(CACHE_KEY);
+          storage.remove(CACHE_KEY);
           return undefined;
         }
 
@@ -55,9 +62,10 @@ export const createMMKVPersister = (): Persister => {
       }
     },
     removeClient: async () => {
-      if (!queryStorage) return;
+      const storage = getQueryStorage();
+      if (!storage) return;
       try {
-        queryStorage.remove(CACHE_KEY);
+        storage.remove(CACHE_KEY);
       } catch (error) {
         console.error('[MMKV Persister] Error removing client:', error);
       }
