@@ -1,34 +1,7 @@
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 import type { StateStorage } from 'zustand/middleware';
 
-import { Platform } from 'react-native';
-
 import { getMMKVEncryptionKey } from './storage-key';
-
-/**
- * web-compatible localStorage adapter for Zustand persistence
- */
-const createWebStorage = (storageName: string): StateStorage => {
-  return {
-    setItem: (name, value) => {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(`${storageName}:${name}`, value);
-      }
-    },
-    getItem: (name) => {
-      if (typeof window === 'undefined') {
-        return null;
-      }
-      const value = localStorage.getItem(`${storageName}:${name}`);
-      return value ?? null;
-    },
-    removeItem: (name) => {
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem(`${storageName}:${name}`);
-      }
-    },
-  };
-};
 
 /**
  * Creates an MMKV-based storage adapter to be used
@@ -61,18 +34,13 @@ const createWebStorage = (storageName: string): StateStorage => {
  * )
  */
 export const createMMKVStorage = (storageName: string): StateStorage => {
-  // Use localStorage for web platform to avoid SSR issues
-  if (Platform.OS === 'web') {
-    return createWebStorage(storageName);
-  }
-
   // Lazily create the MMKV instance on first access to ensure the encryption
   // key has been initialized by initMMKVEncryptionKey() before use.
-  let mmkvInstance: MMKV | null = null;
+  let mmkvInstance: ReturnType<typeof createMMKV> | null = null;
 
-  function getInstance(): MMKV {
+  function getInstance(): ReturnType<typeof createMMKV> {
     if (!mmkvInstance) {
-      mmkvInstance = new MMKV({
+      mmkvInstance = createMMKV({
         id: storageName,
         encryptionKey: getMMKVEncryptionKey(),
       });
