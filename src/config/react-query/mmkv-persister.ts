@@ -1,6 +1,7 @@
 import type { PersistedClient, Persister } from '@tanstack/react-query-persist-client';
 import Constants from 'expo-constants';
 import type { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
 import { Platform } from 'react-native';
 
@@ -12,11 +13,10 @@ function getQueryStorage(): MMKV | null {
   if (queryStorage) return queryStorage;
   if (Platform.OS === 'web' && typeof window === 'undefined') return null;
   try {
-    const { createMMKV } = require('react-native-mmkv');
     queryStorage = createMMKV({
-      id: `${Constants.expoConfig?.slug || 'sportidia'}.query-cache`,
+      id: `${Constants.expoConfig?.slug || 'fenrir'}.query-cache`,
       ...(Platform.OS !== 'web' && {
-        encryptionKey: Constants.expoConfig?.slug || 'sportidia',
+        encryptionKey: Constants.expoConfig?.slug || 'fenrir',
       }),
     });
   } catch {

@@ -4,19 +4,19 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'boilerplate',
-  slug: 'boilerplate',
+  name: 'fenrir',
+  slug: 'fenrir',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'boilerplate',
+  scheme: 'fenrir',
   userInterfaceStyle: 'automatic',
   ios: {
     icon: './assets/expo.icon',
-    bundleIdentifier: 'com.threewolves.boilerplate',
+    bundleIdentifier: 'com.threewolves.fenrir',
   },
   android: {
-    package: 'com.threewolves.boilerplate',
+    package: 'com.threewolves.fenrir',
     adaptiveIcon: {
       backgroundColor: '#E6F4FE',
       foregroundImage: './assets/images/android-icon-foreground.png',
@@ -50,6 +50,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         organization: 'wgsoftwares',
       },
     ],
+    [
+      'expo-secure-store',
+      {
+        configureAndroidBackup: true,
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,
@@ -57,6 +63,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     sentryDNS: process.env.SENTRY_DSN,
+    supabaseUrl: process.env.VITE_SUPABASE_URL,
+    supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY,
     eas: {
       projectId: process.env.EAS_PROJECT_ID || '',
     },

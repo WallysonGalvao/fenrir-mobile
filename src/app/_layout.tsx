@@ -1,33 +1,45 @@
-import React from 'react';
-
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import * as Sentry from '@sentry/react-native';
-import { useNavigationContainerRef } from 'expo-router';
-import { I18nextProvider } from 'react-i18next';
-
-import { useColorScheme } from 'react-native';
-
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
-import i18n from '@/i18n';
-
 import '../config';
 
-function TabLayout() {
-  const colorScheme = useColorScheme();
-  const navigationRef = useNavigationContainerRef();
+import React, { useEffect } from 'react';
 
+import * as Sentry from '@sentry/react-native';
+import { Stack, useNavigationContainerRef } from 'expo-router';
+import { I18nextProvider } from 'react-i18next';
+
+import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
+import i18n from '@/i18n';
+import { initAuth } from '@/services/auth';
+import { useSession } from '@/stores/auth';
+
+function RootLayout() {
+  const navigationRef = useNavigationContainerRef();
   useRozeniteDevTools(navigationRef);
+
+  useEffect(() => initAuth(), []);
 
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AnimatedSplashOverlay />
-        <AppTabs />
-      </ThemeProvider>
+      <RootNavigator />
     </I18nextProvider>
   );
 }
 
-export default Sentry.wrap(TabLayout);
+function RootNavigator() {
+  const { session, isLoading } = useSession();
+
+  if (isLoading) return null;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!!session}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+      <Stack.Protected guard={!session}>
+        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="sign-up" />
+      </Stack.Protected>
+    </Stack>
+  );
+}
+
+export default Sentry.wrap(RootLayout);

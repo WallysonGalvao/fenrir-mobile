@@ -27,6 +27,28 @@ const pt = {
       animations: 'Animações',
     },
   },
+  auth: {
+    appName: 'Fenrir',
+    signIn: 'Entrar',
+    signUp: 'Cadastrar',
+    signInSubtitle: 'Entre na sua conta',
+    signUpSubtitle: 'Crie sua conta',
+    email: 'E-mail',
+    emailPlaceholder: 'voce@exemplo.com',
+    emailInvalid: 'Por favor, insira um e-mail válido',
+    password: 'Senha',
+    passwordPlaceholder: '\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7',
+    passwordMinLength: 'A senha deve ter pelo menos 8 caracteres',
+    passwordUppercase: 'A senha deve conter pelo menos uma letra maiúscula',
+    passwordLowercase: 'A senha deve conter pelo menos uma letra minúscula',
+    passwordNumber: 'A senha deve conter pelo menos um número',
+    passwordSpecial: 'A senha deve conter pelo menos um caractere especial',
+    showPassword: 'Mostrar senha',
+    hidePassword: 'Ocultar senha',
+    alreadyHaveAccount: 'Já tem uma conta?',
+    dontHaveAccount: 'Não tem uma conta?',
+    checkEmail: 'Verifique seu e-mail para confirmar sua conta e faça login.',
+  },
 } as const;
 
 export default pt;
