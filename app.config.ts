@@ -4,19 +4,19 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'fenrir-app',
-  slug: 'fenrir-app',
+  name: 'boilerplate',
+  slug: 'boilerplate',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'fenrirapp',
+  scheme: 'boilerplate',
   userInterfaceStyle: 'automatic',
   ios: {
     icon: './assets/expo.icon',
-    bundleIdentifier: 'com.wallyson.fenrir-app',
+    bundleIdentifier: 'com.threewolves.boilerplate',
   },
   android: {
-    package: 'com.wallyson.fenrirapp',
+    package: 'com.threewolves.boilerplate',
     adaptiveIcon: {
       backgroundColor: '#E6F4FE',
       foregroundImage: './assets/images/android-icon-foreground.png',
