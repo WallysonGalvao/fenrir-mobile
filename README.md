@@ -1,56 +1,67 @@
-# Welcome to your Expo app 👋
+# Fenrir — Expo Boilerplate
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Opinionated boilerplate for React Native apps with Expo, focused on eliminating initial configuration time and being productive from the first commit.
+
+Inspired by [Ignite](https://github.com/infinitered/ignite), with choices aligned to the modern Expo ecosystem.
+
+## What's already configured
+
+- **Expo SDK 55** + Expo Router (typed routes, file-based)
+- **NativeWind v5** + Tailwind CSS v4 (universal styling — iOS/Android/Web)
+- **TanStack React Query v5** + MMKV persistence (offline cache)
+- **i18next** + expo-localization (EN + PT-BR, auto-detection)
+- **Sentry** (error tracking + source maps)
+- **Reanimated v4** + Gesture Handler (animations and gestures)
+- **React Compiler** enabled (automatic optimization)
+- **Dark mode** native with themed components
+- **ESLint v9** (flat config) + Prettier + Knip (dead code detection)
+- **Rozenite Dev Tools** (inspector for queries, storage, network, navigation)
 
 ## Get started
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
 ```bash
-npm run reset-project
+# 1. Clone the repository
+git clone https://github.com/your-username/boilerplate
+
+# 2. Install dependencies
+npm install
+
+# 3. Configure environment variables
+cp .env.example .env
+
+# 4. Start the project
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Environment variables
 
-### Other setup steps
+| Variable         | Description        |
+| ---------------- | ------------------ |
+| `SENTRY_DSN`     | Sentry project DSN |
+| `EAS_PROJECT_ID` | EAS project ID     |
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Structure
 
-## Learn more
+```
+src/
+├── app/          # Routes (Expo Router file-based)
+├── components/   # Reusable components
+├── config/       # Service initialization (Sentry, React Query)
+├── constants/    # Theme, colors, time constants
+├── hooks/        # Custom hooks
+├── i18n/         # Translations (EN, PT-BR)
+└── utils/        # Utilities
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Scripts
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Command                 | Description                  |
+| ----------------------- | ---------------------------- |
+| `npm start`             | Start the development server |
+| `npm run ios`           | Open on iOS simulator        |
+| `npm run android`       | Open on Android emulator     |
+| `npm run web`           | Open in browser              |
+| `npm run lint`          | Check for lint errors        |
+| `npm run format`        | Format code with Prettier    |
+| `npm run knip:check`    | Detect unused code           |
+| `npm run reset-project` | Reset to a blank project     |
