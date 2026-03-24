@@ -61,15 +61,12 @@ const createWebStorage = (storageName: string): StateStorage => {
  * )
  */
 export const createMMKVStorage = (storageName: string): StateStorage => {
-  console.log('createMMKVStorage');
   // Use localStorage for web platform to avoid SSR issues
   if (Platform.OS === 'web') {
-    console.log('aqui');
     return createWebStorage(storageName);
   }
 
-  // Lazily create the MMKV instance on first access to ensure the encryption
-  // key has been initialized by initMMKVEncryptionKey() before use.
+  // Lazily create the MMKV instance on first access.
   let mmkvInstance: ReturnType<typeof createMMKV> | null = null;
 
   function getInstance(): ReturnType<typeof createMMKV> {
