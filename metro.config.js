@@ -7,6 +7,12 @@ const { withNativewind } = require('nativewind/metro');
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getSentryExpoConfig(__dirname);
 
+config.resolver = {
+  ...config.resolver,
+  unstable_conditionNames: ['browser', 'require', 'react-native'],
+  unstable_enablePackageExports: true,
+};
+
 module.exports = withRozenite(withNativewind(config), {
   enabled: process.env.WITH_ROZENITE === 'true',
   enhanceMetroConfig: (c) => withRozeniteExpoAtlasPlugin(withRozeniteWeb(c)),

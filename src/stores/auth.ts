@@ -29,6 +29,7 @@ export const useSession = create<AuthState>()(
     {
       name: 'auth-session',
       storage: createJSONStorage(() => createMMKVStorage('auth-session')),
+      skipHydration: true,
       partialize: (state) => ({ session: state.session }),
     },
   ),
