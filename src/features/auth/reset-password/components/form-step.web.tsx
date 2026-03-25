@@ -5,7 +5,12 @@ import { Text, View } from 'react-native';
 
 import { EmailFormFields } from './email-form-fields';
 
-export function FormStep() {
+type FormStepProps = {
+  onBack: () => void;
+  onSuccess: () => void;
+};
+
+export function FormStep({ onBack, onSuccess }: FormStepProps) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +27,7 @@ export function FormStep() {
           {t('auth.resetPasswordSubtitle')}
         </Text>
       </View>
-      <EmailFormFields />
+      <EmailFormFields onBack={onBack} onSuccess={onSuccess} />
     </Animated.View>
   );
 }

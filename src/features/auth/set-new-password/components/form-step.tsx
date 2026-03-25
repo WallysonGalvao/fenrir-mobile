@@ -4,10 +4,13 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { Text } from 'react-native';
 
 import { FormHeader } from '../../shared/form-header';
-
 import { PasswordFormFields } from './password-form-fields';
 
-export function FormStep() {
+type FormStepProps = {
+  onSuccess: () => void;
+};
+
+export function FormStep({ onSuccess }: FormStepProps) {
   const { t } = useTranslation();
 
   return (
@@ -26,7 +29,7 @@ export function FormStep() {
         {t('auth.setNewPasswordSubtitle')}
       </Text>
 
-      <PasswordFormFields />
+      <PasswordFormFields onSuccess={onSuccess} />
     </Animated.View>
   );
 }

@@ -13,13 +13,15 @@ import { FormInput } from '../../shared/form-input';
 import { PasswordToggle } from '../../shared/password-toggle';
 import { ServerError } from '../../shared/server-error';
 import { SubmitButton } from '../../shared/submit-button';
-import { useSetNewPassword } from '../context';
+
+type PasswordFormFieldsProps = {
+  onSuccess: () => void;
+};
 
 type PasswordFields = { password: string; confirmPassword: string };
 
-export function PasswordFormFields() {
+export function PasswordFormFields({ onSuccess }: PasswordFormFieldsProps) {
   const { t } = useTranslation();
-  const { onSuccess } = useSetNewPassword();
   const [serverError, setServerError] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);

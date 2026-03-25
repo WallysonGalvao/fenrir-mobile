@@ -12,15 +12,18 @@ import { supabase } from '@/lib/supabase';
 import { FormInput } from '../../shared/form-input';
 import { ServerError } from '../../shared/server-error';
 import { SubmitButton } from '../../shared/submit-button';
-import { useResetPassword } from '../context';
 
 const isWeb = Platform.OS === 'web';
 
+type EmailFormFieldsProps = {
+  onBack: () => void;
+  onSuccess: () => void;
+};
+
 type ResetFields = { email: string };
 
-export function EmailFormFields() {
+export function EmailFormFields({ onBack, onSuccess }: EmailFormFieldsProps) {
   const { t } = useTranslation();
-  const { onBack, onSuccess } = useResetPassword();
   const [serverError, setServerError] = React.useState('');
 
   const schema = React.useMemo(

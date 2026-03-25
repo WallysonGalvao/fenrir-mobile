@@ -4,12 +4,15 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { Text } from 'react-native';
 
 import { FormHeader } from '../../shared/form-header';
-import { useResetPassword } from '../context';
 import { EmailFormFields } from './email-form-fields';
 
-export function FormStep() {
+type FormStepProps = {
+  onBack: () => void;
+  onSuccess: () => void;
+};
+
+export function FormStep({ onBack, onSuccess }: FormStepProps) {
   const { t } = useTranslation();
-  const { onBack } = useResetPassword();
 
   return (
     <Animated.View
@@ -27,7 +30,7 @@ export function FormStep() {
         {t('auth.resetPasswordSubtitle')}
       </Text>
 
-      <EmailFormFields />
+      <EmailFormFields onBack={onBack} onSuccess={onSuccess} />
     </Animated.View>
   );
 }

@@ -7,7 +7,6 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { FormStep } from './components/form-step';
 import { SuccessStep } from './components/success-step';
-import { ResetPasswordContext } from './context';
 
 type Step = 'form' | 'success';
 
@@ -17,36 +16,29 @@ export default function ResetPassword() {
   const [step, setStep] = React.useState<Step>('form');
   const router = useRouter();
 
-  const ctx = React.useMemo(
-    () => ({
-      onBack: () => router.back(),
-      onSuccess: () => setStep('success'),
-    }),
-    [router],
-  );
+  const onBack = () => router.back();
+  const onSuccess = () => setStep('success');
 
   const content =
     step === 'form' ? (
-      <ResetPasswordContext value={ctx}>
-        <Animated.View
-          key="form"
-          entering={FadeIn.duration(280)}
-          exiting={FadeOut.duration(180)}
-          className="flex-1"
-        >
-          {isWeb ? (
-            <FormStep />
-          ) : (
-            <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              contentContainerClassName="grow px-6 py-4"
-              keyboardShouldPersistTaps="handled"
-            >
-              <FormStep />
-            </ScrollView>
-          )}
-        </Animated.View>
-      </ResetPasswordContext>
+      <Animated.View
+        key="form"
+        entering={FadeIn.duration(280)}
+        exiting={FadeOut.duration(180)}
+        className="flex-1"
+      >
+        {isWeb ? (
+          <FormStep onBack={onBack} onSuccess={onSuccess} />
+        ) : (
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerClassName="grow px-6 py-4"
+            keyboardShouldPersistTaps="handled"
+          >
+            <FormStep onBack={onBack} onSuccess={onSuccess} />
+          </ScrollView>
+        )}
+      </Animated.View>
     ) : (
       <Animated.View
         key="success"

@@ -5,7 +5,11 @@ import { Text, View } from 'react-native';
 
 import { PasswordFormFields } from './password-form-fields';
 
-export function FormStep() {
+type FormStepProps = {
+  onSuccess: () => void;
+};
+
+export function FormStep({ onSuccess }: FormStepProps) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +26,7 @@ export function FormStep() {
           {t('auth.setNewPasswordSubtitle')}
         </Text>
       </View>
-      <PasswordFormFields />
+      <PasswordFormFields onSuccess={onSuccess} />
     </Animated.View>
   );
 }
