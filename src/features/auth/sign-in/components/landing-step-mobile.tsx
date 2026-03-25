@@ -31,13 +31,13 @@ export function LandingStepMobile({ onSignIn }: { onSignIn: () => void }) {
             style={styles.logo}
             contentFit="contain"
             accessibilityIgnoresInvertColors
-            tintColor={scheme === 'dark' ? '#1FA5AC' : '#4D4088'}
+            tintColor={scheme === 'dark' ? '#3ED6A1' : '#4D4088'}
           />
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(80)}>
           <Text
-            className="text-[28px] font-extrabold tracking-tight text-[#4D4088] dark:text-[#1FA5AC]"
+            className="text-3xl font-extrabold tracking-tight text-[#4D4088] dark:text-[#3ED6A1]"
             style={[styles.textShadowLanding, styles.appNameText]}
           >
             {t('auth.appName')}

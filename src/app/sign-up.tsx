@@ -30,7 +30,6 @@ const ERROR_BORDER = 'rgba(239, 68, 68, 0.3)';
 const SUCCESS_COLOR = '#16a34a';
 const SUCCESS_BG = 'rgba(34, 197, 94, 0.1)';
 const SUCCESS_BORDER = 'rgba(34, 197, 94, 0.3)';
-const PRIMARY_COLOR = '#208AEF';
 const WHITE = '#ffffff';
 
 type SignUpFields = { email: string; password: string };
@@ -91,7 +90,12 @@ export default function SignUp() {
       >
         <View style={styles.container}>
           <View style={styles.logoSection}>
-            <View style={[styles.logoContainer, { shadowColor: theme.text }]}>
+            <View
+              style={[
+                styles.logoContainer,
+                { shadowColor: theme.text, backgroundColor: theme.backgroundElement },
+              ]}
+            >
               <Image
                 source={require('@/assets/images/icon.png')}
                 style={styles.logoImage}
@@ -208,7 +212,7 @@ export default function SignUp() {
             <Pressable
               style={({ pressed }) => [
                 styles.submitButton,
-                { opacity: pressed || isSubmitting ? 0.75 : 1 },
+                { backgroundColor: theme.primary, opacity: pressed || isSubmitting ? 0.75 : 1 },
               ]}
               onPress={handleSubmit(onSubmit)}
               disabled={isSubmitting}
@@ -248,7 +252,6 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 24,
-    backgroundColor: WHITE,
     justifyContent: 'center',
     alignItems: 'center',
     padding: Spacing.three,
@@ -302,7 +305,6 @@ const styles = StyleSheet.create({
   fieldError: { fontSize: 12, color: ERROR_COLOR, marginTop: 2 },
   submitButton: {
     height: 48,
-    backgroundColor: PRIMARY_COLOR,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',

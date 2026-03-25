@@ -3,7 +3,7 @@ import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
 
@@ -14,6 +14,7 @@ export function FormStepMobile() {
   const { t } = useTranslation();
   const { onBack } = useSignIn();
   const theme = useTheme();
+  const scheme = useColorScheme();
 
   return (
     <Animated.View
@@ -42,6 +43,7 @@ export function FormStepMobile() {
             style={styles.logo}
             contentFit="contain"
             accessibilityIgnoresInvertColors
+            tintColor={scheme === 'dark' ? 'white' : 'black'}
           />
         </View>
         {/* Spacer for centering */}

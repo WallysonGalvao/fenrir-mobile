@@ -163,13 +163,13 @@ export function FormFields() {
           </Pressable>
 
           <Pressable
-            className="h-10.5 px-8 bg-primary rounded-[21px] justify-center items-center active:opacity-75 disabled:opacity-75"
+            className="h-10.5 px-8 bg-primary dark:bg-primary-dark rounded-[21px] justify-center items-center active:opacity-75 disabled:opacity-75"
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}
             accessibilityRole="button"
           >
             {isSubmitting ? (
-              <ActivityIndicator color="#ffffff" />
+              <ActivityIndicator color="#EAF2FF" />
             ) : (
               <Text className="text-white text-[15px] font-semibold">{t('auth.signIn')}</Text>
             )}
@@ -177,13 +177,13 @@ export function FormFields() {
         </View>
       ) : (
         <Pressable
-          className="h-12 bg-primary rounded-3xl justify-center items-center mt-2 active:opacity-75 disabled:opacity-75"
+          className="h-12 bg-primary dark:bg-primary-dark rounded-3xl justify-center items-center mt-2 active:opacity-75 disabled:opacity-75"
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           accessibilityRole="button"
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#ffffff" />
+            <ActivityIndicator color="#EAF2FF" />
           ) : (
             <Text className="text-white text-base font-semibold">{t('auth.signIn')}</Text>
           )}

@@ -5,27 +5,46 @@
 @import 'nativewind/theme';
 
 @theme {
-  --color-primary: #208aef;
-  --color-primary-glow: rgba(32, 138, 239, 0.18);
+  /* Primary */
+  --color-primary: #6ccfd1;
+  --color-primary-dark: #3ed6a1;
+  --color-primary-glow: rgba(108, 207, 209, 0.18);
+  --color-primary-glow-dark: rgba(62, 214, 161, 0.18);
+  --color-primary-hover: #7ee3c5;
+  --color-primary-hover-dark: #2fb7c8;
+
+  /* Accent & Warm */
+  --color-accent: #b8a4ff;
+  --color-accent-dark: #8a6cff;
+  --color-warm: #ffd8a8;
+  --color-warm-dark: #f2a65a;
+
+  /* Semantic */
   --color-error: #ef4444;
 
+  /* Foreground */
   --color-foreground: #000000;
-  --color-foreground-dark: #ffffff;
+  --color-foreground-dark: #eaf2ff;
   --color-foreground-secondary: #60646c;
   --color-foreground-secondary-dark: #b0b4ba;
 
+  /* Background */
   --color-background: #ffffff;
-  --color-background-dark: #000000;
+  --color-background-dark: #0b1f3a;
   --color-background-element: #f0f0f3;
-  --color-background-element-dark: #212225;
-  --color-background-surface: #f1f3f5;
-  --color-background-surface-alt: #f8f9fb;
+  --color-background-element-dark: #1e3a5f;
+  --color-background-surface: #ffffff;
+  --color-background-surface-dark: #121a26;
+  --color-background-surface-alt: #e5eaf0;
+  --color-background-surface-alt-dark: #162d4a;
 
-  --color-border: #e0e1e6;
-  --color-border-dark: #2e3135;
+  /* Border */
+  --color-border: #e5eaf0;
+  --color-border-dark: #2a4f7a;
 
-  --color-button-secondary: #e4e6eb;
-  --color-button-secondary-dark: #2e3135;
+  /* Button */
+  --color-button-secondary: #a8d0e6;
+  --color-button-secondary-dark: #5b3f8c;
   --color-button-secondary-text: #1a1a2e;
 }
 

@@ -18,7 +18,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: 'com.threewolves.fenrir',
     adaptiveIcon: {
-      backgroundColor: '#E6F4FE',
+      backgroundColor: '#CFE8F7',
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#208AEF',
+        backgroundColor: '#0B1F3A',
         android: {
           image: './assets/images/splash-icon.png',
           imageWidth: 76,

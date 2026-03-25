@@ -10,9 +10,9 @@ export function LandingStepWeb({ onSignIn }: { onSignIn: () => void }) {
   const router = useRouter();
 
   return (
-    <View className="flex-1 bg-background-surface justify-center items-center">
+    <View className="flex-1 bg-background-surface dark:bg-background-surface-dark justify-center items-center">
       {/* Subtle blue glow edges */}
-      <View className="absolute inset-0 border-8 border-primary-glow" />
+      <View className="absolute inset-0 border-8 border-primary-glow dark:border-primary-glow-dark" />
 
       <View className="items-center gap-6 z-1 max-w-100 w-full px-6">
         <Animated.View entering={FadeInDown.duration(400).delay(0)}>
@@ -35,7 +35,7 @@ export function LandingStepWeb({ onSignIn }: { onSignIn: () => void }) {
 
         <Animated.View entering={FadeInDown.duration(400).delay(120)} className="w-full gap-2 mt-4">
           <Pressable
-            className="w-full h-12 rounded-3xl bg-primary justify-center items-center active:opacity-85"
+            className="w-full h-12 rounded-3xl bg-primary dark:bg-primary-dark justify-center items-center active:opacity-85"
             onPress={() => router.push('/sign-up' as Href)}
             accessibilityRole="button"
           >
