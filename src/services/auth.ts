@@ -1,3 +1,5 @@
+import { router } from 'expo-router';
+
 import { supabase } from '@/lib/supabase';
 import { useSession } from '@/stores/auth';
 
@@ -10,7 +12,17 @@ import { useSession } from '@/stores/auth';
 export function initAuth() {
   const {
     data: { subscription },
-  } = supabase.auth.onAuthStateChange((_event, updatedSession) => {
+  } = supabase.auth.onAuthStateChange((event, updatedSession) => {
+    if (event === 'PASSWORD_RECOVERY') {
+      useSession.setState({
+        session: updatedSession,
+        isLoading: false,
+        isPasswordRecovery: true,
+      });
+      router.replace('/set-new-password');
+      return;
+    }
+
     useSession.setState({ session: updatedSession, isLoading: false });
   });
 

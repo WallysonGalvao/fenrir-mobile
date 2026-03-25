@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,25 +12,22 @@ import { ActivityIndicator, Platform, Pressable, Text, TextInput, View } from 'r
 import { useTheme } from '@/hooks/use-theme';
 import { supabase } from '@/lib/supabase';
 
-import { useSignIn } from '../context';
+import { useResetPassword } from '../context';
 
 const isWeb = Platform.OS === 'web';
 
-type SignInFields = { email: string; password: string };
+type ResetFields = { email: string };
 
-export function FormFields() {
+export function EmailFormFields() {
   const { t } = useTranslation();
-  const { onBack } = useSignIn();
-  const router = useRouter();
+  const { onBack, onSuccess } = useResetPassword();
   const theme = useTheme();
   const [serverError, setServerError] = React.useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
 
   const schema = React.useMemo(
     () =>
       z.object({
         email: z.email(t('auth.emailInvalid')),
-        password: z.string().min(1, t('auth.passwordMinLength')),
       }),
     [t],
   );
@@ -40,12 +36,20 @@ export function FormFields() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignInFields>({ resolver: zodResolver(schema) });
+  } = useForm<ResetFields>({ resolver: zodResolver(schema) });
 
-  async function onSubmit({ email, password }: SignInFields) {
+  async function onSubmit({ email }: ResetFields) {
     setServerError('');
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setServerError(error.message);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: isWeb
+        ? `${window.location.origin}/set-new-password`
+        : 'fenrir://set-new-password',
+    });
+    if (error) {
+      setServerError(error.message);
+    } else {
+      onSuccess();
+    }
   }
 
   return (
@@ -60,12 +64,10 @@ export function FormFields() {
       ) : null}
 
       <View className="gap-2">
-        {/* Account section label */}
         <Text className="text-[13px] font-medium mb-0.5 text-foreground-secondary dark:text-foreground-secondary-dark">
-          {t('auth.account')}
+          {t('auth.email')}
         </Text>
 
-        {/* Email field with @ icon */}
         <View className="gap-1">
           <View
             className={`flex-row items-center h-11 border rounded-[10px] px-4 gap-2 bg-background-element dark:bg-background-element-dark ${
@@ -89,6 +91,7 @@ export function FormFields() {
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect={false}
+                  autoFocus
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}
@@ -102,71 +105,8 @@ export function FormFields() {
             <Text className="text-xs text-error pl-1">{errors.email.message}</Text>
           ) : null}
         </View>
-
-        {/* Password field with lock icon + Forgot? */}
-        <View className="gap-1">
-          <View
-            className={`flex-row items-center h-11 border rounded-[10px] px-4 gap-2 bg-background-element dark:bg-background-element-dark ${
-              errors.password ? 'border-error' : 'border-border dark:border-border-dark'
-            }`}
-          >
-            <SymbolView
-              name={{ ios: 'lock', android: 'lock', web: 'lock' }}
-              size={18}
-              tintColor={theme.textSecondary}
-            />
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className="flex-1 h-full text-[15px] text-foreground dark:text-foreground-dark"
-                  placeholder={t('auth.passwordPlaceholder')}
-                  placeholderTextColor={theme.textSecondary}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  autoComplete="current-password"
-                  autoCorrect={false}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  accessibilityLabel={t('auth.password')}
-                  accessibilityHint={t('auth.passwordHint')}
-                />
-              )}
-            />
-            <Pressable
-              onPress={() => setShowPassword((prev) => !prev)}
-              accessibilityLabel={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-              accessibilityHint={t('auth.togglePasswordHint')}
-            >
-              <SymbolView
-                name={
-                  showPassword
-                    ? { ios: 'eye.slash', android: 'visibility_off', web: 'visibility_off' }
-                    : { ios: 'eye', android: 'visibility', web: 'visibility' }
-                }
-                size={18}
-                tintColor={theme.textSecondary}
-              />
-            </Pressable>
-          </View>
-          <View className="flex-row justify-between items-center">
-            {errors.password ? (
-              <Text className="text-xs text-error pl-1">{errors.password.message}</Text>
-            ) : (
-              <View />
-            )}
-            <Pressable onPress={() => router.push('/reset-password')} accessibilityRole="link">
-              <Text className="text-[13px] font-medium text-primary dark:text-primary-dark">
-                {t('auth.forgotPassword')}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
       </View>
 
-      {/* Submit — different layout on web vs mobile */}
       {isWeb ? (
         <View className="flex-row justify-between items-center mt-2">
           <Pressable
@@ -175,7 +115,7 @@ export function FormFields() {
             accessibilityRole="button"
           >
             <Text className="text-[15px] font-semibold text-foreground-secondary dark:text-foreground-secondary-dark">
-              {t('auth.backToLanding')}
+              {t('auth.backToSignIn')}
             </Text>
           </Pressable>
 
@@ -188,7 +128,9 @@ export function FormFields() {
             {isSubmitting ? (
               <ActivityIndicator color="#EAF2FF" />
             ) : (
-              <Text className="text-white text-[15px] font-semibold">{t('auth.signIn')}</Text>
+              <Text className="text-white text-[15px] font-semibold">
+                {t('auth.sendResetLink')}
+              </Text>
             )}
           </Pressable>
         </View>
@@ -202,7 +144,7 @@ export function FormFields() {
           {isSubmitting ? (
             <ActivityIndicator color="#EAF2FF" />
           ) : (
-            <Text className="text-white text-base font-semibold">{t('auth.signIn')}</Text>
+            <Text className="text-white text-base font-semibold">{t('auth.sendResetLink')}</Text>
           )}
         </Pressable>
       )}

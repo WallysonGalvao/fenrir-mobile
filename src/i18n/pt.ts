@@ -58,6 +58,23 @@ const pt = {
     emailHint: 'Digite seu e-mail para entrar',
     passwordHint: 'Digite sua senha para entrar',
     togglePasswordHint: 'Alterna a visibilidade da senha',
+    resetPassword: 'Redefinir senha',
+    resetPasswordSubtitle: 'Insira seu e-mail para receber um link de redefinição',
+    sendResetLink: 'Enviar link de redefinição',
+    resetEmailSent: 'Verifique seu e-mail',
+    resetEmailSentDescription:
+      'Enviamos um link de redefinição de senha para seu e-mail. Clique no link para definir uma nova senha.',
+    backToSignIn: 'Voltar para login',
+    setNewPassword: 'Definir nova senha',
+    setNewPasswordSubtitle: 'Escolha uma senha forte para sua conta',
+    newPassword: 'Nova senha',
+    newPasswordPlaceholder: 'Digite a nova senha',
+    confirmPassword: 'Confirmar senha',
+    confirmPasswordPlaceholder: 'Digite a nova senha novamente',
+    passwordsDoNotMatch: 'As senhas não coincidem',
+    passwordUpdated: 'Senha atualizada',
+    passwordUpdatedDescription:
+      'Sua senha foi atualizada com sucesso. Agora você pode entrar com sua nova senha.',
   },
 } as const;
 

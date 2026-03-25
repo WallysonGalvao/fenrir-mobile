@@ -9,12 +9,14 @@ import { createMMKVStorage } from '@/utils/storage';
 type AuthState = {
   session: Session | null;
   isLoading: boolean;
+  isPasswordRecovery: boolean;
   signOut: () => Promise<void>;
 };
 
 const initialState: InitialStateOnly<AuthState> = {
   session: null,
   isLoading: true,
+  isPasswordRecovery: false,
 };
 
 export const useSession = create<AuthState>()(

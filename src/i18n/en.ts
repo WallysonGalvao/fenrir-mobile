@@ -58,6 +58,23 @@ const en = {
     emailHint: 'Enter your email address to sign in',
     passwordHint: 'Enter your password to sign in',
     togglePasswordHint: 'Toggles password visibility',
+    resetPassword: 'Reset password',
+    resetPasswordSubtitle: 'Enter your email to receive a reset link',
+    sendResetLink: 'Send reset link',
+    resetEmailSent: 'Check your email',
+    resetEmailSentDescription:
+      'We sent a password reset link to your email. Click the link to set a new password.',
+    backToSignIn: 'Back to sign in',
+    setNewPassword: 'Set new password',
+    setNewPasswordSubtitle: 'Choose a strong password for your account',
+    newPassword: 'New password',
+    newPasswordPlaceholder: 'Enter new password',
+    confirmPassword: 'Confirm password',
+    confirmPasswordPlaceholder: 'Re-enter new password',
+    passwordsDoNotMatch: 'Passwords do not match',
+    passwordUpdated: 'Password updated',
+    passwordUpdatedDescription:
+      'Your password has been updated successfully. You can now sign in with your new password.',
   },
 } as const;
 
