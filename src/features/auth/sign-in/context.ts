@@ -1,13 +1,8 @@
-import { createContext, useContext } from 'react';
+import { createAuthContext } from '../shared/create-auth-context';
 
 type SignInContextValue = {
   onBack: () => void;
 };
 
-export const SignInContext = createContext<SignInContextValue | null>(null);
-
-export function useSignIn() {
-  const ctx = useContext(SignInContext);
-  if (!ctx) throw new Error('useSignIn must be used within SignInContext');
-  return ctx;
-}
+export const { Provider: SignInContext, useContext: useSignIn } =
+  createAuthContext<SignInContextValue>('useSignIn');
