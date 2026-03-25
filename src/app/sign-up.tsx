@@ -190,7 +190,11 @@ export default function SignUp() {
                   accessibilityHint=""
                 >
                   <SymbolView
-                    name={showPassword ? 'eye.slash' : 'eye'}
+                    name={
+                      showPassword
+                        ? { ios: 'eye.slash', android: 'visibility_off', web: 'visibility_off' }
+                        : { ios: 'eye', android: 'visibility', web: 'visibility' }
+                    }
                     size={18}
                     tintColor={theme.textSecondary}
                   />
