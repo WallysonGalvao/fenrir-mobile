@@ -7,6 +7,9 @@ import * as Sentry from '@sentry/react-native';
 import { Stack, useNavigationContainerRef } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { I18nextProvider } from 'react-i18next';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import { StyleSheet } from 'react-native';
 
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
 import i18n from '@/i18n';
@@ -44,20 +47,23 @@ function RootNavigator() {
   if (isLoading) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={!!session && !isPasswordRecovery}>
-        <Stack.Screen name="(app)" />
-      </Stack.Protected>
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="sign-in" />
-        <Stack.Screen name="sign-up" />
-        <Stack.Screen name="reset-password" />
-      </Stack.Protected>
-      <Stack.Protected guard={!!isPasswordRecovery}>
-        <Stack.Screen name="set-new-password" />
-      </Stack.Protected>
-    </Stack>
+    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Protected guard={!!session && !isPasswordRecovery}>
+          <Stack.Screen name="(app)" />
+        </Stack.Protected>
+        <Stack.Protected guard={!session || !!isPasswordRecovery}>
+          <Stack.Screen name="(public)" />
+        </Stack.Protected>
+      </Stack>
+    </GestureHandlerRootView>
   );
 }
 
 export default Sentry.wrap(RootLayout);
+
+const styles = StyleSheet.create({
+  gestureHandlerRootView: {
+    flex: 1,
+  },
+});

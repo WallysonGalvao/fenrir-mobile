@@ -5,7 +5,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
+export function Landing() {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -44,7 +44,7 @@ export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
 
           <Pressable
             className="w-full h-12 rounded-3xl bg-button-secondary dark:bg-button-secondary-dark justify-center items-center active:opacity-75"
-            onPress={onSignIn}
+            onPress={() => router.push('/sign-in')}
             accessibilityRole="button"
           >
             <Text className="text-base font-semibold text-foreground dark:text-foreground-dark">

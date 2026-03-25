@@ -4,13 +4,14 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { Text } from 'react-native';
 
 import { FormHeader } from '../../shared/form-header';
-
-import { useSignIn } from '../context';
 import { FormFields } from './form-fields';
 
-export function FormStep() {
+type FormStepProps = {
+  onBack: () => void;
+};
+
+export function FormStep({ onBack }: FormStepProps) {
   const { t } = useTranslation();
-  const { onBack } = useSignIn();
 
   return (
     <Animated.View
@@ -24,7 +25,7 @@ export function FormStep() {
         {t('auth.signIn')}
       </Text>
 
-      <FormFields />
+      <FormFields onBack={onBack} />
     </Animated.View>
   );
 }

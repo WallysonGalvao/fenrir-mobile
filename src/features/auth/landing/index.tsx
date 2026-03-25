@@ -8,7 +8,7 @@ import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native'
 import landingBgDark from '@/assets/images/landing-bg-dark.png';
 import landingBg from '@/assets/images/landing-bg.png';
 
-export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
+export function Landing() {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -60,7 +60,11 @@ export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
           </Text>
         </Pressable>
 
-        <Pressable className="py-2 active:opacity-60" onPress={onSignIn} accessibilityRole="button">
+        <Pressable
+          className="py-2 active:opacity-60"
+          onPress={() => router.push('/sign-in')}
+          accessibilityRole="button"
+        >
           <Text className="text-[17px] font-semibold text-white" style={styles.textShadowButton}>
             {t('auth.signIn')}
           </Text>

@@ -14,13 +14,15 @@ import { FormInput } from '../../shared/form-input';
 import { PasswordToggle } from '../../shared/password-toggle';
 import { ServerError } from '../../shared/server-error';
 import { SubmitButton } from '../../shared/submit-button';
-import { useSignIn } from '../context';
+
+type FormFieldsProps = {
+  onBack: () => void;
+};
 
 type SignInFields = { email: string; password: string };
 
-export function FormFields() {
+export function FormFields({ onBack }: FormFieldsProps) {
   const { t } = useTranslation();
-  const { onBack } = useSignIn();
   const router = useRouter();
   const [serverError, setServerError] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
