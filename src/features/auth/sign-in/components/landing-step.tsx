@@ -8,7 +8,7 @@ import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native'
 import landingBgDark from '@/assets/images/landing-bg-dark.png';
 import landingBg from '@/assets/images/landing-bg.png';
 
-export function LandingStepMobile({ onSignIn }: { onSignIn: () => void }) {
+export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
   const { t } = useTranslation();
   const router = useRouter();
 

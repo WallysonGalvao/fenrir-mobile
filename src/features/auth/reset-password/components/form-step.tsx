@@ -7,12 +7,12 @@ import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native'
 
 import { useTheme } from '@/hooks/use-theme';
 
-import { useSignIn } from '../context';
-import { FormFields } from './form-fields';
+import { useResetPassword } from '../context';
+import { EmailFormFields } from './email-form-fields';
 
-export function FormStepMobile() {
+export function FormStep() {
   const { t } = useTranslation();
-  const { onBack } = useSignIn();
+  const { onBack } = useResetPassword();
   const theme = useTheme();
   const scheme = useColorScheme();
 
@@ -22,14 +22,12 @@ export function FormStepMobile() {
       exiting={FadeOutLeft.duration(220)}
       className="flex-1 gap-6"
     >
-      {/* Header: back arrow + centered logo */}
       <View className="flex-row items-center justify-between">
         <Pressable
           className="w-10 h-10 justify-center items-center active:opacity-60"
           onPress={onBack}
           accessibilityRole="button"
-          accessibilityLabel={t('auth.backToLanding')}
-          accessibilityHint={t('auth.backToLandingHint')}
+          accessibilityLabel={t('auth.backToSignIn')}
         >
           <SymbolView
             name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
@@ -46,16 +44,18 @@ export function FormStepMobile() {
             tintColor={scheme === 'dark' ? 'white' : 'black'}
           />
         </View>
-        {/* Spacer for centering */}
         <View className="w-10 h-10" />
       </View>
 
-      {/* Title */}
       <Text className="text-[28px] font-extrabold tracking-tight text-foreground dark:text-foreground-dark">
-        {t('auth.signIn')}
+        {t('auth.resetPassword')}
       </Text>
 
-      <FormFields />
+      <Text className="text-[15px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark -mt-2">
+        {t('auth.resetPasswordSubtitle')}
+      </Text>
+
+      <EmailFormFields />
     </Animated.View>
   );
 }

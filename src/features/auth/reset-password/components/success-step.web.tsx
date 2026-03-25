@@ -5,7 +5,7 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { Pressable, Text, View } from 'react-native';
 
-export function SuccessStepWeb() {
+export function SuccessStep() {
   const { t } = useTranslation();
   const router = useRouter();
 

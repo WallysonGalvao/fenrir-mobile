@@ -5,7 +5,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-export function LandingStepWeb({ onSignIn }: { onSignIn: () => void }) {
+export function LandingStep({ onSignIn }: { onSignIn: () => void }) {
   const { t } = useTranslation();
   const router = useRouter();
 

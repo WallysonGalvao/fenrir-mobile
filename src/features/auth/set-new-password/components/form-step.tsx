@@ -6,7 +6,7 @@ import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import { PasswordFormFields } from './password-form-fields';
 
-export function FormStepMobile() {
+export function FormStep() {
   const { t } = useTranslation();
   const scheme = useColorScheme();
 

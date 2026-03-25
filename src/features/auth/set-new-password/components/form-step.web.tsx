@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 
 import { PasswordFormFields } from './password-form-fields';
 
-export function FormStepWeb() {
+export function FormStep() {
   const { t } = useTranslation();
 
   return (

@@ -7,7 +7,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import { useSession } from '@/stores/auth';
 
-export function SuccessStepWeb() {
+export function SuccessStep() {
   const { t } = useTranslation();
   const router = useRouter();
 

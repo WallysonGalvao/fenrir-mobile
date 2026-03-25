@@ -4,15 +4,13 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
-import { FormStepMobile } from './components/form-step-mobile';
-import { FormStepWeb } from './components/form-step-web';
-import { SuccessStepMobile } from './components/success-step-mobile';
-import { SuccessStepWeb } from './components/success-step-web';
+import { FormStep } from './components/form-step';
+import { SuccessStep } from './components/success-step';
 import { SetNewPasswordContext } from './context';
 
-const isWeb = Platform.OS === 'web';
-
 type Step = 'form' | 'success';
+
+const isWeb = Platform.OS === 'web';
 
 export default function SetNewPassword() {
   const [step, setStep] = React.useState<Step>('form');
@@ -24,48 +22,44 @@ export default function SetNewPassword() {
     [],
   );
 
-  const content = (
-    <>
-      {step === 'form' ? (
-        <SetNewPasswordContext value={ctx}>
-          <Animated.View
-            key="form"
-            entering={FadeIn.duration(280)}
-            exiting={FadeOut.duration(180)}
-            className="flex-1"
-          >
-            {isWeb ? (
-              <FormStepWeb />
-            ) : (
-              <ScrollView
-                key="form-mobile"
-                contentInsetAdjustmentBehavior="automatic"
-                contentContainerClassName="grow px-6 py-4"
-                keyboardShouldPersistTaps="handled"
-              >
-                <FormStepMobile />
-              </ScrollView>
-            )}
-          </Animated.View>
-        </SetNewPasswordContext>
-      ) : (
+  const content =
+    step === 'form' ? (
+      <SetNewPasswordContext value={ctx}>
         <Animated.View
-          key="success"
+          key="form"
           entering={FadeIn.duration(280)}
           exiting={FadeOut.duration(180)}
           className="flex-1"
         >
           {isWeb ? (
-            <SuccessStepWeb />
+            <FormStep />
           ) : (
-            <View className="flex-1 px-6 py-4">
-              <SuccessStepMobile />
-            </View>
+            <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              contentContainerClassName="grow px-6 py-4"
+              keyboardShouldPersistTaps="handled"
+            >
+              <FormStep />
+            </ScrollView>
           )}
         </Animated.View>
-      )}
-    </>
-  );
+      </SetNewPasswordContext>
+    ) : (
+      <Animated.View
+        key="success"
+        entering={FadeIn.duration(280)}
+        exiting={FadeOut.duration(180)}
+        className="flex-1"
+      >
+        {isWeb ? (
+          <SuccessStep />
+        ) : (
+          <View className="flex-1 px-6 py-4">
+            <SuccessStep />
+          </View>
+        )}
+      </Animated.View>
+    );
 
   if (isWeb) {
     return <View className="flex-1 bg-background dark:bg-background-dark">{content}</View>;

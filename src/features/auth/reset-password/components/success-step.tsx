@@ -6,17 +6,10 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
 import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
-import { useSession } from '@/stores/auth';
-
-export function SuccessStepMobile() {
+export function SuccessStep() {
   const { t } = useTranslation();
   const router = useRouter();
   const scheme = useColorScheme();
-
-  function handleGoToSignIn() {
-    useSession.setState({ isPasswordRecovery: false });
-    router.replace('/sign-in');
-  }
 
   return (
     <Animated.View
@@ -36,15 +29,15 @@ export function SuccessStepMobile() {
 
       <View className="items-center gap-3">
         <SymbolView
-          name={{ ios: 'checkmark.seal.fill', android: 'verified', web: 'verified' }}
+          name={{ ios: 'envelope.badge.fill', android: 'mark_email_read', web: 'mark_email_read' }}
           size={48}
           tintColor={scheme === 'dark' ? '#3ed6a1' : '#6ccfd1'}
         />
         <Text className="text-[28px] font-extrabold tracking-tight text-foreground dark:text-foreground-dark text-center">
-          {t('auth.passwordUpdated')}
+          {t('auth.resetEmailSent')}
         </Text>
         <Text className="text-[15px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark text-center px-4">
-          {t('auth.passwordUpdatedDescription')}
+          {t('auth.resetEmailSentDescription')}
         </Text>
       </View>
 
@@ -52,7 +45,7 @@ export function SuccessStepMobile() {
 
       <Pressable
         className="h-12 bg-primary dark:bg-primary-dark rounded-3xl justify-center items-center active:opacity-75"
-        onPress={handleGoToSignIn}
+        onPress={() => router.replace('/sign-in')}
         accessibilityRole="button"
       >
         <Text className="text-white text-base font-semibold">{t('auth.backToSignIn')}</Text>
