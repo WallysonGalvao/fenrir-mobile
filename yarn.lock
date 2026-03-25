@@ -1270,6 +1270,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/bebas-neue@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@expo-google-fonts/bebas-neue@npm:0.4.1"
+  checksum: da53b565ef4c598e332f95be1e173b37766b355ccb6c6ac17676f9b7892b0f6217d82a80475d2350f13e49d40e8bca97a5cca14bbfb5a87bcaa02f8f4d8cd2d3
+  languageName: node
+  linkType: hard
+
 "@expo-google-fonts/material-symbols@npm:^0.4.1":
   version: 0.4.27
   resolution: "@expo-google-fonts/material-symbols@npm:0.4.27"
@@ -6766,6 +6773,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fenrir@workspace:."
   dependencies:
+    "@expo-google-fonts/bebas-neue": ^0.4.1
     "@hookform/resolvers": ^5.2.2
     "@react-navigation/bottom-tabs": ^7.15.5
     "@react-navigation/elements": ^2.9.10

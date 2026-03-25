@@ -4,6 +4,31 @@
 
 @import 'nativewind/theme';
 
+@theme {
+  --color-primary: #208aef;
+  --color-primary-glow: rgba(32, 138, 239, 0.18);
+  --color-error: #ef4444;
+
+  --color-foreground: #000000;
+  --color-foreground-dark: #ffffff;
+  --color-foreground-secondary: #60646c;
+  --color-foreground-secondary-dark: #b0b4ba;
+
+  --color-background: #ffffff;
+  --color-background-dark: #000000;
+  --color-background-element: #f0f0f3;
+  --color-background-element-dark: #212225;
+  --color-background-surface: #f1f3f5;
+  --color-background-surface-alt: #f8f9fb;
+
+  --color-border: #e0e1e6;
+  --color-border-dark: #2e3135;
+
+  --color-button-secondary: #e4e6eb;
+  --color-button-secondary-dark: #2e3135;
+  --color-button-secondary-text: #1a1a2e;
+}
+
 :root {
   --font-display:
     Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,

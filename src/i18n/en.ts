@@ -51,9 +51,13 @@ const en = {
     tagline: 'Connect with what matters most',
     createAccount: 'Create account',
     backToLanding: 'Back',
+    backToLandingHint: 'Navigate back to the landing screen',
     continueWithEmail: 'Continue with email',
     forgotPassword: 'Forgot?',
     account: 'Account',
+    emailHint: 'Enter your email address to sign in',
+    passwordHint: 'Enter your password to sign in',
+    togglePasswordHint: 'Toggles password visibility',
   },
 } as const;
 

@@ -51,9 +51,13 @@ const pt = {
     tagline: 'Conecte-se com o que mais importa',
     createAccount: 'Criar conta',
     backToLanding: 'Voltar',
+    backToLandingHint: 'Voltar para a tela inicial',
     continueWithEmail: 'Continuar com e-mail',
     forgotPassword: 'Esqueceu?',
     account: 'Conta',
+    emailHint: 'Digite seu e-mail para entrar',
+    passwordHint: 'Digite sua senha para entrar',
+    togglePasswordHint: 'Alterna a visibilidade da senha',
   },
 } as const;
 
