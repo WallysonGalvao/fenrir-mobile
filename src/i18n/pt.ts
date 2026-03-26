@@ -45,7 +45,7 @@ const pt = {
     passwordPlaceholder: 'Senha',
     passwordRequired: 'Senha é obrigatória',
     passwordMinLength: 'A senha deve ter pelo menos 8 caracteres',
-    passwordUppercase: 'A senha deve conter pelo menos uma letra minúscula',
+    passwordUppercase: 'A senha deve conter pelo menos uma letra maiúscula',
     passwordLowercase: 'A senha deve conter pelo menos uma letra minúscula',
     passwordNumber: 'A senha deve conter pelo menos um número',
     passwordSpecial: 'A senha deve conter pelo menos um caractere especial',

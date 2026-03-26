@@ -72,16 +72,16 @@ describe('SignIn', () => {
     });
   });
 
-  it('shows validation error for weak password', async () => {
+  it('shows validation error for empty password', async () => {
     const { getByLabelText, findByText, getAllByText } = renderWithClient(<SignIn />);
 
     fireEvent.changeText(getByLabelText('auth.email'), 'user@example.com');
-    fireEvent.changeText(getByLabelText('auth.password'), 'abc');
+    fireEvent.changeText(getByLabelText('auth.password'), '');
 
     const buttons = getAllByText('auth.signIn');
     fireEvent.press(buttons[buttons.length - 1]);
 
-    expect(await findByText('Password must be at least 8 characters')).toBeTruthy();
+    expect(await findByText('Password is required')).toBeTruthy();
   });
 
   it('calls signIn on valid submit', async () => {

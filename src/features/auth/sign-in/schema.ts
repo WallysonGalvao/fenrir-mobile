@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
-import { getEmailSchema, getPasswordSchema } from '@/schemas/common';
+import i18n from '@/i18n';
+import { getEmailSchema } from '@/schemas/common';
 
 export const signInSchema = z.object({
   email: getEmailSchema(),
-  password: getPasswordSchema(),
+  password: z
+    .string({ error: i18n.t('auth.passwordRequired') })
+    .min(1, i18n.t('auth.passwordRequired')),
 });
 
 export type SignInSchemaType = z.infer<typeof signInSchema>;
