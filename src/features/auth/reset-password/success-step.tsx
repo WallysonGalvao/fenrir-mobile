@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
-import { SuccessLayout } from '../../shared/success-layout';
+import { SuccessLayout } from '../shared/success-layout';
 
 export function SuccessStep() {
   const { t } = useTranslation();
