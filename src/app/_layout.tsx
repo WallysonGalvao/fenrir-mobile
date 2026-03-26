@@ -1,4 +1,5 @@
 import '../config';
+import '../global.css';
 
 import { useEffect } from 'react';
 
@@ -7,7 +8,11 @@ import * as Sentry from '@sentry/react-native';
 import { Stack, useNavigationContainerRef } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { I18nextProvider } from 'react-i18next';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { StyleSheet } from 'react-native';
+
+import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
 import i18n from '@/i18n';
 import { initAuth } from '@/services/auth';
@@ -32,9 +37,13 @@ function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <RootNavigator />
-    </I18nextProvider>
+    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+      <GluestackUIProvider mode="system">
+        <I18nextProvider i18n={i18n}>
+          <RootNavigator />
+        </I18nextProvider>
+      </GluestackUIProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -48,16 +57,17 @@ function RootNavigator() {
       <Stack.Protected guard={!!session && !isPasswordRecovery}>
         <Stack.Screen name="(app)" />
       </Stack.Protected>
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="sign-in" />
-        <Stack.Screen name="sign-up" />
-        <Stack.Screen name="reset-password" />
-      </Stack.Protected>
-      <Stack.Protected guard={!!isPasswordRecovery}>
-        <Stack.Screen name="set-new-password" />
+      <Stack.Protected guard={!session || !!isPasswordRecovery}>
+        <Stack.Screen name="(public)" />
       </Stack.Protected>
     </Stack>
   );
 }
 
 export default Sentry.wrap(RootLayout);
+
+const styles = StyleSheet.create({
+  gestureHandlerRootView: {
+    flex: 1,
+  },
+});

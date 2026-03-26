@@ -1,6 +1,10 @@
 const en = {
   common: {
     learnMore: 'Learn more',
+    headerLeftAction: 'Left action',
+    headerRightAction: 'Right action',
+    headerTitleLabel: '{{title}}',
+    currentPageTitleHint: 'Current page title',
   },
   home: {
     title: 'Welcome to Expo',
@@ -36,8 +40,10 @@ const en = {
     email: 'Email',
     emailPlaceholder: 'Username or email address',
     emailInvalid: 'Please enter a valid email',
+    emailRequired: 'Email is required',
     password: 'Password',
     passwordPlaceholder: 'Password',
+    passwordRequired: 'Password is required',
     passwordMinLength: 'Password must be at least 8 characters',
     passwordUppercase: 'Password must contain at least one uppercase letter',
     passwordLowercase: 'Password must contain at least one lowercase letter',
@@ -47,7 +53,9 @@ const en = {
     hidePassword: 'Hide password',
     alreadyHaveAccount: 'Already have an account?',
     dontHaveAccount: "Don't have an account?",
-    checkEmail: 'Check your email to confirm your account, then sign in.',
+    checkEmail: 'Check your email',
+    checkEmailDescription:
+      'We sent a confirmation link to your email. Click the link to confirm your account, then sign in.',
     tagline: 'Connect with what matters most',
     createAccount: 'Create account',
     backToLanding: 'Back',
@@ -71,10 +79,13 @@ const en = {
     newPasswordPlaceholder: 'Enter new password',
     confirmPassword: 'Confirm password',
     confirmPasswordPlaceholder: 'Re-enter new password',
+    confirmPasswordRequired: 'Please confirm your password',
     passwordsDoNotMatch: 'Passwords do not match',
     passwordUpdated: 'Password updated',
     passwordUpdatedDescription:
       'Your password has been updated successfully. You can now sign in with your new password.',
+    agreeTerms:
+      'By clicking Sign in, you agree with our <1>Terms and Conditions</1> and <2>Privacy Policy</2>.',
   },
 } as const;
 

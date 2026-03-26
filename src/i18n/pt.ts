@@ -1,6 +1,10 @@
 const pt = {
   common: {
     learnMore: 'Saiba mais',
+    headerLeftAction: 'Ação esquerda',
+    headerRightAction: 'Ação direita',
+    headerTitleLabel: '{{title}}',
+    currentPageTitleHint: 'Título da página atual',
   },
   home: {
     title: 'Bem-vindo ao Expo',
@@ -36,10 +40,12 @@ const pt = {
     email: 'E-mail',
     emailPlaceholder: 'Nome de usuário ou e-mail',
     emailInvalid: 'Por favor, insira um e-mail válido',
+    emailRequired: 'E-mail é obrigatório',
     password: 'Senha',
     passwordPlaceholder: 'Senha',
+    passwordRequired: 'Senha é obrigatória',
     passwordMinLength: 'A senha deve ter pelo menos 8 caracteres',
-    passwordUppercase: 'A senha deve conter pelo menos uma letra maiúscula',
+    passwordUppercase: 'A senha deve conter pelo menos uma letra minúscula',
     passwordLowercase: 'A senha deve conter pelo menos uma letra minúscula',
     passwordNumber: 'A senha deve conter pelo menos um número',
     passwordSpecial: 'A senha deve conter pelo menos um caractere especial',
@@ -47,7 +53,9 @@ const pt = {
     hidePassword: 'Ocultar senha',
     alreadyHaveAccount: 'Já tem uma conta?',
     dontHaveAccount: 'Não tem uma conta?',
-    checkEmail: 'Verifique seu e-mail para confirmar sua conta e faça login.',
+    checkEmail: 'Verifique seu e-mail',
+    checkEmailDescription:
+      'Enviamos um link de confirmação para seu e-mail. Clique no link para confirmar sua conta e faça login.',
     tagline: 'Conecte-se com o que mais importa',
     createAccount: 'Criar conta',
     backToLanding: 'Voltar',
@@ -71,10 +79,13 @@ const pt = {
     newPasswordPlaceholder: 'Digite a nova senha',
     confirmPassword: 'Confirmar senha',
     confirmPasswordPlaceholder: 'Digite a nova senha novamente',
+    confirmPasswordRequired: 'Por favor, confirme sua senha',
     passwordsDoNotMatch: 'As senhas não coincidem',
     passwordUpdated: 'Senha atualizada',
     passwordUpdatedDescription:
       'Sua senha foi atualizada com sucesso. Agora você pode entrar com sua nova senha.',
+    agreeTerms:
+      'Ao clicar em Entrar, você concorda com nossos <1>Termos e Condições</1> e <2>Política de Privacidade</2>.',
   },
 } as const;
 
