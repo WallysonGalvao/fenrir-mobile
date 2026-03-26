@@ -55,7 +55,7 @@ function RootNavigator() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={!!session && !isPasswordRecovery}>
-        <Stack.Screen name="(app)" />
+        <Stack.Screen name="(protected)" />
       </Stack.Protected>
       <Stack.Protected guard={!session || !!isPasswordRecovery}>
         <Stack.Screen name="(public)" />

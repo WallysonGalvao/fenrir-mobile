@@ -4466,6 +4466,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-navigation/drawer@npm:^7.9.7":
+  version: 7.9.7
+  resolution: "@react-navigation/drawer@npm:7.9.7"
+  dependencies:
+    "@react-navigation/elements": ^2.9.13
+    color: ^4.2.3
+    react-native-drawer-layout: ^4.2.2
+    use-latest-callback: ^0.2.4
+  peerDependencies:
+    "@react-navigation/native": ^7.2.1
+    react: ">= 18.2.0"
+    react-native: "*"
+    react-native-gesture-handler: ">= 2.0.0"
+    react-native-reanimated: ">= 2.0.0"
+    react-native-safe-area-context: ">= 4.0.0"
+    react-native-screens: ">= 4.0.0"
+  checksum: e414a3dc516746fb883c3ba253c106731c549be6e548db5c14e4882394667e1f79e92c291dc09135c236c0aa77279b64fd02544f15e64d9596110a3d0f32384c
+  languageName: node
+  linkType: hard
+
 "@react-navigation/elements@npm:^2.9.10, @react-navigation/elements@npm:^2.9.13":
   version: 2.9.13
   resolution: "@react-navigation/elements@npm:2.9.13"
@@ -6051,15 +6071,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/debug@npm:^4.1.12":
-  version: 4.1.13
-  resolution: "@types/debug@npm:4.1.13"
-  dependencies:
-    "@types/ms": "*"
-  checksum: 5091d4ebda85236e6f4a6ecea552860e521e11d1d388d3f6255b40726f5a4a7cf1baa0d09f60853838e4cac6c12a13b14114d5f422ccecaee4d1d07dab349900
-  languageName: node
-  linkType: hard
-
 "@types/eslint@npm:^9.6.1":
   version: 9.6.1
   resolution: "@types/eslint@npm:9.6.1"
@@ -6150,13 +6161,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
-  languageName: node
-  linkType: hard
-
-"@types/ms@npm:*":
-  version: 2.1.0
-  resolution: "@types/ms@npm:2.1.0"
-  checksum: 532d2ebb91937ccc4a89389715e5b47d4c66e708d15942fe6cc25add6dc37b2be058230a327dd50f43f89b8b6d5d52b74685a9e8f70516edfc9bdd6be910eff4
   languageName: node
   linkType: hard
 
@@ -9675,6 +9679,7 @@ __metadata:
     "@hookform/resolvers": ^5.2.2
     "@legendapp/motion": ^2.4.0
     "@react-navigation/bottom-tabs": ^7.15.5
+    "@react-navigation/drawer": ^7.9.7
     "@react-navigation/elements": ^2.9.10
     "@react-navigation/native": ^7.1.33
     "@rozenite/expo-atlas-plugin": ^1.6.0
@@ -9740,7 +9745,7 @@ __metadata:
     react-hook-form: ^7.72.0
     react-i18next: ^16.6.2
     react-native: 0.83.2
-    react-native-css: ^3.0.4
+    react-native-css: 3.0.4
     react-native-gesture-handler: ~2.30.0
     react-native-mmkv: ^4.3.0
     react-native-nitro-modules: ^0.35.2
@@ -14361,11 +14366,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-css@npm:^3.0.4":
-  version: 3.0.6
-  resolution: "react-native-css@npm:3.0.6"
+"react-native-css@npm:3.0.4":
+  version: 3.0.4
+  resolution: "react-native-css@npm:3.0.4"
   dependencies:
-    "@types/debug": ^4.1.12
     babel-plugin-react-compiler: ^19.1.0-rc.2
     colorjs.io: 0.6.0-alpha.1
     comment-json: ^4.2.5
@@ -14375,7 +14379,22 @@ __metadata:
     lightningcss: ">=1.27.0"
     react: ">=19"
     react-native: ">=0.81"
-  checksum: f68b1baec0c80935277c0a05f71e71aebc225962064f847b446a3ad361f9bf0d6cd2672e94fe56f4abdfb0f69d6ddc8c300d86b76201612f9ee6d5eadca6b66b
+  checksum: 3fe55ddd9661aa7aa410114de57ba8b40a8628a8cf5c455c2b03edfdb5d89c569c6dd6a94124fe3dd7401c794dfce4dfe6d473a4e22e8341349ada2b80345e94
+  languageName: node
+  linkType: hard
+
+"react-native-drawer-layout@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "react-native-drawer-layout@npm:4.2.2"
+  dependencies:
+    color: ^4.2.3
+    use-latest-callback: ^0.2.4
+  peerDependencies:
+    react: ">= 18.2.0"
+    react-native: "*"
+    react-native-gesture-handler: ">= 2.0.0"
+    react-native-reanimated: ">= 2.0.0"
+  checksum: aa15d18270ecaf88dcffdc6c144bc703b4dff26b79f28fbe3d770480ff237ff89e6d58b15daaa72f2db667d8c27ec5e6cb69228fd4c18156d97b2f2d6d140a89
   languageName: node
   linkType: hard
 
