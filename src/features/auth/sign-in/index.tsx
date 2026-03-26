@@ -45,7 +45,7 @@ export default function SignIn() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+    <SafeAreaView className="flex-1 bg-background">
       <Header
         leftIcons={[
           {
@@ -70,10 +70,10 @@ export default function SignIn() {
             className="flex-1 gap-6"
           >
             <View className="gap-2">
-              <Text className="text-[28px] font-extrabold tracking-tight text-foreground md:text-[42px] md:tracking-tighter md:text-primary dark:text-foreground-dark md:dark:text-primary-dark">
+              <Text className="text-[28px] font-extrabold tracking-tight text-foreground md:text-[42px] md:tracking-tighter md:text-primary">
                 {t('auth.signIn')}
               </Text>
-              <Text className="hidden text-[17px] leading-6 text-foreground-secondary md:flex dark:text-foreground-secondary-dark">
+              <Text className="hidden text-[17px] leading-6 text-foreground-secondary md:flex">
                 {t('auth.signInSubtitle')}
               </Text>
             </View>
@@ -81,7 +81,7 @@ export default function SignIn() {
             <ServerError message={serverError} />
 
             <View className="gap-2">
-              <Text className="mb-0.5 text-[13px] font-medium text-foreground-secondary dark:text-foreground-secondary-dark">
+              <Text className="mb-0.5 text-[13px] font-medium text-foreground-secondary">
                 {t('auth.account')}
               </Text>
 
@@ -157,7 +157,7 @@ export default function SignIn() {
 
               <View className="flex-row justify-end">
                 <Pressable onPress={() => router.push('/reset-password')} accessibilityRole="link">
-                  <Text className="text-[13px] font-medium text-primary dark:text-primary-dark">
+                  <Text className="text-[13px] font-medium text-primary">
                     {t('auth.forgotPassword')}
                   </Text>
                 </Pressable>

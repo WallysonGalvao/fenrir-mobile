@@ -22,11 +22,11 @@ export function SubmitButton({
       <View className="flex-row justify-between items-center mt-2">
         {secondaryLabel && onSecondaryPress ? (
           <Pressable
-            className="h-10.5 px-6 rounded-[21px] bg-button-secondary dark:bg-button-secondary-dark justify-center items-center active:opacity-60"
+            className="h-10.5 px-6 rounded-[21px] bg-button-secondary justify-center items-center active:opacity-60"
             onPress={onSecondaryPress}
             accessibilityRole="button"
           >
-            <Text className="text-[15px] font-semibold text-foreground-secondary dark:text-foreground-secondary-dark">
+            <Text className="text-[15px] font-semibold text-foreground-secondary">
               {secondaryLabel}
             </Text>
           </Pressable>
@@ -35,7 +35,7 @@ export function SubmitButton({
         )}
 
         <Pressable
-          className="h-10.5 px-8 bg-primary dark:bg-primary-dark rounded-[21px] justify-center items-center active:opacity-75 disabled:opacity-75"
+          className="h-10.5 px-8 bg-primary rounded-[21px] justify-center items-center active:opacity-75 disabled:opacity-75"
           onPress={onPress}
           disabled={isSubmitting}
           accessibilityRole="button"
@@ -52,7 +52,7 @@ export function SubmitButton({
 
   return (
     <Pressable
-      className="h-12 bg-primary dark:bg-primary-dark rounded-3xl justify-center items-center mt-2 active:opacity-75 disabled:opacity-75"
+      className="h-12 bg-primary rounded-3xl justify-center items-center mt-2 active:opacity-75 disabled:opacity-75"
       onPress={onPress}
       disabled={isSubmitting}
       accessibilityRole="button"

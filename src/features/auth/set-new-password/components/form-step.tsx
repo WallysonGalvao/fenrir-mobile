@@ -21,11 +21,11 @@ export function FormStep({ onSuccess }: FormStepProps) {
     >
       <FormHeader />
 
-      <Text className="text-[28px] font-extrabold tracking-tight text-foreground dark:text-foreground-dark">
+      <Text className="text-[28px] font-extrabold tracking-tight text-foreground">
         {t('auth.setNewPassword')}
       </Text>
 
-      <Text className="text-[15px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark -mt-2">
+      <Text className="text-[15px] leading-6 text-foreground-secondary -mt-2">
         {t('auth.setNewPasswordSubtitle')}
       </Text>
 

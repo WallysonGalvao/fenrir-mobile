@@ -10,8 +10,8 @@ export const buttonStyle = tv({
   base: 'group/button h-12 rounded-3xl flex-row items-center justify-center gap-2 active:opacity-75 disabled:opacity-75 data-[focus-visible=true]:web:outline-none data-[focus-visible=true]:web:ring-2',
   variants: {
     action: {
-      primary: 'bg-primary dark:bg-primary-dark',
-      secondary: 'bg-button-secondary dark:bg-button-secondary-dark active:opacity-60',
+      primary: 'bg-primary',
+      secondary: 'bg-button-secondary active:opacity-60',
       disabled: 'bg-gray-200 dark:bg-gray-700',
     },
     variant: {
@@ -31,7 +31,7 @@ export const buttonTextStyle = tv({
   variants: {
     action: {
       primary: 'text-white',
-      secondary: 'text-foreground-secondary dark:text-foreground-secondary-dark',
+      secondary: 'text-foreground-secondary',
       disabled: 'text-gray-500 dark:text-gray-400',
     },
     variant: {

@@ -19,10 +19,10 @@ export function FormStep({ onSuccess }: FormStepProps) {
       className="w-full max-w-md gap-6 self-center px-8"
     >
       <View className="gap-2">
-        <Text className="text-[42px] font-extrabold tracking-tighter text-primary dark:text-primary-dark">
+        <Text className="text-[42px] font-extrabold tracking-tighter text-primary">
           {t('auth.setNewPassword')}
         </Text>
-        <Text className="text-[17px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark">
+        <Text className="text-[17px] leading-6 text-foreground-secondary">
           {t('auth.setNewPasswordSubtitle')}
         </Text>
       </View>

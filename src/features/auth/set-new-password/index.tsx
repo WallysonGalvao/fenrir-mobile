@@ -54,12 +54,12 @@ export default function SetNewPassword() {
     );
 
   if (isWeb) {
-    return <View className="flex-1 bg-background dark:bg-background-dark">{content}</View>;
+    return <View className="flex-1 bg-background">{content}</View>;
   }
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-background dark:bg-background-dark"
+      className="flex-1 bg-background"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       {content}

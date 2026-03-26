@@ -39,10 +39,10 @@ export function SuccessLayout({
 
       <View className="items-center gap-3">
         <SymbolView name={icon} size={48} tintColor={scheme === 'dark' ? '#3ed6a1' : '#6ccfd1'} />
-        <Text className="text-[28px] font-extrabold tracking-tight text-foreground dark:text-foreground-dark text-center">
+        <Text className="text-[28px] font-extrabold tracking-tight text-foreground text-center">
           {title}
         </Text>
-        <Text className="text-[15px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark text-center px-4">
+        <Text className="text-[15px] leading-6 text-foreground-secondary text-center px-4">
           {description}
         </Text>
       </View>
@@ -50,7 +50,7 @@ export function SuccessLayout({
       <View className="flex-1" />
 
       <Pressable
-        className="h-12 bg-primary dark:bg-primary-dark rounded-3xl justify-center items-center active:opacity-75"
+        className="h-12 bg-primary rounded-3xl justify-center items-center active:opacity-75"
         onPress={onPress}
         accessibilityRole="button"
       >

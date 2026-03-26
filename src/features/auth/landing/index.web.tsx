@@ -10,9 +10,9 @@ export function Landing() {
   const router = useRouter();
 
   return (
-    <View className="flex-1 bg-background-surface dark:bg-background-surface-dark justify-center items-center">
+    <View className="flex-1 bg-background-surface justify-center items-center">
       {/* Subtle blue glow edges */}
-      <View className="absolute inset-0 border-8 border-primary-glow dark:border-primary-glow-dark" />
+      <View className="absolute inset-0 border-8 border-primary-glow" />
 
       <View className="items-center gap-6 z-1 max-w-100 w-full px-6">
         <Animated.View entering={FadeInDown.duration(400).delay(0)}>
@@ -25,17 +25,17 @@ export function Landing() {
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(400).delay(60)} className="items-center gap-1">
-          <Text className="text-[40px] font-extrabold tracking-tighter text-foreground dark:text-foreground-dark">
+          <Text className="text-[40px] font-extrabold tracking-tighter text-foreground">
             {t('auth.appName')}
           </Text>
-          <Text className="text-lg leading-6 text-foreground-secondary dark:text-foreground-secondary-dark">
+          <Text className="text-lg leading-6 text-foreground-secondary">
             {t('auth.tagline')}
           </Text>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(400).delay(120)} className="w-full gap-2 mt-4">
           <Pressable
-            className="w-full h-12 rounded-3xl bg-primary dark:bg-primary-dark justify-center items-center active:opacity-85"
+            className="w-full h-12 rounded-3xl bg-primary justify-center items-center active:opacity-85"
             onPress={() => router.push('/sign-up' as Href)}
             accessibilityRole="button"
           >
@@ -43,11 +43,11 @@ export function Landing() {
           </Pressable>
 
           <Pressable
-            className="w-full h-12 rounded-3xl bg-button-secondary dark:bg-button-secondary-dark justify-center items-center active:opacity-75"
+            className="w-full h-12 rounded-3xl bg-button-secondary justify-center items-center active:opacity-75"
             onPress={() => router.push('/sign-in')}
             accessibilityRole="button"
           >
-            <Text className="text-base font-semibold text-foreground dark:text-foreground-dark">
+            <Text className="text-base font-semibold text-foreground">
               {t('auth.signIn')}
             </Text>
           </Pressable>

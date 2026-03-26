@@ -6,10 +6,10 @@ import { tv } from 'tailwind-variants';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 export const inputStyle = tv({
-  base: 'h-11 px-4 bg-background-element dark:bg-background-element-dark',
+  base: 'h-11 px-4 bg-background-element',
   variants: {
     variant: {
-      outline: 'justify-center rounded-[10px] border border-border dark:border-border-dark',
+      outline: 'justify-center rounded-[10px] border border-border',
     },
     isInvalid: {
       true: 'border-error',
@@ -18,7 +18,7 @@ export const inputStyle = tv({
 });
 
 export const inputFieldStyle = tv({
-  base: 'flex-1 text-foreground dark:text-foreground-dark text-[15px] font-normal py-0 placeholder:text-foreground-secondary dark:placeholder:text-foreground-secondary-dark h-full ios:leading-0 web:cursor-text web:data-[disabled=true]:cursor-not-allowed web:focus:outline-none web:focus-visible:outline-2 web:focus-visible:outline-primary',
+  base: 'flex-1 text-foreground text-[15px] font-normal py-0 placeholder:text-foreground-secondary h-full ios:leading-0 web:cursor-text web:data-[disabled=true]:cursor-not-allowed web:focus:outline-none web:focus-visible:outline-2 web:focus-visible:outline-primary',
   variants: {
     variant: {
       outline: 'web:outline-0 web:outline-none',
@@ -31,7 +31,7 @@ export const inputLabelStyle = tv({
 });
 
 export const inputLabelTextStyle = tv({
-  base: 'text-xs font-normal text-foreground-secondary dark:text-foreground-secondary-dark',
+  base: 'text-xs font-normal text-foreground-secondary',
 });
 
 export const inputSlotStyle = tv({

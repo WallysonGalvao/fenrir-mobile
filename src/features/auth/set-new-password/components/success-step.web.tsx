@@ -27,14 +27,14 @@ export function SuccessStep() {
         size={56}
         tintColor="#6ccfd1"
       />
-      <Text className="text-center text-[42px] font-extrabold tracking-tighter text-primary dark:text-primary-dark">
+      <Text className="text-center text-[42px] font-extrabold tracking-tighter text-primary">
         {t('auth.passwordUpdated')}
       </Text>
-      <Text className="text-center text-[17px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark">
+      <Text className="text-center text-[17px] leading-6 text-foreground-secondary">
         {t('auth.passwordUpdatedDescription')}
       </Text>
       <Pressable
-        className="mt-4 h-10.5 items-center justify-center rounded-[21px] bg-primary px-8 active:opacity-75 dark:bg-primary-dark"
+        className="mt-4 h-10.5 items-center justify-center rounded-[21px] bg-primary px-8 active:opacity-75"
         onPress={handleGoToSignIn}
         accessibilityRole="button"
       >

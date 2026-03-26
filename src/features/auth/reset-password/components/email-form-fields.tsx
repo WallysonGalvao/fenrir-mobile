@@ -59,7 +59,7 @@ export function EmailFormFields({ onBack, onSuccess }: EmailFormFieldsProps) {
       <ServerError message={serverError} />
 
       <View className="gap-2">
-        <Text className="text-[13px] font-medium mb-0.5 text-foreground-secondary dark:text-foreground-secondary-dark">
+        <Text className="text-[13px] font-medium mb-0.5 text-foreground-secondary">
           {t('auth.email')}
         </Text>
 

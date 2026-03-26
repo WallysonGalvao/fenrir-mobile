@@ -42,8 +42,8 @@ export function FormInput<T extends FieldValues>({
   return (
     <View className="gap-1">
       <View
-        className={`flex-row items-center h-11 border rounded-[10px] px-4 gap-2 bg-background-element dark:bg-background-element-dark ${
-          error ? 'border-error' : 'border-border dark:border-border-dark'
+        className={`flex-row items-center h-11 border rounded-[10px] px-4 gap-2 bg-background-element ${
+          error ? 'border-error' : 'border-border'
         }`}
       >
         <SymbolView name={icon} size={18} tintColor={theme.textSecondary} />
@@ -52,7 +52,7 @@ export function FormInput<T extends FieldValues>({
           name={name}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              className="flex-1 h-full text-[15px] text-foreground dark:text-foreground-dark"
+              className="flex-1 h-full text-[15px] text-foreground"
               placeholder={placeholder}
               placeholderTextColor={theme.textSecondary}
               autoCapitalize="none"

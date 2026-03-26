@@ -20,14 +20,14 @@ export function SuccessStep() {
         size={56}
         tintColor="#6ccfd1"
       />
-      <Text className="text-center text-[42px] font-extrabold tracking-tighter text-primary dark:text-primary-dark">
+      <Text className="text-center text-[42px] font-extrabold tracking-tighter text-primary">
         {t('auth.resetEmailSent')}
       </Text>
-      <Text className="text-center text-[17px] leading-6 text-foreground-secondary dark:text-foreground-secondary-dark">
+      <Text className="text-center text-[17px] leading-6 text-foreground-secondary">
         {t('auth.resetEmailSentDescription')}
       </Text>
       <Pressable
-        className="mt-4 h-10.5 items-center justify-center rounded-[21px] bg-primary px-8 active:opacity-75 dark:bg-primary-dark"
+        className="mt-4 h-10.5 items-center justify-center rounded-[21px] bg-primary px-8 active:opacity-75"
         onPress={() => router.replace('/sign-in')}
         accessibilityRole="button"
       >
