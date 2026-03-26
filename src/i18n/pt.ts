@@ -78,6 +78,8 @@ const pt = {
     passwordUpdated: 'Senha atualizada',
     passwordUpdatedDescription:
       'Sua senha foi atualizada com sucesso. Agora você pode entrar com sua nova senha.',
+    agreeTerms:
+      'Ao clicar em Entrar, você concorda com nossos <1>Termos e Condições</1> e <2>Política de Privacidade</2>.',
   },
 } as const;
 

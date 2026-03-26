@@ -78,6 +78,8 @@ const en = {
     passwordUpdated: 'Password updated',
     passwordUpdatedDescription:
       'Your password has been updated successfully. You can now sign in with your new password.',
+    agreeTerms:
+      'By clicking Sign in, you agree with our <1>Terms and Conditions</1> and <2>Privacy Policy</2>.',
   },
 } as const;
 

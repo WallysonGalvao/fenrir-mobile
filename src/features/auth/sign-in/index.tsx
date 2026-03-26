@@ -4,21 +4,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { Controller, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
-import { Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 
+import { Button, ButtonText } from '@/components/button';
+import { Header } from '@/components/header';
 import { Input, InputErrorText, InputField, InputSlot } from '@/components/input';
 import { KeyboardDismissWrapper } from '@/components/keyboard-dismiss-wrapper';
 import { SafeAreaView } from '@/components/safe-area-view';
 import { useTheme } from '@/hooks/use-theme';
 import { supabase } from '@/lib/supabase';
 
-import { FormHeader } from '../shared/form-header';
+import { PrivacyLink, TermsLink } from '../components/links';
 import { PasswordToggle } from '../shared/password-toggle';
 import { ServerError } from '../shared/server-error';
-import { SubmitButton } from '../shared/submit-button';
 import type { SignInSchemaType } from './schema';
 import { signInSchema } from './schema';
 
@@ -26,7 +27,7 @@ export default function SignIn() {
   const router = useRouter();
   const { t } = useTranslation();
   const theme = useTheme();
-  const [serverError, setServerError] = React.useState('');
+  const [serverError, setServerError] = React.useState('Deu erro aqui grande');
   const [showPassword, setShowPassword] = React.useState(false);
 
   const onBack = () => router.back();
@@ -45,6 +46,22 @@ export default function SignIn() {
 
   return (
     <SafeAreaView className="flex-1 bg-background dark:bg-background-dark">
+      <Header
+        leftIcons={[
+          {
+            icon: (
+              <SymbolView
+                name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
+                size={22}
+                tintColor={theme.text}
+              />
+            ),
+            onPress: onBack,
+            accessibilityLabel: t('auth.backToLanding'),
+            accessibilityHint: t('auth.backToLanding'),
+          },
+        ]}
+      />
       <KeyboardDismissWrapper>
         <View className="w-full flex-1 self-center px-6 py-4 md:mt-20 md:max-w-110">
           <Animated.View
@@ -52,8 +69,6 @@ export default function SignIn() {
             exiting={FadeOutLeft.duration(220)}
             className="flex-1 gap-6"
           >
-            <FormHeader onBack={onBack} backLabel={t('auth.backToLanding')} />
-
             <View className="gap-2">
               <Text className="text-[28px] font-extrabold tracking-tight text-foreground md:text-[42px] md:tracking-tighter md:text-primary dark:text-foreground-dark md:dark:text-primary-dark">
                 {t('auth.signIn')}
@@ -149,13 +164,29 @@ export default function SignIn() {
               </View>
             </View>
 
-            <SubmitButton
-              label={t('auth.signIn')}
-              isSubmitting={isSubmitting}
-              onPress={handleSubmit(onSubmit)}
-              secondaryLabel={t('auth.backToLanding')}
-              onSecondaryPress={onBack}
-            />
+            <View className="gap-3">
+              <Button onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <ActivityIndicator color="#EAF2FF" />
+                ) : (
+                  <ButtonText>{t('auth.signIn')}</ButtonText>
+                )}
+              </Button>
+            </View>
+
+            <Text
+              className="font-base mt-2 text-left text-sm text-gray-600 web:text-center dark:text-gray-400"
+              accessible
+              accessibilityRole="text"
+            >
+              <Trans
+                i18nKey="auth.agreeTerms"
+                components={{
+                  1: <TermsLink />,
+                  2: <PrivacyLink />,
+                }}
+              />
+            </Text>
           </Animated.View>
         </View>
       </KeyboardDismissWrapper>
