@@ -1,6 +1,6 @@
 import { renderHookWithClient } from '@/utils/test/helper';
 
-import { useSignIn } from '../hooks/use-sign-in';
+import { useSignIn } from './use-sign-in';
 
 const mockShow = jest.fn();
 

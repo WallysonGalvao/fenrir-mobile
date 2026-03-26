@@ -1,64 +1,22 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+import 'react-native-gesture-handler/jestSetup';
 
-jest.mock('react-native-gesture-handler', () => {
-  const { View } = require('react-native');
-  return {
-    GestureHandlerRootView: ({ children }) => <View>{children}</View>,
-    Swipeable: View,
-    DrawerLayout: View,
-    State: {},
-    PanGestureHandler: View,
-    TapGestureHandler: View,
-    FlingGestureHandler: View,
-    ForceTouchGestureHandler: View,
-    LongPressGestureHandler: View,
-    NativeViewGestureHandler: View,
-    PinchGestureHandler: View,
-    RotationGestureHandler: View,
-    ScrollView: View,
-    Slider: View,
-    Switch: View,
-    TextInput: View,
-    ToolbarAndroid: View,
-    ViewPagerAndroid: View,
-    DrawerLayoutAndroid: View,
-    WebView: View,
-    TouchableHighlight: View,
-    TouchableNativeFeedback: View,
-    TouchableOpacity: View,
-    TouchableWithoutFeedback: View,
-    Directions: {},
-    gestureHandlerRootHOC: (Component) => Component,
-  };
-});
+jest.mock('@/utils/storage-key', () => ({
+  getMMKVEncryptionKey: () => 'test-mmkv-key',
+  initMMKVEncryptionKey: jest.fn().mockResolvedValue(undefined),
+}));
+
+jest.mock('react-native-worklets', () => require('react-native-worklets/src/mock'));
 
 jest.mock('react-native-reanimated', () => {
-  const { View, Text, ScrollView } = require('react-native');
+  const Reanimated = require('react-native-reanimated/mock');
 
-  const Animated = {
-    View,
-    Text,
-    ScrollView,
-    createAnimatedComponent: (Component) => Component,
-  };
+  Reanimated.useReducedMotion = () => false;
 
-  return {
-    __esModule: true,
-    default: Animated,
-    createAnimatedComponent: (Component) => Component,
-    useAnimatedStyle: () => ({}),
-    useSharedValue: (val) => ({ value: val }),
-    withTiming: (val) => val,
-    withSpring: (val) => val,
-    withDelay: (_, val) => val,
-    FadeIn: { duration: () => ({ duration: () => ({}) }) },
-    FadeOut: { duration: () => ({ duration: () => ({}) }) },
-    FadeInRight: { duration: () => ({ duration: () => ({}) }) },
-    FadeOutLeft: { duration: () => ({ duration: () => ({}) }) },
-    SlideInUp: { duration: () => ({ duration: () => ({}) }) },
-    Animated,
-    View,
-  };
+  if (typeof Reanimated.createAnimatedComponent !== 'function') {
+    Reanimated.createAnimatedComponent = (Component) => Component;
+  }
+
+  return Reanimated;
 });
 
 jest.mock('nativewind', () => ({
@@ -75,6 +33,32 @@ jest.mock('expo-router', () => ({
   useLocalSearchParams: jest.fn(() => ({})),
   useSegments: jest.fn(() => []),
   Link: 'Link',
+}));
+
+jest.mock('@sentry/react-native', () => ({
+  init: jest.fn(),
+  ReactNavigationInstrumentation: jest.fn(),
+  ReactNativeTracing: jest.fn(),
+  captureException: jest.fn(),
+  captureMessage: jest.fn(),
+}));
+
+jest.mock('expo-font', () => ({
+  loadAsync: jest.fn(() => Promise.resolve()),
+  isLoaded: jest.fn(() => true),
+  isLoading: jest.fn(() => false),
+  unloadAsync: jest.fn(() => Promise.resolve()),
+  useFonts: jest.fn(() => [true, null]),
+}));
+
+jest.mock('@expo/vector-icons', () => ({
+  MaterialIcons: 'MaterialIcons',
+  Ionicons: 'Ionicons',
+}));
+
+jest.mock('expo-crypto', () => ({
+  getRandomBytesAsync: jest.fn(async (n) => new Uint8Array(n)),
+  randomUUID: jest.fn(() => 'mocked-uuid'),
 }));
 
 jest.mock('react-i18next', () => ({

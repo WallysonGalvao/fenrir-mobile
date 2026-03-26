@@ -2,13 +2,13 @@ import { fireEvent, waitFor } from '@testing-library/react-native';
 
 import { renderWithClient } from '@/utils/test/helper';
 
-import SignIn from '../index';
+import SignIn from '.';
 
 const mockSignIn = jest.fn();
 const mockBack = jest.fn();
 const mockPush = jest.fn();
 
-jest.mock('../hooks/use-sign-in', () => ({
+jest.mock('./hooks/use-sign-in', () => ({
   useSignIn: () => ({ signIn: mockSignIn }),
 }));
 
