@@ -17,7 +17,9 @@ export function GluestackUIProvider({
   style?: ViewProps['style'];
 }) {
   useEffect(() => {
-    Appearance.setColorScheme(mode as ColorSchemeName);
+    if (mode !== 'system') {
+      Appearance.setColorScheme(mode as ColorSchemeName);
+    }
   }, [mode]);
 
   return (

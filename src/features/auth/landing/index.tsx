@@ -55,7 +55,7 @@ export function Landing() {
           onPress={() => router.push('/sign-up' as Href)}
           accessibilityRole="button"
         >
-          <Text className="text-[17px] font-semibold text-button-secondary-text">
+          <Text className="text-[17px] font-semibold text-[#1a1a2e]">
             {t('auth.createAccount')}
           </Text>
         </Pressable>

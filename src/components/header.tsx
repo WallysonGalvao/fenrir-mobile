@@ -1,25 +1,25 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 
-import { Platform, Pressable, Text, View } from 'react-native'
+import { Platform, Pressable, Text, View } from 'react-native';
 
-import { test_id } from '@/constants/test-id'
+import { test_id } from '@/constants/test-id';
 
 export type IconButton = {
-  icon?: React.ReactNode
-  label?: React.ReactNode
-  menu?: React.ReactNode
-  onPress?: () => void
-  accessibilityLabel?: string
-  accessibilityHint?: string
-}
+  icon?: React.ReactNode;
+  label?: React.ReactNode;
+  menu?: React.ReactNode;
+  onPress?: () => void;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+};
 
 type HeaderProps = {
-  title?: string
-  customTitle?: React.ReactNode
-  leftIcons?: IconButton[]
-  rightIcons?: IconButton[]
-  showOnWeb?: boolean
-}
+  title?: string;
+  customTitle?: React.ReactNode;
+  leftIcons?: IconButton[];
+  rightIcons?: IconButton[];
+  showOnWeb?: boolean;
+};
 
 export const Header = ({
   title,
@@ -28,26 +28,21 @@ export const Header = ({
   rightIcons = [],
   showOnWeb = false,
 }: HeaderProps) => {
-  const { t } = useTranslation()
-  const limitedLeftIcons = leftIcons.slice(0, 3)
-  const limitedRightIcons = rightIcons.slice(0, 3)
+  const { t } = useTranslation();
+  const limitedLeftIcons = leftIcons.slice(0, 3);
+  const limitedRightIcons = rightIcons.slice(0, 3);
 
-  if (Platform.OS === 'web' && !showOnWeb) return null
+  if (Platform.OS === 'web' && !showOnWeb) return null;
 
   return (
-    <View
-      className="h-14 flex-row items-center justify-between px-4"
-      accessibilityRole="header"
-    >
+    <View className="h-14 flex-row items-center justify-between px-4" accessibilityRole="header">
       {/* Left icons/labels */}
       <View className="flex-row gap-4">
         {limitedLeftIcons.map((item, index) => (
           <Pressable
             testID={`left-icon-${index}`}
             accessibilityRole="button"
-            accessibilityLabel={
-              item.accessibilityLabel || t('HEADER_LEFT_ACTION')
-            }
+            accessibilityLabel={item.accessibilityLabel || t('HEADER_LEFT_ACTION')}
             accessibilityHint={item.accessibilityHint}
             accessibilityState={{ disabled: !item.onPress }}
             key={`left-icon-${index}`}
@@ -66,17 +61,13 @@ export const Header = ({
         testID={test_id['header-title']}
         className="pointer-events-none absolute right-0 left-0 items-center"
         accessibilityRole="text"
-        accessibilityLabel={
-          title ? t('HEADER_TITLE_LABEL', { title }) : undefined
-        }
+        accessibilityLabel={title ? t('HEADER_TITLE_LABEL', { title }) : undefined}
         accessibilityHint={t('CURRENT_PAGE_TITLE_HINT')}
       >
         {customTitle ? (
           customTitle
         ) : (
-          <Text className="text-primary dark:text-lighter text-base font-bold">
-            {title}
-          </Text>
+          <Text className="text-primary text-base font-bold">{title}</Text>
         )}
       </View>
 
@@ -86,9 +77,7 @@ export const Header = ({
           <Pressable
             testID={`right-icon-${index}`}
             accessibilityRole="button"
-            accessibilityLabel={
-              item.accessibilityLabel || t('HEADER_RIGHT_ACTION')
-            }
+            accessibilityLabel={item.accessibilityLabel || t('HEADER_RIGHT_ACTION')}
             accessibilityHint={item.accessibilityHint}
             accessibilityState={{ disabled: !item.onPress }}
             key={`right-icon-${index}`}
@@ -102,5 +91,5 @@ export const Header = ({
         ))}
       </View>
     </View>
-  )
-}
+  );
+};
