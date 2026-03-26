@@ -1,8 +1,121 @@
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css';
-
 @import 'nativewind/theme';
+
+/* ─── Theme: design tokens (light / dark) ─────────────────────────
+   1. :root              — light defaults (all platforms)
+   2. @media dark :root  — dark defaults; nativewind maps this to
+                           Appearance.getColorScheme() on native.
+   3. :root.dark / :root.light — higher specificity for web class toggle. */
+@layer theme {
+  :root {
+    --primary: 108 207 209;
+    --primary-foreground: 255 255 255;
+    --primary-glow: 108 207 209;
+    --primary-hover: 126 227 197;
+    --accent: 184 164 255;
+    --accent-foreground: 255 255 255;
+    --warm: 255 216 168;
+    --error: 239 68 68;
+    --foreground: 0 0 0;
+    --foreground-secondary: 96 100 108;
+    --background: 255 255 255;
+    --background-element: 240 240 243;
+    --background-surface: 255 255 255;
+    --background-surface-alt: 229 234 240;
+    --border: 229 234 240;
+    --button-secondary: 168 208 230;
+    --button-secondary-text: 26 26 46;
+    --indicator-primary: 108 207 209;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary: 62 214 161;
+      --primary-foreground: 255 255 255;
+      --primary-glow: 62 214 161;
+      --primary-hover: 47 183 200;
+      --accent: 138 108 255;
+      --accent-foreground: 255 255 255;
+      --warm: 242 166 90;
+      --error: 239 68 68;
+      --foreground: 234 242 255;
+      --foreground-secondary: 176 180 186;
+      --background: 11 31 58;
+      --background-element: 30 58 95;
+      --background-surface: 18 26 38;
+      --background-surface-alt: 22 45 74;
+      --border: 42 79 122;
+      --button-secondary: 91 63 140;
+      --button-secondary-text: 234 242 255;
+      --indicator-primary: 62 214 161;
+    }
+  }
+
+  :root.dark {
+    --primary: 62 214 161;
+    --primary-foreground: 255 255 255;
+    --primary-glow: 62 214 161;
+    --primary-hover: 47 183 200;
+    --accent: 138 108 255;
+    --accent-foreground: 255 255 255;
+    --warm: 242 166 90;
+    --error: 239 68 68;
+    --foreground: 234 242 255;
+    --foreground-secondary: 176 180 186;
+    --background: 11 31 58;
+    --background-element: 30 58 95;
+    --background-surface: 18 26 38;
+    --background-surface-alt: 22 45 74;
+    --border: 42 79 122;
+    --button-secondary: 91 63 140;
+    --button-secondary-text: 234 242 255;
+    --indicator-primary: 62 214 161;
+  }
+
+  :root.light {
+    --primary: 108 207 209;
+    --primary-foreground: 255 255 255;
+    --primary-glow: 108 207 209;
+    --primary-hover: 126 227 197;
+    --accent: 184 164 255;
+    --accent-foreground: 255 255 255;
+    --warm: 255 216 168;
+    --error: 239 68 68;
+    --foreground: 0 0 0;
+    --foreground-secondary: 96 100 108;
+    --background: 255 255 255;
+    --background-element: 240 240 243;
+    --background-surface: 255 255 255;
+    --background-surface-alt: 229 234 240;
+    --border: 229 234 240;
+    --button-secondary: 168 208 230;
+    --button-secondary-text: 26 26 46;
+    --indicator-primary: 108 207 209;
+  }
+}
+
+@theme inline {
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-primary-glow: rgb(var(--primary-glow) / 0.18);
+  --color-primary-hover: rgb(var(--primary-hover));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-warm: rgb(var(--warm));
+  --color-error: rgb(var(--error));
+  --color-foreground: rgb(var(--foreground));
+  --color-foreground-secondary: rgb(var(--foreground-secondary));
+  --color-background: rgb(var(--background));
+  --color-background-element: rgb(var(--background-element));
+  --color-background-surface: rgb(var(--background-surface));
+  --color-background-surface-alt: rgb(var(--background-surface-alt));
+  --color-border: rgb(var(--border));
+  --color-button-secondary: rgb(var(--button-secondary));
+  --color-button-secondary-text: rgb(var(--button-secondary-text));
+  --color-indicator-primary: rgb(var(--indicator-primary));
+}
 
 :root {
   --font-display:

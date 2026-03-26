@@ -1,33 +1,73 @@
-import React from 'react';
+import '../config';
+import '../global.css';
 
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useEffect } from 'react';
+
+import { BebasNeue_400Regular, useFonts } from '@expo-google-fonts/bebas-neue';
 import * as Sentry from '@sentry/react-native';
-import { useNavigationContainerRef } from 'expo-router';
+import { Stack, useNavigationContainerRef } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { I18nextProvider } from 'react-i18next';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { useColorScheme } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
 import i18n from '@/i18n';
+import { initAuth } from '@/services/auth';
+import { useSession } from '@/stores/auth';
 
-import '../config';
+SplashScreen.preventAutoHideAsync();
 
-function TabLayout() {
-  const colorScheme = useColorScheme();
+function RootLayout() {
   const navigationRef = useNavigationContainerRef();
-
   useRozeniteDevTools(navigationRef);
 
+  const [fontsLoaded] = useFonts({ BebasNeue_400Regular });
+
+  useEffect(() => initAuth(), []);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) return null;
+
   return (
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AnimatedSplashOverlay />
-        <AppTabs />
-      </ThemeProvider>
-    </I18nextProvider>
+    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+      <GluestackUIProvider mode="system">
+        <I18nextProvider i18n={i18n}>
+          <RootNavigator />
+        </I18nextProvider>
+      </GluestackUIProvider>
+    </GestureHandlerRootView>
   );
 }
 
-export default Sentry.wrap(TabLayout);
+function RootNavigator() {
+  const { session, isLoading, isPasswordRecovery } = useSession();
+
+  if (isLoading) return null;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!!session && !isPasswordRecovery}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+      <Stack.Protected guard={!session || !!isPasswordRecovery}>
+        <Stack.Screen name="(public)" />
+      </Stack.Protected>
+    </Stack>
+  );
+}
+
+export default Sentry.wrap(RootLayout);
+
+const styles = StyleSheet.create({
+  gestureHandlerRootView: {
+    flex: 1,
+  },
+});
