@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
@@ -7,30 +7,32 @@ import { Controller, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import type { TextInput } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, Text, View } from 'react-native';
 
 import { Button, ButtonText } from '@/components/button';
-import { Header } from '@/components/header';
+import { Header, type IconButton } from '@/components/header';
 import { Input, InputErrorText, InputField, InputSlot } from '@/components/input';
 import { KeyboardDismissWrapper } from '@/components/keyboard-dismiss-wrapper';
 import { SafeAreaView } from '@/components/safe-area-view';
 import { useTheme } from '@/hooks/use-theme';
-import { supabase } from '@/lib/supabase';
 
 import { PrivacyLink, TermsLink } from '../components/links';
 import { PasswordToggle } from '../shared/password-toggle';
-import { ServerError } from '../shared/server-error';
+import { useSignIn } from './hooks/use-sign-in';
 import type { SignInSchemaType } from './schema';
 import { signInSchema } from './schema';
 
 export default function SignIn() {
   const router = useRouter();
-  const { t } = useTranslation();
   const theme = useTheme();
-  const [serverError, setServerError] = React.useState('Deu erro aqui grande');
-  const [showPassword, setShowPassword] = React.useState(false);
 
-  const onBack = () => router.back();
+  const { t } = useTranslation();
+  const { signIn } = useSignIn();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordRef = useRef<TextInput>(null);
 
   const {
     control,
@@ -38,30 +40,27 @@ export default function SignIn() {
     formState: { errors, isSubmitting },
   } = useForm<SignInSchemaType>({ resolver: zodResolver(signInSchema) });
 
+  const leftIcons: IconButton = {
+    icon: (
+      <SymbolView
+        name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
+        size={22}
+        tintColor={theme.text}
+      />
+    ),
+    onPress: () => router.back(),
+    accessibilityLabel: t('auth.backToLanding'),
+    accessibilityHint: t('auth.backToLanding'),
+  };
+
   async function onSubmit({ email, password }: SignInSchemaType) {
-    setServerError('');
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setServerError(error.message);
+    Keyboard.dismiss();
+    await signIn({ email, password });
   }
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <Header
-        leftIcons={[
-          {
-            icon: (
-              <SymbolView
-                name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
-                size={22}
-                tintColor={theme.text}
-              />
-            ),
-            onPress: onBack,
-            accessibilityLabel: t('auth.backToLanding'),
-            accessibilityHint: t('auth.backToLanding'),
-          },
-        ]}
-      />
+      <Header leftIcons={[leftIcons]} />
       <KeyboardDismissWrapper>
         <View className="w-full flex-1 self-center px-6 py-4 md:mt-20 md:max-w-110">
           <Animated.View
@@ -78,13 +77,7 @@ export default function SignIn() {
               </Text>
             </View>
 
-            <ServerError message={serverError} />
-
             <View className="gap-2">
-              <Text className="mb-0.5 text-[13px] font-medium text-foreground-secondary">
-                {t('auth.account')}
-              </Text>
-
               <Controller
                 control={control}
                 name="email"
@@ -107,6 +100,9 @@ export default function SignIn() {
                         autoCapitalize="none"
                         autoCorrect={false}
                         autoComplete="email"
+                        textContentType="username"
+                        returnKeyType="next"
+                        onSubmitEditing={() => passwordRef.current?.focus()}
                         accessibilityLabel={t('auth.email')}
                         accessibilityHint={t('auth.emailHint')}
                       />
@@ -130,6 +126,7 @@ export default function SignIn() {
                         />
                       </InputSlot>
                       <InputField
+                        ref={passwordRef}
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
@@ -138,6 +135,9 @@ export default function SignIn() {
                         autoCapitalize="none"
                         autoCorrect={false}
                         autoComplete="current-password"
+                        textContentType="password"
+                        returnKeyType="done"
+                        onSubmitEditing={handleSubmit(onSubmit)}
                         accessibilityLabel={t('auth.password')}
                         accessibilityHint={t('auth.passwordHint')}
                       />
@@ -175,7 +175,7 @@ export default function SignIn() {
             </View>
 
             <Text
-              className="font-base mt-2 text-left text-sm text-gray-600 web:text-center dark:text-gray-400"
+              className="font-base text-left text-sm text-gray-600 web:text-center dark:text-gray-400"
               accessible
               accessibilityRole="text"
             >
