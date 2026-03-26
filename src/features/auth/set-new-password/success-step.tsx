@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/stores/auth';
 
-import { SuccessLayout } from '../../shared/success-layout';
+import { SuccessLayout } from '../shared/success-layout';
 
 export function SuccessStep() {
   const { t } = useTranslation();

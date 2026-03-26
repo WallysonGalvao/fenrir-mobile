@@ -1,6 +1,5 @@
 import { fireEvent, waitFor } from '@testing-library/react-native';
 
-import { Colors } from '@/constants/theme';
 import { renderWithClient } from '@/utils/test/helper';
 
 import ResetPassword from '.';
@@ -24,9 +23,10 @@ jest.mock('@/lib/supabase', () => ({
   supabase: { auth: { resetPasswordForEmail: jest.fn() } },
 }));
 
-jest.mock('@/hooks/use-theme', () => ({
-  useTheme: () => Colors.light,
-}));
+jest.mock('@/hooks/use-theme', () => {
+  const { Colors } = require('@/constants/theme');
+  return { useTheme: () => Colors.light };
+});
 
 jest.mock('@/hooks/use-color-scheme', () => ({
   useColorScheme: () => 'light',
