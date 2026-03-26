@@ -36,8 +36,10 @@ const en = {
     email: 'Email',
     emailPlaceholder: 'Username or email address',
     emailInvalid: 'Please enter a valid email',
+    emailRequired: 'Email is required',
     password: 'Password',
     passwordPlaceholder: 'Password',
+    passwordRequired: 'Password is required',
     passwordMinLength: 'Password must be at least 8 characters',
     passwordUppercase: 'Password must contain at least one uppercase letter',
     passwordLowercase: 'Password must contain at least one lowercase letter',
@@ -71,6 +73,7 @@ const en = {
     newPasswordPlaceholder: 'Enter new password',
     confirmPassword: 'Confirm password',
     confirmPasswordPlaceholder: 'Re-enter new password',
+    confirmPasswordRequired: 'Please confirm your password',
     passwordsDoNotMatch: 'Passwords do not match',
     passwordUpdated: 'Password updated',
     passwordUpdatedDescription:
