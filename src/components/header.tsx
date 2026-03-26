@@ -42,7 +42,7 @@ export const Header = ({
           <Pressable
             testID={`left-icon-${index}`}
             accessibilityRole="button"
-            accessibilityLabel={item.accessibilityLabel || t('HEADER_LEFT_ACTION')}
+            accessibilityLabel={item.accessibilityLabel || t('common.headerLeftAction')}
             accessibilityHint={item.accessibilityHint}
             accessibilityState={{ disabled: !item.onPress }}
             key={`left-icon-${index}`}
@@ -61,8 +61,8 @@ export const Header = ({
         testID={test_id['header-title']}
         className="pointer-events-none absolute right-0 left-0 items-center"
         accessibilityRole="text"
-        accessibilityLabel={title ? t('HEADER_TITLE_LABEL', { title }) : undefined}
-        accessibilityHint={t('CURRENT_PAGE_TITLE_HINT')}
+        accessibilityLabel={title ? t('common.headerTitleLabel', { title }) : undefined}
+        accessibilityHint={t('common.currentPageTitleHint')}
       >
         {customTitle ? (
           customTitle
@@ -77,7 +77,7 @@ export const Header = ({
           <Pressable
             testID={`right-icon-${index}`}
             accessibilityRole="button"
-            accessibilityLabel={item.accessibilityLabel || t('HEADER_RIGHT_ACTION')}
+            accessibilityLabel={item.accessibilityLabel || t('common.headerRightAction')}
             accessibilityHint={item.accessibilityHint}
             accessibilityState={{ disabled: !item.onPress }}
             key={`right-icon-${index}`}

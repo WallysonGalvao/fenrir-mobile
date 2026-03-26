@@ -1,6 +1,10 @@
 const en = {
   common: {
     learnMore: 'Learn more',
+    headerLeftAction: 'Left action',
+    headerRightAction: 'Right action',
+    headerTitleLabel: '{{title}}',
+    currentPageTitleHint: 'Current page title',
   },
   home: {
     title: 'Welcome to Expo',

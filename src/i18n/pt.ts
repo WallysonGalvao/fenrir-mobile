@@ -1,6 +1,10 @@
 const pt = {
   common: {
     learnMore: 'Saiba mais',
+    headerLeftAction: 'Ação esquerda',
+    headerRightAction: 'Ação direita',
+    headerTitleLabel: '{{title}}',
+    currentPageTitleHint: 'Título da página atual',
   },
   home: {
     title: 'Bem-vindo ao Expo',
