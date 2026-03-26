@@ -1,9 +1,36 @@
-import { Children, cloneElement, forwardRef, isValidElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  createContext,
+  forwardRef,
+  isValidElement,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import type { VariantProps } from 'tailwind-variants';
 import { tv } from 'tailwind-variants';
 
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Appearance, Pressable, Text, TextInput, View } from 'react-native';
+
+import { Colors } from '@/constants/theme';
+
+type InputFocusContextType = {
+  focused: boolean;
+  onFocus: () => void;
+  onBlur: () => void;
+  inputRef: React.RefObject<TextInput | null>;
+};
+
+const InputFocusContext = createContext<InputFocusContextType>({
+  focused: false,
+  onFocus: () => {},
+  onBlur: () => {},
+  inputRef: { current: null },
+});
 
 export const inputStyle = tv({
   base: 'h-11 px-4 bg-background-element',
@@ -13,6 +40,9 @@ export const inputStyle = tv({
     },
     isInvalid: {
       true: 'border-error',
+    },
+    isFocused: {
+      true: 'border-primary',
     },
   },
 });
@@ -59,6 +89,18 @@ const Input = forwardRef<React.ComponentRef<typeof View>, InputProps>(function I
   { className, variant = 'outline', isInvalid, children, ...props },
   ref,
 ) {
+  const [focused, setFocused] = useState(false);
+  const inputRef = useRef<TextInput>(null);
+  const focusCtx = useMemo(
+    () => ({
+      focused,
+      onFocus: () => setFocused(true),
+      onBlur: () => setFocused(false),
+      inputRef,
+    }),
+    [focused],
+  );
+
   const leftSlots: React.ReactNode[] = [];
   const rightSlots: React.ReactNode[] = [];
   const content: React.ReactNode[] = [];
@@ -79,23 +121,30 @@ const Input = forwardRef<React.ComponentRef<typeof View>, InputProps>(function I
   });
 
   return (
-    <View
-      ref={ref}
-      {...props}
-      className={inputStyle({ variant, isInvalid, class: className })}
-      accessible
-      accessibilityRole="none"
-    >
-      <View className="h-full w-full flex-row items-center gap-2">
-        {leftSlots.map((slot, idx) =>
-          isValidElement(slot) ? cloneElement(slot, { key: `left-${idx}` }) : null,
-        )}
-        <View className="flex-1">{content}</View>
-        {rightSlots.map((slot, idx) =>
-          isValidElement(slot) ? cloneElement(slot, { key: `right-${idx}` }) : null,
-        )}
+    <InputFocusContext.Provider value={focusCtx}>
+      <View
+        ref={ref}
+        {...props}
+        className={inputStyle({
+          variant,
+          isInvalid: !focused && isInvalid,
+          isFocused: focused,
+          class: className,
+        })}
+        accessible
+        accessibilityRole="none"
+      >
+        <View className="h-full w-full flex-row items-center gap-2">
+          {leftSlots.map((slot, idx) =>
+            isValidElement(slot) ? cloneElement(slot, { key: `left-${idx}` }) : null,
+          )}
+          <View className="flex-1">{content}</View>
+          {rightSlots.map((slot, idx) =>
+            isValidElement(slot) ? cloneElement(slot, { key: `right-${idx}` }) : null,
+          )}
+        </View>
       </View>
-    </View>
+    </InputFocusContext.Provider>
   );
 });
 
@@ -103,11 +152,34 @@ type InputFieldProps = React.ComponentProps<typeof TextInput> &
   VariantProps<typeof inputFieldStyle> & { className?: string };
 
 const InputField = forwardRef<React.ComponentRef<typeof TextInput>, InputFieldProps>(
-  function InputField({ className, variant = 'outline', ...props }, ref) {
+  function InputField({ className, variant = 'outline', onFocus, onBlur, ...props }, ref) {
+    const ctx = useContext(InputFocusContext);
+    const scheme = Appearance.getColorScheme() === 'dark' ? 'dark' : 'light';
+    const selectionColor = ctx.focused ? Colors[scheme].primary : Colors[scheme].textSecondary;
+
+    const mergedRef = useCallback(
+      (node: TextInput | null) => {
+        ctx.inputRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ctx.inputRef, ref],
+    );
+
     return (
       <TextInput
-        ref={ref}
+        ref={mergedRef}
         {...props}
+        onFocus={(e) => {
+          ctx.onFocus();
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          ctx.onBlur();
+          onBlur?.(e);
+        }}
+        selectionColor={selectionColor}
+        cursorColor={selectionColor}
         className={inputFieldStyle({ variant, class: className })}
         accessible
         accessibilityRole="text"
@@ -145,13 +217,29 @@ const InputLabelText = forwardRef<React.ComponentRef<typeof Text>, InputLabelTex
   },
 );
 
-type InputSlotProps = React.ComponentProps<typeof Pressable> &
-  VariantProps<typeof inputSlotStyle> & { className?: string };
+type InputSlotProps = Omit<React.ComponentProps<typeof Pressable>, 'children'> &
+  VariantProps<typeof inputSlotStyle> & {
+    className?: string;
+    children: React.ReactNode | ((focused: boolean) => React.ReactNode);
+  };
 
 const InputSlot = forwardRef<React.ComponentRef<typeof Pressable>, InputSlotProps>(
-  function InputSlot({ className, position = 'left', ...props }, ref) {
+  function InputSlot({ className, position = 'left', children, onPress, ...props }, ref) {
+    const { focused, inputRef } = useContext(InputFocusContext);
+    const content = typeof children === 'function' ? children(focused) : children;
+
+    const handlePress = position === 'left' ? () => inputRef.current?.focus() : onPress;
+
     return (
-      <Pressable ref={ref} {...props} className={inputSlotStyle({ position, class: className })} />
+      <Pressable
+        ref={ref}
+        {...props}
+        onPress={handlePress}
+        tabIndex={position === 'left' ? -1 : undefined}
+        className={inputSlotStyle({ position, class: className })}
+      >
+        {content}
+      </Pressable>
     );
   },
 );

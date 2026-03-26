@@ -8,8 +8,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
 import type { TextInput } from 'react-native';
-import { ActivityIndicator, Keyboard, Pressable, Text, View } from 'react-native';
+import { Keyboard, Pressable, Text, View } from 'react-native';
 
+import { ActivityIndicator } from '@/components/activity-indicator';
 import { Button, ButtonText } from '@/components/button';
 import { Header, type IconButton } from '@/components/header';
 import { Input, InputErrorText, InputField, InputSlot } from '@/components/input';
@@ -85,11 +86,13 @@ export default function SignIn() {
                   <View className="gap-1">
                     <Input isInvalid={!!errors.email}>
                       <InputSlot position="left">
-                        <SymbolView
-                          name={{ ios: 'at', android: 'alternate_email', web: 'alternate_email' }}
-                          size={18}
-                          tintColor={theme.textSecondary}
-                        />
+                        {(focused) => (
+                          <SymbolView
+                            name={{ ios: 'at', android: 'alternate_email', web: 'alternate_email' }}
+                            size={18}
+                            tintColor={focused ? theme.primary : theme.textSecondary}
+                          />
+                        )}
                       </InputSlot>
                       <InputField
                         value={value}
@@ -119,11 +122,13 @@ export default function SignIn() {
                   <View className="gap-1">
                     <Input isInvalid={!!errors.password}>
                       <InputSlot position="left">
-                        <SymbolView
-                          name={{ ios: 'lock', android: 'lock', web: 'lock' }}
-                          size={18}
-                          tintColor={theme.textSecondary}
-                        />
+                        {(focused) => (
+                          <SymbolView
+                            name={{ ios: 'lock', android: 'lock', web: 'lock' }}
+                            size={18}
+                            tintColor={focused ? theme.primary : theme.textSecondary}
+                          />
+                        )}
                       </InputSlot>
                       <InputField
                         ref={passwordRef}
@@ -164,15 +169,9 @@ export default function SignIn() {
               </View>
             </View>
 
-            <View className="gap-3">
-              <Button onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <ActivityIndicator color="#EAF2FF" />
-                ) : (
-                  <ButtonText>{t('auth.signIn')}</ButtonText>
-                )}
-              </Button>
-            </View>
+            <Button onPress={handleSubmit(onSubmit)} disabled={isSubmitting}>
+              {isSubmitting ? <ActivityIndicator /> : <ButtonText>{t('auth.signIn')}</ButtonText>}
+            </Button>
 
             <Text
               className="font-base text-left text-sm text-gray-600 web:text-center dark:text-gray-400"
