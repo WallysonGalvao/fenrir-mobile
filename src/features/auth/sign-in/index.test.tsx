@@ -1,5 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react-native';
 
+import { Colors } from '@/constants/theme';
 import { renderWithClient } from '@/utils/test/helper';
 
 import SignIn from '.';
@@ -24,11 +25,7 @@ jest.mock('@/lib/supabase', () => ({
 }));
 
 jest.mock('@/hooks/use-theme', () => ({
-  useTheme: () => ({
-    text: '#000000',
-    primary: '#6CCFD1',
-    textSecondary: '#60646C',
-  }),
+  useTheme: () => Colors.light,
 }));
 
 jest.mock('@/hooks/use-color-scheme', () => ({
