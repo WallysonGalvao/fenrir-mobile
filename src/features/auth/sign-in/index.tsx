@@ -19,7 +19,7 @@ import { SafeAreaView } from '@/components/safe-area-view';
 import { useTheme } from '@/hooks/use-theme';
 
 import { PrivacyLink, TermsLink } from '../components/links';
-import { PasswordToggle } from '../shared/password-toggle';
+import { PasswordToggle } from '../components/password-toggle';
 import { useSignIn } from './hooks/use-sign-in';
 import type { SignInSchemaType } from './schema';
 import { signInSchema } from './schema';

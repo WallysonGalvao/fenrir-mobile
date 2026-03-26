@@ -17,7 +17,7 @@ import { KeyboardDismissWrapper } from '@/components/keyboard-dismiss-wrapper';
 import { SafeAreaView } from '@/components/safe-area-view';
 import { useTheme } from '@/hooks/use-theme';
 
-import { PasswordToggle } from '../shared/password-toggle';
+import { PasswordToggle } from '../components/password-toggle';
 import { useSetNewPassword } from './hooks/use-set-new-password';
 import type { SetNewPasswordSchemaType } from './schema';
 import { setNewPasswordSchema } from './schema';
