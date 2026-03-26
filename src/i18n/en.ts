@@ -53,7 +53,9 @@ const en = {
     hidePassword: 'Hide password',
     alreadyHaveAccount: 'Already have an account?',
     dontHaveAccount: "Don't have an account?",
-    checkEmail: 'Check your email to confirm your account, then sign in.',
+    checkEmail: 'Check your email',
+    checkEmailDescription:
+      'We sent a confirmation link to your email. Click the link to confirm your account, then sign in.',
     tagline: 'Connect with what matters most',
     createAccount: 'Create account',
     backToLanding: 'Back',

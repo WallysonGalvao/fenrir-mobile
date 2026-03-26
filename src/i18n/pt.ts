@@ -53,7 +53,9 @@ const pt = {
     hidePassword: 'Ocultar senha',
     alreadyHaveAccount: 'Já tem uma conta?',
     dontHaveAccount: 'Não tem uma conta?',
-    checkEmail: 'Verifique seu e-mail para confirmar sua conta e faça login.',
+    checkEmail: 'Verifique seu e-mail',
+    checkEmailDescription:
+      'Enviamos um link de confirmação para seu e-mail. Clique no link para confirmar sua conta e faça login.',
     tagline: 'Conecte-se com o que mais importa',
     createAccount: 'Criar conta',
     backToLanding: 'Voltar',

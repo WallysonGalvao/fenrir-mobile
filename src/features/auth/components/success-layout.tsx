@@ -1,8 +1,11 @@
-import { Image } from 'expo-image';
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 
-import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Text, View } from 'react-native';
+
+import { Button, ButtonText } from '@/components/button';
+import { SafeAreaView } from '@/components/safe-area-view';
+import { useTheme } from '@/hooks/use-theme';
 
 type SuccessLayoutProps = {
   icon: SymbolViewProps['name'];
@@ -19,50 +22,31 @@ export function SuccessLayout({
   buttonLabel,
   onPress,
 }: SuccessLayoutProps) {
-  const scheme = useColorScheme();
+  const theme = useTheme();
 
   return (
-    <Animated.View
-      entering={FadeInRight.duration(320)}
-      exiting={FadeOutLeft.duration(220)}
-      className="flex-1 gap-6"
-    >
-      <View className="items-center">
-        <Image
-          source={require('@/assets/images/fenrir-logo.png')}
-          style={styles.logo}
-          contentFit="contain"
-          accessibilityIgnoresInvertColors
-          tintColor={scheme === 'dark' ? 'white' : 'black'}
-        />
+    <SafeAreaView className="flex-1 bg-background">
+      <View className="w-full flex-1 self-center px-6 py-4 md:mt-20 md:max-w-110">
+        <Animated.View
+          entering={FadeInRight.duration(320)}
+          exiting={FadeOutLeft.duration(220)}
+          className="flex-1 gap-6"
+        >
+          <View className="items-center gap-3">
+            <SymbolView name={icon} size={48} tintColor={theme.primary} />
+            <Text className="text-center text-[28px] font-extrabold tracking-tight text-foreground md:text-[42px] md:tracking-tighter">
+              {title}
+            </Text>
+            <Text className="px-4 text-center text-[15px] leading-6 text-foreground-secondary md:text-[17px]">
+              {description}
+            </Text>
+          </View>
+
+          <Button onPress={onPress}>
+            <ButtonText>{buttonLabel}</ButtonText>
+          </Button>
+        </Animated.View>
       </View>
-
-      <View className="items-center gap-3">
-        <SymbolView name={icon} size={48} tintColor={scheme === 'dark' ? '#3ed6a1' : '#6ccfd1'} />
-        <Text className="text-[28px] font-extrabold tracking-tight text-foreground text-center">
-          {title}
-        </Text>
-        <Text className="text-[15px] leading-6 text-foreground-secondary text-center px-4">
-          {description}
-        </Text>
-      </View>
-
-      <View className="flex-1" />
-
-      <Pressable
-        className="h-12 bg-primary rounded-3xl justify-center items-center active:opacity-75"
-        onPress={onPress}
-        accessibilityRole="button"
-      >
-        <Text className="text-white text-base font-semibold">{buttonLabel}</Text>
-      </Pressable>
-    </Animated.View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  logo: {
-    width: 32,
-    height: 32,
-  },
-});
