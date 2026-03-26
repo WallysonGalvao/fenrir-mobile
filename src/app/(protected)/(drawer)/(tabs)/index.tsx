@@ -1,66 +1,109 @@
-import * as Device from 'expo-device';
+import { useCallback, useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Platform, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
+import { ActivityIndicator } from '@/components/activity-indicator';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint(t: ReturnType<typeof useTranslation>['t']) {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">{t('home.devMenu.web')}</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        {t('home.devMenu.deviceStart')} <ThemedText type="code">m</ThemedText>{' '}
-        {t('home.devMenu.deviceEnd')}
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      {t('home.devMenu.press')} <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { useTheme } from '@/hooks/use-theme';
+import { getAllProjects } from '@/lib/supabase/projects';
+import type { Project } from '@/types/project';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const theme = useTheme();
+
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchProjects = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getAllProjects();
+      setProjects(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load projects');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
+
+  const renderProject = useCallback(
+    ({ item }: { item: Project }) => (
+      <ThemedView type="backgroundElement" style={styles.projectCard}>
+        <View style={styles.projectHeader}>
+          <View style={[styles.projectAvatar, { backgroundColor: theme.primary }]}>
+            <ThemedText style={styles.projectAvatarText}>
+              {item.name.charAt(0).toUpperCase()}
+            </ThemedText>
+          </View>
+          <View style={styles.projectInfo}>
+            <ThemedText type="default" style={styles.projectName}>
+              {item.name}
+            </ThemedText>
+            <ThemedText type="small" themeColor="textSecondary">
+              {item.slug}
+            </ThemedText>
+          </View>
+        </View>
+        <ThemedText type="small" themeColor="textSecondary">
+          {new Date(item.created_at).toLocaleDateString()}
+        </ThemedText>
+      </ThemedView>
+    ),
+    [theme],
+  );
+
+  const renderEmpty = useCallback(() => {
+    if (loading) return null;
+    return (
+      <View style={styles.emptyContainer}>
+        <ThemedText type="default" themeColor="textSecondary">
+          {t('home.noProjects', { defaultValue: 'No projects yet' })}
+        </ThemedText>
+      </View>
+    );
+  }, [loading, t]);
 
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            {t('home.title')}
-          </ThemedText>
-        </ThemedView>
+        <View style={styles.headerSection}>
+          <ThemedText type="subtitle">{t('home.title')}</ThemedText>
+        </View>
 
-        <ThemedText type="code" style={styles.code}>
-          {t('home.getStarted')}
-        </ThemedText>
+        {error ? (
+          <ThemedView type="backgroundElement" style={styles.errorContainer}>
+            <ThemedText type="small" style={{ color: '#ef4444' }}>
+              {error}
+            </ThemedText>
+          </ThemedView>
+        ) : null}
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title={t('home.tryEditing')}
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        ) : (
+          <FlatList
+            data={projects}
+            renderItem={renderProject}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.listContent}
+            ListEmptyComponent={renderEmpty}
+            showsVerticalScrollIndicator={false}
           />
-          <HintRow title={t('home.devTools')} hint={getDevMenuHint(t)} />
-          <HintRow
-            title={t('home.freshStart')}
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
+        )}
       </SafeAreaView>
     </ThemedView>
   );
@@ -75,29 +118,64 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
+    paddingBottom: BottomTabInset,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
+  headerSection: {
     paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
+    borderRadius: Spacing.two,
+    marginBottom: Spacing.three,
+  },
+  listContent: {
+    gap: Spacing.two,
+    paddingBottom: Spacing.four,
+  },
+  projectCard: {
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.three,
+    borderRadius: Spacing.three,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.three,
+    flex: 1,
+  },
+  projectAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  projectAvatarText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#fff',
+  },
+  projectInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  projectName: {
+    fontWeight: '600',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: Spacing.six,
   },
 });
