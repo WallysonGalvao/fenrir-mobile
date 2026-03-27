@@ -207,11 +207,13 @@ export function DrawerContent({
         <View className="flex-1 bg-background-element">
           <DrawerHeader isCollapsed={isCollapsed} />
 
-          <View
-            className={`border-b border-border px-4 py-3 ${isCollapsed ? 'items-center gap-3' : 'gap-1'}`}
-          >
-            {title ? <ProjectSwitcher currentSlug={title} isCollapsed={isCollapsed} /> : null}
-          </View>
+          {!isCollapsed ? (
+            <View
+              className={`border-b border-border px-4 py-3 ${isCollapsed ? 'items-center gap-3' : 'gap-1'}`}
+            >
+              {title ? <ProjectSwitcher currentSlug={title} isCollapsed={isCollapsed} /> : null}
+            </View>
+          ) : null}
 
           <DrawerContentScrollView
             contentContainerClassName="gap-2 px-3 py-4"
