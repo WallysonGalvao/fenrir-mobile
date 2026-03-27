@@ -5,13 +5,21 @@ const pt = {
     headerRightAction: 'Ação direita',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Título da página atual',
+    back: 'Voltar',
+  },
+  project: {
+    notFound: 'Projeto não encontrado',
+    createdAt: 'Criado em',
+    repositories: 'Repositórios',
+    noRepositories: 'Nenhum repositório vinculado',
   },
   home: {
-    title: 'Bem-vindo ao Expo',
+    title: 'Projetos',
     getStarted: 'começar',
     tryEditing: 'Tente editar',
     devTools: 'Ferramentas de dev',
     freshStart: 'Começar do zero',
+    noProjects: 'Nenhum projeto encontrado ainda.',
     devMenu: {
       web: 'use as ferramentas de desenvolvedor do navegador',
       deviceStart: 'agite o dispositivo ou pressione',
@@ -29,6 +37,44 @@ const pt = {
       images: 'Imagens',
       darkMode: 'Componentes de modo claro e escuro',
       animations: 'Animações',
+    },
+  },
+  drawer: {
+    eyebrow: 'Workspace',
+    sections: {
+      main: 'Visão geral',
+      collections: 'Coleções',
+    },
+    groups: {
+      workspace: 'Espaços de trabalho',
+      resources: 'Referências',
+    },
+    items: {
+      projects: 'Projetos',
+      explore: 'Explorar',
+      allProjects: 'Todos os projetos',
+      layoutReference: 'Referência de layout',
+      expoDocs: 'Documentação Expo',
+      routerGuide: 'Guia do Expo Router',
+      help: 'Ajuda',
+      search: 'Buscar',
+    },
+    descriptions: {
+      projects: 'Acompanhe seus espaços e ativos',
+      explore: 'Veja exemplos e padrões do app',
+    },
+    actions: {
+      collapse: 'Recolher drawer',
+      expand: 'Expandir drawer',
+      toggleGroup: 'Alterna a visibilidade do grupo',
+      openUserMenu: 'Menu do usuário',
+      signOut: 'Sair',
+    },
+    hints: {
+      navigate: 'Abre o destino selecionado',
+      toggleDrawer: 'Alterna o tamanho do drawer lateral',
+      openUserMenu: 'Abre o menu de opções do usuário',
+      signOut: 'Encerra a sessão atual',
     },
   },
   auth: {

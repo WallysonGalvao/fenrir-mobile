@@ -5,13 +5,21 @@ const en = {
     headerRightAction: 'Right action',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Current page title',
+    back: 'Back',
+  },
+  project: {
+    notFound: 'Project not found',
+    createdAt: 'Created at',
+    repositories: 'Repositories',
+    noRepositories: 'No repositories linked',
   },
   home: {
-    title: 'Welcome to Expo',
+    title: 'Projects',
     getStarted: 'get started',
     tryEditing: 'Try editing',
     devTools: 'Dev tools',
     freshStart: 'Fresh start',
+    noProjects: 'No projects yet.',
     devMenu: {
       web: 'use browser devtools',
       deviceStart: 'shake device or press',
@@ -29,6 +37,44 @@ const en = {
       images: 'Images',
       darkMode: 'Light and dark mode components',
       animations: 'Animations',
+    },
+  },
+  drawer: {
+    eyebrow: 'Workspace',
+    sections: {
+      main: 'Overview',
+      collections: 'Collections',
+    },
+    groups: {
+      workspace: 'Workspaces',
+      resources: 'References',
+    },
+    items: {
+      projects: 'Projects',
+      explore: 'Explore',
+      allProjects: 'All projects',
+      layoutReference: 'Layout reference',
+      expoDocs: 'Expo docs',
+      routerGuide: 'Expo Router guide',
+      help: 'Help',
+      search: 'Search',
+    },
+    descriptions: {
+      projects: 'Track workspaces and generated assets',
+      explore: 'Browse examples and app patterns',
+    },
+    actions: {
+      collapse: 'Collapse drawer',
+      expand: 'Expand drawer',
+      toggleGroup: 'Toggle group visibility',
+      openUserMenu: 'User menu',
+      signOut: 'Sign out',
+    },
+    hints: {
+      navigate: 'Opens the selected destination',
+      toggleDrawer: 'Toggles the sidebar size',
+      openUserMenu: 'Opens the user options menu',
+      signOut: 'Signs out of the current session',
     },
   },
   auth: {

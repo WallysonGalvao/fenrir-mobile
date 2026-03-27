@@ -64,6 +64,7 @@ function RootNavigator() {
       <Stack.Protected guard={!session || !!isPasswordRecovery}>
         <Stack.Screen name="(public)" />
       </Stack.Protected>
+      <Stack.Screen name="new-project" options={{ presentation: 'modal' }} />
     </Stack>
   );
 }

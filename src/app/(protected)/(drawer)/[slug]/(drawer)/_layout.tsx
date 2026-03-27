@@ -1,10 +1,9 @@
 import { Stack } from 'expo-router';
 
-export default function DrawerGroupLayout() {
+export default function ProjectDrawerGroupLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="[slug]" />
     </Stack>
   );
 }
