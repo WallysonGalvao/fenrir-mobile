@@ -210,8 +210,8 @@ export function DrawerContent({
     return (
       <SafeAreaView className="flex-1 bg-background-element">
         <View className="flex-1 bg-background-element">
-          <View className="border-b border-border px-4 py-4">
-            {onBack ? (
+          <View className={`border-b border-border px-4 py-4 ${isCollapsed ? 'items-center' : ''}`}>
+            {onBack && !isCollapsed ? (
               <Pressable
                 onPress={() => {
                   onBack();
@@ -233,7 +233,29 @@ export function DrawerContent({
               </Pressable>
             ) : null}
 
-            {title ? (
+            {onToggleCollapse ? (
+              <Pressable
+                onPress={onToggleCollapse}
+                className={`items-center justify-center rounded-xl active:opacity-80 ${
+                  isCollapsed ? 'h-11 w-11' : 'mt-2 h-9 w-9'
+                }`}
+                accessibilityRole="button"
+                accessibilityLabel={isCollapsed ? t('drawer.expand') : t('drawer.collapse')}
+                accessibilityHint={t('drawer.hints.navigate')}
+              >
+                <SymbolView
+                  name={
+                    isCollapsed
+                      ? { ios: 'sidebar.left', android: 'menu_open', web: 'menu_open' }
+                      : { ios: 'sidebar.left', android: 'menu_open', web: 'menu_open' }
+                  }
+                  size={18}
+                  tintColor={colors.textSecondary}
+                />
+              </Pressable>
+            ) : null}
+
+            {title && !isCollapsed ? (
               <Text className="mt-2 px-2 text-lg font-bold text-foreground" numberOfLines={1}>
                 {title}
               </Text>
@@ -248,7 +270,7 @@ export function DrawerContent({
               <DrawerNavItem
                 key={item.key}
                 item={item}
-                isCollapsed={false}
+                isCollapsed={isCollapsed}
                 pathname={pathname}
                 onPress={() => void handleNavigate(item)}
               />
