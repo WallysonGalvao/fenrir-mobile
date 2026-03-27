@@ -94,8 +94,7 @@ export function UpdateRequiredModal({
             {/* Update button */}
             <Pressable
               onPress={onUpdate}
-              style={{ backgroundColor: theme.primary }}
-              className="mb-3 h-14 flex-row items-center justify-center gap-2 rounded-2xl active:scale-[0.98]"
+              className="mb-3 h-14 flex-row items-center justify-center gap-2 rounded-2xl bg-primary active:scale-[0.98]"
               accessibilityRole="button"
             >
               <SymbolView

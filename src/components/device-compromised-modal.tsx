@@ -26,7 +26,7 @@ export function DeviceCompromisedModal() {
       onRequestClose={() => BackHandler.exitApp()}
     >
       <View className="flex-1 items-center justify-center bg-black/70">
-        <View className="mx-6 overflow-hidden rounded-3xl bg-white shadow-2xl dark:bg-gray-800">
+        <View className="mx-6 overflow-hidden rounded-3xl bg-background-surface shadow-2xl">
           {/* Icon */}
           <View className="items-center pb-4 pt-8">
             <View className="h-20 w-20 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
@@ -37,18 +37,18 @@ export function DeviceCompromisedModal() {
                   web: 'security',
                 }}
                 size={40}
-                tintColor="#dc2626"
+                tintColor="rgb(239, 68, 68)"
               />
             </View>
           </View>
 
           {/* Content */}
           <View className="px-6 pb-8">
-            <Text className="mb-2 text-center text-2xl font-bold text-gray-900 dark:text-white">
+            <Text className="mb-2 text-center text-2xl font-bold text-foreground">
               {t('security.compromisedTitle')}
             </Text>
 
-            <Text className="text-center text-base leading-6 text-gray-600 dark:text-gray-400">
+            <Text className="text-center text-base leading-6 text-foreground-secondary">
               {t('security.compromisedDescription')}
             </Text>
           </View>

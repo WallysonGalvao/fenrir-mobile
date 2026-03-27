@@ -47,7 +47,7 @@ function RootLayout() {
 
   if (!fontsLoaded) return null;
 
-  // const showUpdateModal = needsUpdate && !isLoading;
+  const showUpdateModal = needsUpdate && !isLoading;
 
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRootView}>
@@ -55,7 +55,7 @@ function RootLayout() {
         <I18nextProvider i18n={i18n}>
           <RootNavigator />
           <UpdateRequiredModal
-            visible
+            visible={showUpdateModal}
             currentVersion={currentVersion}
             latestVersion={latestVersion}
             isRequired={isForceUpdate}

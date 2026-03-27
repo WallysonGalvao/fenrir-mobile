@@ -66,11 +66,7 @@ export default function AppTabs() {
 
   return (
     <NativeTabs
-      tintColor={
-        Platform.OS === 'ios'
-          ? DynamicColorIOS({ light: Colors.light.primary, dark: Colors.dark.primary })
-          : theme.primary
-      }
+      tintColor={theme.primary}
       iconColor={inactiveTintColor}
       labelStyle={{ color: inactiveTintColor }}
       labelVisibilityMode="labeled"
