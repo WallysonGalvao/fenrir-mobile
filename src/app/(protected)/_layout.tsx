@@ -7,8 +7,8 @@ import { Drawer } from 'expo-router/drawer';
 import { Platform } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { DrawerContent, drawerWidths } from '@/components/drawer-content';
-import { DrawerLayoutProvider } from '@/components/drawer-layout-context';
+import { DrawerContent, drawerWidths } from '@/components/drawer/content';
+import { DrawerLayoutProvider } from '@/components/drawer/layout-context';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 

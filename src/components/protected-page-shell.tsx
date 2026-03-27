@@ -4,8 +4,9 @@ import { SymbolView } from 'expo-symbols';
 
 import { Platform, Pressable, Text, View } from 'react-native';
 
-import { useDrawerLayout } from '@/components/drawer-layout-context';
 import { useTheme } from '@/hooks/use-theme';
+
+import { useDrawerLayout } from './drawer/layout-context';
 
 type ProtectedPageShellProps = PropsWithChildren<{
   title: string;
