@@ -12,6 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { StyleSheet } from 'react-native';
 
+import { DeviceCompromisedModal } from '@/components/device-compromised-modal';
 import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
 import { UpdateRequiredModal } from '@/components/update-required-modal';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
@@ -60,6 +61,7 @@ function RootLayout() {
             isRequired={isForceUpdate}
             onUpdate={openStore}
           />
+          <DeviceCompromisedModal />
         </I18nextProvider>
       </GluestackUIProvider>
     </GestureHandlerRootView>
