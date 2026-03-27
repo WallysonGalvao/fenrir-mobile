@@ -17,6 +17,8 @@ import { UpdateRequiredModal } from '@/components/update-required-modal';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
 import { useVersionCheck } from '@/hooks/use-version-check';
 import i18n from '@/i18n';
+import { useQuickActionRouting } from '@/quick-actions/use-quick-action-routing';
+import { useQuickActions } from '@/quick-actions/use-quick-actions';
 import { initAuth } from '@/services/auth';
 import { useSession } from '@/stores/auth';
 
@@ -30,6 +32,9 @@ function RootLayout() {
 
   const { currentVersion, latestVersion, needsUpdate, isLoading, isForceUpdate, openStore } =
     useVersionCheck();
+
+  useQuickActions();
+  useQuickActionRouting();
 
   useEffect(() => initAuth(), []);
 
