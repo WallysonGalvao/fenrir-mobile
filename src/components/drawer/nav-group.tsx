@@ -42,7 +42,7 @@ export function DrawerNavGroup({
         } ${
           hasActiveChild || isOpen
             ? 'border-primary/35 bg-background-element'
-            : 'border-transparent bg-transparent'
+            : 'border-transparent bg-transparent web:hover:bg-foreground/5'
         } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
         accessibilityRole="button"
         accessibilityLabel={group.label}
@@ -85,7 +85,9 @@ export function DrawerNavGroup({
                 key={item.key}
                 onPress={() => onNavigate(item)}
                 className={`rounded-xl px-3 py-3 active:opacity-80 ${
-                  isChildActive ? 'bg-background-element' : 'bg-transparent'
+                  isChildActive
+                    ? 'bg-background-element'
+                    : 'bg-transparent web:hover:bg-foreground/5'
                 }`}
                 accessibilityRole="button"
                 accessibilityLabel={item.label}

@@ -24,7 +24,7 @@ export function DrawerUtilityBar({
   const colors = useTheme();
 
   return (
-    <View className={`flex-row gap-2 ${isCollapsed ? 'justify-center' : ''}`}>
+    <View className={`gap-1 ${isCollapsed ? 'items-center' : ''}`}>
       {entries.map((item) => {
         const isActive = isInternalItemActive(pathname, item.href);
 
@@ -32,22 +32,16 @@ export function DrawerUtilityBar({
           <Pressable
             key={item.key}
             onPress={() => onPress(item)}
-            className={`rounded-xl border px-3 py-3 active:opacity-80 ${
-              isCollapsed
-                ? 'h-11 w-11 items-center justify-center px-0 py-0'
-                : 'flex-1 flex-row items-center gap-2'
-            } ${
-              isActive ? 'border-primary/35 bg-background-element' : 'border-border bg-transparent'
-            }`}
+            className={`rounded-xl px-3 py-2.5 active:opacity-80 ${
+              isCollapsed ? 'h-11 w-11 items-center justify-center' : 'flex-row items-center gap-3'
+            } ${isActive ? 'bg-background-element' : 'bg-transparent web:hover:bg-foreground/5'}`}
             accessibilityRole="button"
             accessibilityLabel={item.label}
             accessibilityHint={t('drawer.hints.navigate')}
             accessibilityState={{ selected: isActive }}
           >
-            <SymbolView name={item.icon} size={18} tintColor={colors.text} />
-            {!isCollapsed ? (
-              <Text className="text-sm font-medium text-foreground">{item.label}</Text>
-            ) : null}
+            <SymbolView name={item.icon} size={18} tintColor={colors.textSecondary} />
+            {!isCollapsed ? <Text className="text-sm text-foreground">{item.label}</Text> : null}
           </Pressable>
         );
       })}

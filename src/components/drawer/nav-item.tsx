@@ -25,7 +25,9 @@ export function DrawerNavItem({ item, isCollapsed, pathname, onPress }: DrawerNa
       className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
         isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
       } ${
-        isActive ? 'border-primary/40 bg-background-element' : 'border-transparent bg-transparent'
+        isActive
+          ? 'border-primary/40 bg-background-element'
+          : 'border-transparent bg-transparent web:hover:bg-foreground/5'
       } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
       accessibilityRole="button"
       accessibilityLabel={item.label}
