@@ -247,9 +247,9 @@ export function DrawerContent({
 
   return (
     <SafeAreaView className="flex-1 bg-background-element web:min-h-screen">
-      <View className="flex-1 border-r border-border bg-background-element">
+      <View className="flex-1 bg-background-element">
         <View
-          className={`flex-row items-center gap-3 border-b border-border px-4 py-4 ${
+          className={`flex-row items-center gap-3 px-4 py-4 ${
             isCollapsed ? 'justify-center' : 'justify-start'
           }`}
         >
@@ -294,7 +294,9 @@ export function DrawerContent({
                   key={item.key}
                   onPress={() => handleNavigate(item)}
                   className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
-                    isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
+                    isCollapsed
+                      ? 'items-center justify-center px-0 py-0'
+                      : 'flex-row items-center gap-3'
                   } ${
                     isActive
                       ? 'border-primary/40 bg-background-element'
@@ -317,7 +319,9 @@ export function DrawerContent({
                     <View className="flex-1">
                       <Text className="text-sm font-semibold text-foreground">{item.label}</Text>
                       {item.description ? (
-                        <Text className="text-xs text-foreground-secondary">{item.description}</Text>
+                        <Text className="text-xs text-foreground-secondary">
+                          {item.description}
+                        </Text>
                       ) : null}
                     </View>
                   ) : null}
@@ -344,7 +348,9 @@ export function DrawerContent({
                   <Pressable
                     onPress={() => handleToggleGroup(group.key)}
                     className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
-                      isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
+                      isCollapsed
+                        ? 'items-center justify-center px-0 py-0'
+                        : 'flex-row items-center gap-3'
                     } ${
                       hasActiveChild || isOpen
                         ? 'border-primary/35 bg-background-element'
@@ -406,7 +412,9 @@ export function DrawerContent({
                           >
                             <Text
                               className={`text-sm ${
-                                isChildActive ? 'font-semibold text-foreground' : 'text-foreground-secondary'
+                                isChildActive
+                                  ? 'font-semibold text-foreground'
+                                  : 'text-foreground-secondary'
                               }`}
                             >
                               {item.label}
@@ -422,7 +430,7 @@ export function DrawerContent({
           </View>
         </DrawerContentScrollView>
 
-        <View className={`gap-3 border-t border-border p-3 ${isCollapsed ? 'items-center' : ''}`}>
+        <View className={`gap-3 p-3 ${isCollapsed ? 'items-center' : ''}`}>
           <View className={`flex-row gap-2 ${isCollapsed ? 'justify-center' : ''}`}>
             {utilityEntries.map((item) => {
               const isActive = isInternalItemActive(pathname, item.href);
@@ -432,9 +440,13 @@ export function DrawerContent({
                   key={item.key}
                   onPress={() => handleNavigate(item)}
                   className={`rounded-xl border px-3 py-3 active:opacity-80 ${
-                    isCollapsed ? 'h-11 w-11 items-center justify-center px-0 py-0' : 'flex-1 flex-row items-center gap-2'
+                    isCollapsed
+                      ? 'h-11 w-11 items-center justify-center px-0 py-0'
+                      : 'flex-1 flex-row items-center gap-2'
                   } ${
-                    isActive ? 'border-primary/35 bg-background-element' : 'border-border bg-transparent'
+                    isActive
+                      ? 'border-primary/35 bg-background-element'
+                      : 'border-border bg-transparent'
                   }`}
                   accessibilityRole="button"
                   accessibilityLabel={item.label}
@@ -475,7 +487,9 @@ export function DrawerContent({
             <Pressable
               onPress={() => void handleSignOut()}
               className={`rounded-xl bg-background-element px-3 py-3 active:opacity-80 ${
-                isCollapsed ? 'h-11 w-11 items-center justify-center px-0 py-0' : 'flex-row items-center justify-center gap-2'
+                isCollapsed
+                  ? 'h-11 w-11 items-center justify-center px-0 py-0'
+                  : 'flex-row items-center justify-center gap-2'
               }`}
               accessibilityRole="button"
               accessibilityLabel={t('drawer.actions.signOut')}
