@@ -1,4 +1,8 @@
 const pt = {
+  tabs: {
+    home: 'Início',
+    explore: 'Explorar',
+  },
   common: {
     learnMore: 'Saiba mais',
     headerLeftAction: 'Ação esquerda',
@@ -86,6 +90,23 @@ const pt = {
       'Sua senha foi atualizada com sucesso. Agora você pode entrar com sua nova senha.',
     agreeTerms:
       'Ao clicar em Entrar, você concorda com nossos <1>Termos e Condições</1> e <2>Política de Privacidade</2>.',
+  },
+  update: {
+    requiredTitle: 'Atualização Obrigatória',
+    availableTitle: 'Atualização Disponível',
+    requiredDescription:
+      'Uma nova versão do app é necessária para continuar. Por favor, atualize para a versão mais recente.',
+    availableDescription:
+      'Uma nova versão do app está disponível. Atualize agora para ter os últimos recursos e melhorias.',
+    currentVersion: 'Versão atual',
+    latestVersion: 'Versão mais recente',
+    updateNow: 'Atualizar agora',
+    later: 'Agora não',
+  },
+  security: {
+    compromisedTitle: 'Alerta de Segurança',
+    compromisedDescription:
+      'Este dispositivo parece estar com root ou jailbreak. Por sua segurança, o app não pode ser executado em dispositivos comprometidos.',
   },
 } as const;
 

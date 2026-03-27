@@ -132,7 +132,7 @@ interface VersionCheckConfig {
 export function useVersionCheck(config: VersionCheckConfig = {}) {
   const { forceUpdate = false, minimumVersion, autoCheck = true } = config;
 
-  const currentAppVersion = __DEV__ ? '0.9.0' : VersionCheck.getCurrentVersion();
+  const currentAppVersion = __DEV__ ? '0.0.0' : VersionCheck.getCurrentVersion();
 
   const [versionInfo, setVersionInfo] = useState<VersionInfo>({
     currentVersion: currentAppVersion,
