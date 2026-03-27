@@ -98,7 +98,7 @@ export function ProjectSwitcher({ currentSlug, isCollapsed = false }: ProjectSwi
       trigger={(triggerProps) => (
         <Pressable
           {...triggerProps}
-          className="flex-row items-center justify-between rounded-xl px-2 py-2 active:opacity-80"
+          className="flex-row items-center justify-between rounded-xl px-2 py-2 active:opacity-80 web:hover:bg-foreground/5"
           accessibilityRole="button"
           accessibilityLabel="Trocar projeto"
           accessibilityHint="Abre o menu de seleção de projetos"
@@ -110,7 +110,7 @@ export function ProjectSwitcher({ currentSlug, isCollapsed = false }: ProjectSwi
             {displayName}
           </Text>
           <SymbolView
-            name={{ ios: 'arrow.up.arrow.down', android: 'swap_vert', web: 'swap_vert' }}
+            name={{ ios: 'chevron.up.chevron.down', android: 'unfold_more', web: 'unfold_more' }}
             size={14}
             tintColor={colors.textSecondary}
           />

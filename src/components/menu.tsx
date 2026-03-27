@@ -12,11 +12,11 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 const AnimatedView = Animated.createAnimatedComponent(ScrollView);
 
 const menuStyle = tva({
-  base: 'rounded-md bg-popover text-popover-foreground border border-border p-1 shadow-hard-5 max-h-[300px] overflow-y-auto',
+  base: 'rounded-xl bg-background border border-border p-2 shadow-hard-5 max-h-[300px] overflow-y-auto',
 });
 
 const menuItemStyle = tva({
-  base: 'min-w-[200px] p-3 flex-row items-center rounded data-[hover=true]:bg-accent data-[hover=true]:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:text-accent-foreground data-[focus=true]:bg-accent data-[focus=true]:text-accent-foreground data-[focus=true]:web:outline-none data-[focus=true]:web:outline-0 data-[disabled=true]:opacity-40 data-[disabled=true]:web:cursor-not-allowed data-[focus-visible=true]:web:outline-2 data-[focus-visible=true]:web:outline-ring data-[focus-visible=true]:web:outline data-[focus-visible=true]:web:cursor-pointer data-[disabled=true]:data-[focus=true]:bg-transparent',
+  base: 'min-w-[200px] p-2 flex-row items-center justify-between gap-3 rounded-lg data-[hover=true]:bg-background-element data-[active=true]:bg-background-element data-[focus=true]:bg-background-element data-[focus=true]:web:outline-none data-[focus=true]:web:outline-0 data-[disabled=true]:opacity-40 data-[disabled=true]:web:cursor-not-allowed data-[focus-visible=true]:web:outline-2 data-[focus-visible=true]:web:outline-primary data-[focus-visible=true]:web:outline data-[focus-visible=true]:web:cursor-pointer data-[disabled=true]:data-[focus=true]:bg-transparent',
 });
 
 const menuBackdropStyle = tva({
@@ -24,11 +24,11 @@ const menuBackdropStyle = tva({
 });
 
 const menuSeparatorStyle = tva({
-  base: 'bg-border h-px w-full',
+  base: 'bg-border h-px w-full my-2',
 });
 
 const menuItemLabelStyle = tva({
-  base: 'text-popover-foreground font-normal font-body',
+  base: 'text-foreground font-normal font-body',
 
   variants: {
     isTruncated: {
