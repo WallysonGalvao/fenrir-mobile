@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 
 import { ActivityIndicator } from '@/components/activity-indicator';
 import type { IconButton } from '@/components/header';
@@ -20,6 +20,7 @@ import type { Project } from '@/types/project';
 export default function HomeScreen() {
   const { t } = useTranslation();
   const theme = useTheme();
+  const router = useRouter();
 
   const { openDrawer } = useNavigation<DrawerNavigationProp<Record<string, undefined>>>();
 
@@ -47,7 +48,12 @@ export default function HomeScreen() {
 
   const renderProject = useCallback(
     ({ item }: { item: Project }) => (
-      <View className="flex-row items-center justify-between rounded-xl bg-background-element px-4 py-4">
+      <Pressable
+        onPress={() => router.push(`/${item.slug}/dashboard`)}
+        className="flex-row items-center justify-between rounded-xl bg-background-element px-4 py-4 active:opacity-80 web:hover:bg-foreground/5"
+        accessibilityRole="button"
+        accessibilityLabel={item.name}
+      >
         <View className="flex-1 flex-row items-center gap-4">
           <View className="h-10 w-10 items-center justify-center rounded-full bg-primary">
             <Text className="text-lg font-bold text-primary-foreground">
@@ -62,9 +68,9 @@ export default function HomeScreen() {
         <Text className="text-sm text-foreground-secondary">
           {new Date(item.created_at).toLocaleDateString()}
         </Text>
-      </View>
+      </Pressable>
     ),
-    [],
+    [router],
   );
 
   const renderEmpty = useCallback(() => {
@@ -81,7 +87,7 @@ export default function HomeScreen() {
       <SafeAreaView className="flex-1 bg-transparent">
         <Header title={t('home.title')} leftIcons={leftIcons} />
         <View className="flex-1 px-6 pb-safe-offset-0 pt-6 web:px-8">
-          <View className="max-w-[960px] flex-1 self-center">
+          <View className="max-w-240 flex-1 self-center">
             {isLoading ? (
               <View className="flex-1 items-center justify-center">
                 <ActivityIndicator size="large" />

@@ -5,6 +5,13 @@ const pt = {
     headerRightAction: 'Ação direita',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Título da página atual',
+    back: 'Voltar',
+  },
+  project: {
+    notFound: 'Projeto não encontrado',
+    createdAt: 'Criado em',
+    repositories: 'Repositórios',
+    noRepositories: 'Nenhum repositório vinculado',
   },
   home: {
     title: 'Projetos',

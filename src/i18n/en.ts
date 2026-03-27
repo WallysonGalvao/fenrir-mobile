@@ -5,6 +5,13 @@ const en = {
     headerRightAction: 'Right action',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Current page title',
+    back: 'Back',
+  },
+  project: {
+    notFound: 'Project not found',
+    createdAt: 'Created at',
+    repositories: 'Repositories',
+    noRepositories: 'No repositories linked',
   },
   home: {
     title: 'Projects',
