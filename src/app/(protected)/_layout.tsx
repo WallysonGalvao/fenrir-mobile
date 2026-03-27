@@ -7,7 +7,8 @@ import { Drawer } from 'expo-router/drawer';
 import { Platform } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { DrawerContent } from '@/components/drawer-content';
+import { DrawerContent, drawerWidths } from '@/components/drawer-content';
+import { DrawerLayoutProvider } from '@/components/drawer-layout-context';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -18,7 +19,11 @@ export default function ProtectedLayout() {
   const isWeb = Platform.OS === 'web';
   const [isDrawerCollapsed, setIsDrawerCollapsed] = useState(false);
 
-  const drawerWidth = isWeb ? (isDrawerCollapsed ? 88 : 280) : undefined;
+  const drawerWidth = isWeb
+    ? isDrawerCollapsed
+      ? drawerWidths.collapsed
+      : drawerWidths.expanded
+    : undefined;
 
   const handleToggleDrawerCollapse = useCallback(() => {
     setIsDrawerCollapsed((currentState) => !currentState);
@@ -53,16 +58,32 @@ export default function ProtectedLayout() {
   return (
     <ThemeProvider value={navigationTheme}>
       <AnimatedSplashOverlay />
-      <Drawer
-        drawerContent={renderDrawerContent}
-        screenOptions={{
-          headerShown: false,
-          drawerType: isWeb ? 'permanent' : 'front',
-          drawerStyle: drawerWidth ? { width: drawerWidth } : undefined,
-        }}
+      <DrawerLayoutProvider
+        isCollapsed={isDrawerCollapsed}
+        toggleCollapse={handleToggleDrawerCollapse}
       >
-        <Drawer.Screen name="(drawer)" options={{ drawerLabel: 'Home', title: 'Home' }} />
-      </Drawer>
+        <Drawer
+          drawerContent={renderDrawerContent}
+          screenOptions={{
+            headerShown: false,
+            drawerType: isWeb ? 'permanent' : 'front',
+            drawerStyle: drawerWidth
+              ? {
+                  width: drawerWidth,
+                  backgroundColor: 'transparent',
+                  borderRightWidth: 0,
+                }
+              : undefined,
+            overlayColor: isWeb ? 'transparent' : undefined,
+            swipeEdgeWidth: isWeb ? 0 : 32,
+            sceneStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <Drawer.Screen name="(drawer)" options={{ drawerLabel: 'Home', title: 'Home' }} />
+        </Drawer>
+      </DrawerLayoutProvider>
     </ThemeProvider>
   );
 }

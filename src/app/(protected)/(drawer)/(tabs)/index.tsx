@@ -11,6 +11,7 @@ import { FlatList, Text, View } from 'react-native';
 import { ActivityIndicator } from '@/components/activity-indicator';
 import type { IconButton } from '@/components/header';
 import { Header } from '@/components/header';
+import { ProtectedPageShell } from '@/components/protected-page-shell';
 import { SafeAreaView } from '@/components/safe-area-view';
 import { useTheme } from '@/hooks/use-theme';
 import { getAllProjects } from '@/lib/supabase/projects';
@@ -76,24 +77,28 @@ export default function HomeScreen() {
   }, [isLoading, t]);
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <Header title={t('home.title')} leftIcons={leftIcons} />
-      <View className="max-w-[800px] flex-1 px-6 pb-safe-offset-0">
-        {isLoading ? (
-          <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" />
+    <ProtectedPageShell title={t('home.title')}>
+      <SafeAreaView className="flex-1 bg-transparent">
+        <Header title={t('home.title')} leftIcons={leftIcons} />
+        <View className="flex-1 px-6 pb-safe-offset-0 pt-6 web:px-8">
+          <View className="max-w-[960px] flex-1 self-center">
+            {isLoading ? (
+              <View className="flex-1 items-center justify-center">
+                <ActivityIndicator size="large" />
+              </View>
+            ) : (
+              <FlatList
+                data={projects}
+                renderItem={renderProject}
+                keyExtractor={(item) => item.id}
+                contentContainerClassName="gap-2 pb-6"
+                ListEmptyComponent={renderEmpty}
+                showsVerticalScrollIndicator={false}
+              />
+            )}
           </View>
-        ) : (
-          <FlatList
-            data={projects}
-            renderItem={renderProject}
-            keyExtractor={(item) => item.id}
-            contentContainerClassName="gap-2 pb-6"
-            ListEmptyComponent={renderEmpty}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
-      </View>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
+    </ProtectedPageShell>
   );
 }

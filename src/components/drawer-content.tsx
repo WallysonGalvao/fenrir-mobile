@@ -1,11 +1,16 @@
+import { type ComponentProps, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+
 import {
   type DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { Image } from 'expo-image';
+import { type Href, usePathname, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
+import { useTranslation } from 'react-i18next';
+import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-reanimated';
 
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
 import { useSession } from '@/stores/auth';
@@ -17,126 +22,495 @@ type DrawerContentProps = DrawerContentComponentProps & {
   onToggleCollapse?: () => void;
 };
 
+type DrawerSymbolName = ComponentProps<typeof SymbolView>['name'];
+
+type DrawerLeafItem = {
+  key: string;
+  label: string;
+  href?: Href;
+  externalUrl?: string;
+};
+
+type DrawerEntry = {
+  key: string;
+  label: string;
+  description?: string;
+  icon: DrawerSymbolName;
+  href?: Href;
+  externalUrl?: string;
+  items?: DrawerLeafItem[];
+};
+
+const iconOnlyDrawerWidth = 88;
+const expandedDrawerWidth = 304;
+
+const linearTransition = LinearTransition.springify().damping(20).stiffness(220);
+
+function isInternalItemActive(pathname: string, href?: Href) {
+  if (!href) return false;
+
+  const targetPath = String(href);
+  return pathname === targetPath;
+}
+
+function getItemInitial(label: string) {
+  return label
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('');
+}
+
+function getOpenGroupsFromEntries(entries: DrawerEntry[], pathname: string) {
+  return entries.reduce<Record<string, boolean>>((accumulator, entry) => {
+    const hasActiveChild = entry.items?.some((item) => isInternalItemActive(pathname, item.href));
+    accumulator[entry.key] = Boolean(hasActiveChild);
+    return accumulator;
+  }, {});
+}
+
 export function DrawerContent({
   isCollapsed = false,
   onToggleCollapse,
-  ...props
+  navigation,
 }: DrawerContentProps) {
-  const session = useSession((s) => s.session);
-
+  const { t } = useTranslation();
+  const router = useRouter();
+  const pathname = usePathname();
   const colors = useTheme();
+  const session = useSession((state) => state.session);
+  const signOut = useSession((state) => state.signOut);
   const isWeb = Platform.OS === 'web';
 
   const userEmail = session?.user?.email ?? '';
   const userName = session?.user?.user_metadata?.full_name ?? userEmail.split('@')[0] ?? '';
-  const userInitial = userName.charAt(0).toUpperCase();
+  const userInitials = getItemInitial(userName || 'Fenrir');
+
+  const mainEntries = useMemo<DrawerEntry[]>(
+    () => [
+      {
+        key: 'projects',
+        label: t('drawer.items.projects'),
+        description: t('drawer.descriptions.projects'),
+        href: '/' as Href,
+        icon: {
+          ios: 'square.grid.2x2.fill',
+          android: 'dashboard',
+          web: 'dashboard',
+        },
+      },
+      {
+        key: 'explore',
+        label: t('drawer.items.explore'),
+        description: t('drawer.descriptions.explore'),
+        href: '/explore' as Href,
+        icon: {
+          ios: 'sparkles',
+          android: 'explore',
+          web: 'explore',
+        },
+      },
+    ],
+    [t],
+  );
+
+  const groupedEntries = useMemo<DrawerEntry[]>(
+    () => [
+      {
+        key: 'workspace',
+        label: t('drawer.groups.workspace'),
+        icon: {
+          ios: 'rectangle.3.group.fill',
+          android: 'grid_view',
+          web: 'grid_view',
+        },
+        items: [
+          {
+            key: 'all-projects',
+            label: t('drawer.items.allProjects'),
+            href: '/' as Href,
+          },
+          {
+            key: 'layout-reference',
+            label: t('drawer.items.layoutReference'),
+            href: '/explore' as Href,
+          },
+        ],
+      },
+      {
+        key: 'resources',
+        label: t('drawer.groups.resources'),
+        icon: {
+          ios: 'book.closed.fill',
+          android: 'menu_book',
+          web: 'menu_book',
+        },
+        items: [
+          {
+            key: 'expo-docs',
+            label: t('drawer.items.expoDocs'),
+            externalUrl: 'https://docs.expo.dev',
+          },
+          {
+            key: 'router-guide',
+            label: t('drawer.items.routerGuide'),
+            externalUrl: 'https://docs.expo.dev/router/introduction/',
+          },
+        ],
+      },
+    ],
+    [t],
+  );
+
+  const utilityEntries = useMemo<DrawerEntry[]>(
+    () => [
+      {
+        key: 'help',
+        label: t('drawer.items.help'),
+        externalUrl: 'https://docs.expo.dev',
+        icon: {
+          ios: 'questionmark.circle',
+          android: 'help',
+          web: 'help',
+        },
+      },
+      {
+        key: 'search',
+        label: t('drawer.items.search'),
+        href: '/explore' as Href,
+        icon: {
+          ios: 'magnifyingglass',
+          android: 'search',
+          web: 'search',
+        },
+      },
+    ],
+    [t],
+  );
+
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
+    getOpenGroupsFromEntries(groupedEntries, pathname),
+  );
+
+  useEffect(() => {
+    setOpenGroups((currentGroups) => {
+      const nextGroups = getOpenGroupsFromEntries(groupedEntries, pathname);
+
+      return groupedEntries.reduce<Record<string, boolean>>((accumulator, entry) => {
+        accumulator[entry.key] = currentGroups[entry.key] || nextGroups[entry.key];
+        return accumulator;
+      }, {});
+    });
+  }, [groupedEntries, pathname]);
+
+  const closeMobileDrawer = useCallback(() => {
+    if (!isWeb) navigation.closeDrawer();
+  }, [isWeb, navigation]);
+
+  const handleNavigate = useCallback(
+    async (item: DrawerLeafItem | DrawerEntry) => {
+      if (item.href) {
+        router.push(item.href);
+        closeMobileDrawer();
+        return;
+      }
+
+      if (item.externalUrl) {
+        await Linking.openURL(item.externalUrl);
+        closeMobileDrawer();
+      }
+    },
+    [closeMobileDrawer, router],
+  );
+
+  const handleToggleGroup = useCallback(
+    (groupKey: string) => {
+      if (isWeb && isCollapsed) {
+        onToggleCollapse?.();
+        setOpenGroups((currentGroups) => ({ ...currentGroups, [groupKey]: true }));
+        return;
+      }
+
+      setOpenGroups((currentGroups) => ({
+        ...currentGroups,
+        [groupKey]: !currentGroups[groupKey],
+      }));
+    },
+    [isCollapsed, isWeb, onToggleCollapse],
+  );
+
+  const handleSignOut = useCallback(async () => {
+    await signOut();
+    closeMobileDrawer();
+  }, [closeMobileDrawer, signOut]);
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      {/* ── Header: Logo + App Name ── */}
-      <View
-        className={`flex-row items-center px-4 web:py-4 ${isCollapsed ? 'justify-center' : 'justify-between'}`}
-      >
-        <View className={`flex-row items-center gap-3 ${isCollapsed ? 'justify-center' : 'flex-1'}`}>
-          <Image
-            source={require('@/assets/images/fenrir-logo.png')}
-            style={styles.image}
-            className="h-9 w-9"
-            tintColor={colors.text}
-            contentFit="contain"
-            accessibilityIgnoresInvertColors
-          />
-          {!isCollapsed ? <Text className="text-xl font-semibold text-foreground">Fenrir</Text> : null}
+    <SafeAreaView className="flex-1 bg-background-element web:min-h-screen">
+      <View className="flex-1 border-r border-border bg-background-element">
+        <View
+          className={`flex-row items-center gap-3 border-b border-border px-4 py-4 ${
+            isCollapsed ? 'justify-center' : 'justify-start'
+          }`}
+        >
+          <View className={`flex-row items-center gap-3 ${isCollapsed ? '' : 'flex-1'}`}>
+            <View className="h-11 w-11 items-center justify-center rounded-2xl bg-background-element">
+              <Image
+                source={require('@/assets/images/fenrir-logo.png')}
+                style={styles.image}
+                tintColor={colors.text}
+                contentFit="contain"
+                accessibilityIgnoresInvertColors
+              />
+            </View>
+
+            {!isCollapsed ? (
+              <View className="flex-1">
+                <Text className="text-[11px] font-medium uppercase tracking-[2.5px] text-foreground-secondary">
+                  {t('drawer.eyebrow')}
+                </Text>
+                <Text className="text-xl font-semibold text-foreground">{t('auth.appName')}</Text>
+              </View>
+            ) : null}
+          </View>
         </View>
 
-        {isWeb ? (
-          <Pressable
-            onPress={onToggleCollapse}
-            className="h-11 w-11 items-center justify-center rounded-lg active:opacity-70"
-            accessibilityRole="button"
-            accessibilityLabel={isCollapsed ? 'Expand drawer' : 'Collapse drawer'}
-            accessibilityHint="Toggles the sidebar size on web"
-          >
-            <SymbolView
-              name={{
-                ios: isCollapsed ? 'sidebar.left' : 'sidebar.leading',
-                android: isCollapsed ? 'left_panel_open' : 'left_panel_close',
-                web: isCollapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left',
-              }}
-              size={20}
-              tintColor={colors.text}
-            />
-          </Pressable>
-        ) : null}
-      </View>
+        <DrawerContentScrollView
+          contentContainerClassName="gap-6 px-3 py-4"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="gap-2">
+            {!isCollapsed ? (
+              <Text className="px-3 text-[11px] font-medium uppercase tracking-[2px] text-foreground-secondary">
+                {t('drawer.sections.main')}
+              </Text>
+            ) : null}
 
-      {/* ── Drawer Items ── */}
-      <DrawerContentScrollView
-        {...props}
-        contentContainerClassName={`px-3 ${isCollapsed ? 'items-center' : ''}`}
-      >
-        {props.state.routes.map((route, index) => {
-          const { options } = props.descriptors[route.key];
-          const label = options.drawerLabel ?? options.title ?? route.name;
-          const isFocused = props.state.index === index;
-          const stringLabel = typeof label === 'string' ? label : route.name;
-          const compactLabel = stringLabel.charAt(0).toUpperCase();
+            {mainEntries.map((item) => {
+              const isActive = isInternalItemActive(pathname, item.href);
 
-          return (
-            <Pressable
-              key={route.key}
-              onPress={() => props.navigation.navigate(route.name)}
-              className={`mb-1 rounded-lg active:opacity-70 ${
-                isCollapsed ? 'h-12 w-12 items-center justify-center px-0 py-0' : 'px-4 py-3'
-              } ${isFocused ? 'bg-background-element' : ''}`}
-              accessibilityRole="button"
-              accessibilityState={{ selected: isFocused }}
-              accessibilityLabel={stringLabel}
-              accessibilityHint={`Navigate to ${stringLabel}`}
-            >
-              {isCollapsed ? (
-                <Text
-                  className={`text-base font-semibold ${isFocused ? 'text-foreground' : 'text-foreground-secondary'}`}
+              return (
+                <Pressable
+                  key={item.key}
+                  onPress={() => handleNavigate(item)}
+                  className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
+                    isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
+                  } ${
+                    isActive
+                      ? 'border-primary/40 bg-background-element'
+                      : 'border-transparent bg-transparent'
+                  } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
+                  accessibilityRole="button"
+                  accessibilityLabel={item.label}
+                  accessibilityHint={t('drawer.hints.navigate')}
+                  accessibilityState={{ selected: isActive }}
                 >
-                  {compactLabel}
-                </Text>
-              ) : (
-                <Text
-                  className={`text-base font-medium ${isFocused ? 'text-foreground' : 'text-foreground-secondary'}`}
-                >
-                  {stringLabel}
-                </Text>
-              )}
-            </Pressable>
-          );
-        })}
-      </DrawerContentScrollView>
+                  <View
+                    className={`items-center justify-center rounded-xl ${
+                      isCollapsed ? 'h-10 w-10' : 'h-10 w-10 bg-background-element'
+                    }`}
+                  >
+                    <SymbolView name={item.icon} size={20} tintColor={colors.text} />
+                  </View>
 
-      {/* ── Footer: Logged-in User ── */}
-      <View className={`gap-3 border-t border-border py-4 ${isCollapsed ? 'px-4' : 'px-6'}`}>
-        <View className={`flex-row items-center gap-3 ${isCollapsed ? 'justify-center' : ''}`}>
-          <View className="h-9 w-9 items-center justify-center rounded-full bg-primary">
-            <Text className="text-base font-semibold text-background">{userInitial}</Text>
+                  {!isCollapsed ? (
+                    <View className="flex-1">
+                      <Text className="text-sm font-semibold text-foreground">{item.label}</Text>
+                      {item.description ? (
+                        <Text className="text-xs text-foreground-secondary">{item.description}</Text>
+                      ) : null}
+                    </View>
+                  ) : null}
+                </Pressable>
+              );
+            })}
           </View>
-          {!isCollapsed ? (
-            <View className="flex-1">
-              <Text className="text-sm font-medium text-foreground" numberOfLines={1}>
-                {userName}
+
+          <View className="gap-2">
+            {!isCollapsed ? (
+              <Text className="px-3 text-[11px] font-medium uppercase tracking-[2px] text-foreground-secondary">
+                {t('drawer.sections.collections')}
               </Text>
-              <Text className="text-xs text-foreground-secondary" numberOfLines={1}>
-                {userEmail}
-              </Text>
+            ) : null}
+
+            {groupedEntries.map((group) => {
+              const isOpen = openGroups[group.key];
+              const hasActiveChild = Boolean(
+                group.items?.some((item) => isInternalItemActive(pathname, item.href)),
+              );
+
+              return (
+                <Fragment key={group.key}>
+                  <Pressable
+                    onPress={() => handleToggleGroup(group.key)}
+                    className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
+                      isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
+                    } ${
+                      hasActiveChild || isOpen
+                        ? 'border-primary/35 bg-background-element'
+                        : 'border-transparent bg-transparent'
+                    } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
+                    accessibilityRole="button"
+                    accessibilityLabel={group.label}
+                    accessibilityHint={t('drawer.actions.toggleGroup')}
+                    accessibilityState={{ expanded: isOpen }}
+                  >
+                    <View
+                      className={`items-center justify-center rounded-xl ${
+                        isCollapsed ? 'h-10 w-10' : 'h-10 w-10 bg-background-element'
+                      }`}
+                    >
+                      <SymbolView name={group.icon} size={20} tintColor={colors.text} />
+                    </View>
+
+                    {!isCollapsed ? (
+                      <>
+                        <Text className="flex-1 text-sm font-semibold text-foreground">
+                          {group.label}
+                        </Text>
+                        <SymbolView
+                          name={{
+                            ios: 'chevron.down',
+                            android: 'expand_more',
+                            web: 'expand_more',
+                          }}
+                          size={18}
+                          tintColor={colors.text}
+                          style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
+                        />
+                      </>
+                    ) : null}
+                  </Pressable>
+
+                  {!isCollapsed && isOpen && group.items?.length ? (
+                    <Animated.View
+                      layout={linearTransition}
+                      entering={FadeInDown.duration(180)}
+                      exiting={FadeOutUp.duration(140)}
+                      className="ml-6 gap-1 border-l border-border pl-4"
+                    >
+                      {group.items.map((item) => {
+                        const isChildActive = isInternalItemActive(pathname, item.href);
+
+                        return (
+                          <Pressable
+                            key={item.key}
+                            onPress={() => handleNavigate(item)}
+                            className={`rounded-xl px-3 py-3 active:opacity-80 ${
+                              isChildActive ? 'bg-background-element' : 'bg-transparent'
+                            }`}
+                            accessibilityRole="button"
+                            accessibilityLabel={item.label}
+                            accessibilityHint={t('drawer.hints.navigate')}
+                            accessibilityState={{ selected: isChildActive }}
+                          >
+                            <Text
+                              className={`text-sm ${
+                                isChildActive ? 'font-semibold text-foreground' : 'text-foreground-secondary'
+                              }`}
+                            >
+                              {item.label}
+                            </Text>
+                          </Pressable>
+                        );
+                      })}
+                    </Animated.View>
+                  ) : null}
+                </Fragment>
+              );
+            })}
+          </View>
+        </DrawerContentScrollView>
+
+        <View className={`gap-3 border-t border-border p-3 ${isCollapsed ? 'items-center' : ''}`}>
+          <View className={`flex-row gap-2 ${isCollapsed ? 'justify-center' : ''}`}>
+            {utilityEntries.map((item) => {
+              const isActive = isInternalItemActive(pathname, item.href);
+
+              return (
+                <Pressable
+                  key={item.key}
+                  onPress={() => handleNavigate(item)}
+                  className={`rounded-xl border px-3 py-3 active:opacity-80 ${
+                    isCollapsed ? 'h-11 w-11 items-center justify-center px-0 py-0' : 'flex-1 flex-row items-center gap-2'
+                  } ${
+                    isActive ? 'border-primary/35 bg-background-element' : 'border-border bg-transparent'
+                  }`}
+                  accessibilityRole="button"
+                  accessibilityLabel={item.label}
+                  accessibilityHint={t('drawer.hints.navigate')}
+                  accessibilityState={{ selected: isActive }}
+                >
+                  <SymbolView name={item.icon} size={18} tintColor={colors.text} />
+                  {!isCollapsed ? (
+                    <Text className="text-sm font-medium text-foreground">{item.label}</Text>
+                  ) : null}
+                </Pressable>
+              );
+            })}
+          </View>
+
+          <View
+            className={`rounded-3xl border border-border bg-background px-3 py-3 ${
+              isCollapsed ? 'items-center' : 'gap-3'
+            }`}
+          >
+            <View className={`flex-row items-center gap-3 ${isCollapsed ? 'justify-center' : ''}`}>
+              <View className="h-11 w-11 items-center justify-center rounded-2xl bg-primary">
+                <Text className="text-sm font-bold text-primary-foreground">{userInitials}</Text>
+              </View>
+
+              {!isCollapsed ? (
+                <View className="flex-1">
+                  <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
+                    {userName}
+                  </Text>
+                  <Text className="text-xs text-foreground-secondary" numberOfLines={1}>
+                    {userEmail}
+                  </Text>
+                </View>
+              ) : null}
             </View>
-          ) : null}
+
+            <Pressable
+              onPress={() => void handleSignOut()}
+              className={`rounded-xl bg-background-element px-3 py-3 active:opacity-80 ${
+                isCollapsed ? 'h-11 w-11 items-center justify-center px-0 py-0' : 'flex-row items-center justify-center gap-2'
+              }`}
+              accessibilityRole="button"
+              accessibilityLabel={t('drawer.actions.signOut')}
+              accessibilityHint={t('drawer.hints.signOut')}
+            >
+              <SymbolView
+                name={{
+                  ios: 'rectangle.portrait.and.arrow.right',
+                  android: 'logout',
+                  web: 'logout',
+                }}
+                size={18}
+                tintColor={colors.text}
+              />
+              {!isCollapsed ? (
+                <Text className="text-sm font-semibold text-foreground">
+                  {t('drawer.actions.signOut')}
+                </Text>
+              ) : null}
+            </Pressable>
+          </View>
         </View>
       </View>
     </SafeAreaView>
   );
 }
 
+export const drawerWidths = {
+  collapsed: iconOnlyDrawerWidth,
+  expanded: expandedDrawerWidth,
+};
+
 const styles = StyleSheet.create({
   image: {
-    width: 36,
-    height: 36,
+    width: 28,
+    height: 28,
   },
 });
