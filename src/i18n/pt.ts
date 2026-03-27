@@ -3,6 +3,9 @@ const pt = {
     home: 'Início',
     explore: 'Explorar',
   },
+  quickAction: {
+    feedback: { title: 'Enviar Feedback', subtitle: 'Compartilhe sua opinião conosco' },
+  },
   common: {
     learnMore: 'Saiba mais',
     headerLeftAction: 'Ação esquerda',

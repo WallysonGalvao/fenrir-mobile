@@ -3,6 +3,10 @@ const en = {
     home: 'Home',
     explore: 'Explore',
   },
+  quickAction: {
+    settings: { title: 'Settings', subtitle: 'Open settings' },
+    feedback: { title: 'Send Feedback', subtitle: 'Share your thoughts with us' },
+  },
   common: {
     learnMore: 'Learn more',
     headerLeftAction: 'Left action',

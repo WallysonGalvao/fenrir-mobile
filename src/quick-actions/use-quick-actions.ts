@@ -19,12 +19,13 @@ export const useQuickActions = () => {
       const maxCount = QuickActions.maxCount;
 
       const actions = getQuickActions(t);
+      const limit = maxCount ?? actions.length;
 
-      const first = actions[0];
-      const last = actions[actions.length - 1];
-      const middle = actions.slice(1, -1);
-      const maxMiddle = (maxCount ?? actions.length) - 2;
-      const limitedActions = [first, ...middle.slice(0, maxMiddle), last];
+      // feedback is always the last item and must always be shown
+      const feedback = actions.find((a) => a.id === 'feedback');
+      const rest = actions.filter((a) => a.id !== 'feedback');
+      const limitedRest = rest.slice(0, feedback ? limit - 1 : limit);
+      const limitedActions = feedback ? [...limitedRest, feedback] : limitedRest;
 
       await QuickActions.setItems(limitedActions);
     };
