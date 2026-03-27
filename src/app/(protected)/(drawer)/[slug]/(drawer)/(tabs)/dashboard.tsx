@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useGlobalSearchParams, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ import { getProjectBySlug } from '@/lib/supabase/projects';
 
 export default function ProjectDashboardScreen() {
   const { t } = useTranslation();
-  const { slug } = useLocalSearchParams<{ slug: string }>();
+  const { slug } = useGlobalSearchParams<{ slug: string }>();
   const router = useRouter();
   const colors = useTheme();
 

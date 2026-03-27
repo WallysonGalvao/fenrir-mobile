@@ -5,9 +5,12 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { type Href, usePathname, useRouter } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 
-import { Linking, Platform, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, Text, View } from 'react-native';
+
+import { useTheme } from '@/hooks/use-theme';
 
 import { SafeAreaView } from '../safe-area-view';
 import { DrawerHeader } from './header';
@@ -20,6 +23,9 @@ import { DrawerUtilityBar } from './utility-bar';
 type DrawerContentProps = DrawerContentComponentProps & {
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
+  entries?: DrawerEntry[];
+  title?: string;
+  onBack?: () => void;
 };
 
 const iconOnlyDrawerWidth = 88;
@@ -37,10 +43,14 @@ export function DrawerContent({
   isCollapsed = false,
   onToggleCollapse,
   navigation,
+  entries,
+  title,
+  onBack,
 }: DrawerContentProps) {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
+  const colors = useTheme();
   const isWeb = Platform.OS === 'web';
 
   const mainEntries = useMemo<DrawerEntry[]>(
@@ -195,6 +205,59 @@ export function DrawerContent({
     },
     [isCollapsed, isWeb, onToggleCollapse],
   );
+
+  if (entries) {
+    return (
+      <SafeAreaView className="flex-1 bg-background-element">
+        <View className="flex-1 bg-background-element">
+          <View className="border-b border-border px-4 py-4">
+            {onBack ? (
+              <Pressable
+                onPress={() => {
+                  onBack();
+                  closeMobileDrawer();
+                }}
+                className="flex-row items-center gap-2 rounded-xl px-2 py-2 active:opacity-80"
+                accessibilityRole="button"
+                accessibilityLabel={t('common.back')}
+                accessibilityHint={t('drawer.hints.navigate')}
+              >
+                <SymbolView
+                  name={{ ios: 'chevron.left', android: 'arrow_back', web: 'arrow_back' }}
+                  size={16}
+                  tintColor={colors.textSecondary}
+                />
+                <Text className="text-sm text-foreground-secondary">
+                  {t('drawer.items.projects')}
+                </Text>
+              </Pressable>
+            ) : null}
+
+            {title ? (
+              <Text className="mt-2 px-2 text-lg font-bold text-foreground" numberOfLines={1}>
+                {title}
+              </Text>
+            ) : null}
+          </View>
+
+          <DrawerContentScrollView
+            contentContainerClassName="gap-2 px-3 py-4"
+            showsVerticalScrollIndicator={false}
+          >
+            {entries.map((item) => (
+              <DrawerNavItem
+                key={item.key}
+                item={item}
+                isCollapsed={false}
+                pathname={pathname}
+                onPress={() => void handleNavigate(item)}
+              />
+            ))}
+          </DrawerContentScrollView>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-background-element web:min-h-screen">
