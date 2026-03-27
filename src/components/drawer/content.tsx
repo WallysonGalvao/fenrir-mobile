@@ -196,10 +196,6 @@ export function DrawerContent({
     [isCollapsed, isWeb, onToggleCollapse],
   );
 
-  const handleSignOut = useCallback(() => {
-    closeMobileDrawer();
-  }, [closeMobileDrawer]);
-
   return (
     <SafeAreaView className="flex-1 bg-background-element web:min-h-screen">
       <View className="flex-1 bg-background-element">
@@ -257,7 +253,7 @@ export function DrawerContent({
             onPress={(item) => void handleNavigate(item)}
           />
 
-          <DrawerUserCard isCollapsed={isCollapsed} onSignOut={handleSignOut} />
+          <DrawerUserCard isCollapsed={isCollapsed} />
         </View>
       </View>
     </SafeAreaView>

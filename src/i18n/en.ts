@@ -60,11 +60,13 @@ const en = {
       collapse: 'Collapse drawer',
       expand: 'Expand drawer',
       toggleGroup: 'Toggle group visibility',
+      openUserMenu: 'User menu',
       signOut: 'Sign out',
     },
     hints: {
       navigate: 'Opens the selected destination',
       toggleDrawer: 'Toggles the sidebar size',
+      openUserMenu: 'Opens the user options menu',
       signOut: 'Signs out of the current session',
     },
   },

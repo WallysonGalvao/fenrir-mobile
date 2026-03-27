@@ -60,11 +60,13 @@ const pt = {
       collapse: 'Recolher drawer',
       expand: 'Expandir drawer',
       toggleGroup: 'Alterna a visibilidade do grupo',
+      openUserMenu: 'Menu do usuário',
       signOut: 'Sair',
     },
     hints: {
       navigate: 'Abre o destino selecionado',
       toggleDrawer: 'Alterna o tamanho do drawer lateral',
+      openUserMenu: 'Abre o menu de opções do usuário',
       signOut: 'Encerra a sessão atual',
     },
   },
