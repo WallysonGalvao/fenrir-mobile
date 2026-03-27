@@ -1,9 +1,33 @@
 import { Slot } from 'expo-router';
+import { NativeTabs } from 'expo-router/unstable-native-tabs';
 
-import { Platform } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 
-import ProjectTabs from '@/components/project-tabs';
+import { Colors } from '@/constants/theme';
 
 export default function ProjectTabsLayout() {
-  return Platform.OS === 'web' ? <Slot /> : <ProjectTabs />;
+  const scheme = useColorScheme();
+  const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
+
+  if (Platform.OS === 'web') {
+    return <Slot />;
+  }
+
+  return (
+    <NativeTabs
+      backgroundColor={colors.background}
+      indicatorColor={colors.backgroundElement}
+      labelStyle={{ selected: { color: colors.text } }}
+    >
+      <NativeTabs.Trigger name="dashboard">
+        <NativeTabs.Trigger.Label>Dashboard</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="square.grid.2x2.fill" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="settings">
+        <NativeTabs.Trigger.Label>Settings</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="gearshape.fill" />
+      </NativeTabs.Trigger>
+    </NativeTabs>
+  );
 }
