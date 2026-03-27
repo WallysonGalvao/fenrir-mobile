@@ -5,17 +5,15 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { type Href, usePathname, useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 
-import { Linking, Platform, Pressable, Text, View } from 'react-native';
-
-import { useTheme } from '@/hooks/use-theme';
+import { Linking, Platform, Text, View } from 'react-native';
 
 import { SafeAreaView } from '../safe-area-view';
 import { DrawerHeader } from './header';
 import { DrawerNavGroup } from './nav-group';
 import { DrawerNavItem } from './nav-item';
+import { ProjectSwitcher } from './project-switcher';
 import { type DrawerEntry, type DrawerLeafItem, isInternalItemActive } from './types';
 import { DrawerUserCard } from './user-card';
 import { DrawerUtilityBar } from './utility-bar';
@@ -25,7 +23,6 @@ type DrawerContentProps = DrawerContentComponentProps & {
   onToggleCollapse?: () => void;
   entries?: DrawerEntry[];
   title?: string;
-  onBack?: () => void;
 };
 
 const iconOnlyDrawerWidth = 88;
@@ -45,12 +42,10 @@ export function DrawerContent({
   navigation,
   entries,
   title,
-  onBack,
 }: DrawerContentProps) {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
-  const colors = useTheme();
   const isWeb = Platform.OS === 'web';
 
   const mainEntries = useMemo<DrawerEntry[]>(
@@ -210,56 +205,12 @@ export function DrawerContent({
     return (
       <SafeAreaView className="flex-1 bg-background-element">
         <View className="flex-1 bg-background-element">
-          <View className={`border-b border-border px-4 py-4 ${isCollapsed ? 'items-center' : ''}`}>
-            {onBack && !isCollapsed ? (
-              <Pressable
-                onPress={() => {
-                  onBack();
-                  closeMobileDrawer();
-                }}
-                className="flex-row items-center gap-2 rounded-xl px-2 py-2 active:opacity-80"
-                accessibilityRole="button"
-                accessibilityLabel={t('common.back')}
-                accessibilityHint={t('drawer.hints.navigate')}
-              >
-                <SymbolView
-                  name={{ ios: 'chevron.left', android: 'arrow_back', web: 'arrow_back' }}
-                  size={16}
-                  tintColor={colors.textSecondary}
-                />
-                <Text className="text-sm text-foreground-secondary">
-                  {t('drawer.items.projects')}
-                </Text>
-              </Pressable>
-            ) : null}
+          <DrawerHeader isCollapsed={isCollapsed} />
 
-            {onToggleCollapse ? (
-              <Pressable
-                onPress={onToggleCollapse}
-                className={`items-center justify-center rounded-xl active:opacity-80 ${
-                  isCollapsed ? 'h-11 w-11' : 'mt-2 h-9 w-9'
-                }`}
-                accessibilityRole="button"
-                accessibilityLabel={isCollapsed ? t('drawer.expand') : t('drawer.collapse')}
-                accessibilityHint={t('drawer.hints.navigate')}
-              >
-                <SymbolView
-                  name={
-                    isCollapsed
-                      ? { ios: 'sidebar.left', android: 'menu_open', web: 'menu_open' }
-                      : { ios: 'sidebar.left', android: 'menu_open', web: 'menu_open' }
-                  }
-                  size={18}
-                  tintColor={colors.textSecondary}
-                />
-              </Pressable>
-            ) : null}
-
-            {title && !isCollapsed ? (
-              <Text className="mt-2 px-2 text-lg font-bold text-foreground" numberOfLines={1}>
-                {title}
-              </Text>
-            ) : null}
+          <View
+            className={`border-b border-border px-4 py-3 ${isCollapsed ? 'items-center gap-3' : 'gap-1'}`}
+          >
+            {title ? <ProjectSwitcher currentSlug={title} isCollapsed={isCollapsed} /> : null}
           </View>
 
           <DrawerContentScrollView
