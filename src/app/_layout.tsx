@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import { BebasNeue_400Regular, useFonts } from '@expo-google-fonts/bebas-neue';
 import * as Sentry from '@sentry/react-native';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { Stack, useNavigationContainerRef } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { I18nextProvider } from 'react-i18next';
@@ -13,6 +14,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 
 import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
+import { queryClient } from '@/config/react-query';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
 import i18n from '@/i18n';
 import { initAuth } from '@/services/auth';
@@ -39,9 +41,11 @@ function RootLayout() {
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRootView}>
       <GluestackUIProvider mode="system">
-        <I18nextProvider i18n={i18n}>
-          <RootNavigator />
-        </I18nextProvider>
+        <QueryClientProvider client={queryClient}>
+          <I18nextProvider i18n={i18n}>
+            <RootNavigator />
+          </I18nextProvider>
+        </QueryClientProvider>
       </GluestackUIProvider>
     </GestureHandlerRootView>
   );

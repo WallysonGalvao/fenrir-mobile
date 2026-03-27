@@ -5912,7 +5912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:^5.94.5":
+"@tanstack/eslint-plugin-query@npm:^5.95.2":
   version: 5.95.2
   resolution: "@tanstack/eslint-plugin-query@npm:5.95.2"
   dependencies:
@@ -5943,7 +5943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-persist-client@npm:^5.95.0":
+"@tanstack/react-query-persist-client@npm:^5.95.2":
   version: 5.95.2
   resolution: "@tanstack/react-query-persist-client@npm:5.95.2"
   dependencies:
@@ -5955,7 +5955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.95.0":
+"@tanstack/react-query@npm:^5.95.2":
   version: 5.95.2
   resolution: "@tanstack/react-query@npm:5.95.2"
   dependencies:
@@ -9692,9 +9692,9 @@ __metadata:
     "@sentry/react-native": ^8.5.0
     "@supabase/supabase-js": ^2.100.0
     "@tailwindcss/postcss": ^4.2.0
-    "@tanstack/eslint-plugin-query": ^5.94.5
-    "@tanstack/react-query": ^5.95.0
-    "@tanstack/react-query-persist-client": ^5.95.0
+    "@tanstack/eslint-plugin-query": ^5.95.2
+    "@tanstack/react-query": ^5.95.2
+    "@tanstack/react-query-persist-client": ^5.95.2
     "@testing-library/react-native": ^13.3.3
     "@types/eslint": ^9.6.1
     "@types/jest": ^30.0.0

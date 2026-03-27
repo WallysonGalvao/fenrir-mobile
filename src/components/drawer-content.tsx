@@ -6,23 +6,28 @@ import { Image } from 'expo-image';
 
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useTheme } from '@/hooks/use-theme';
 import { useSession } from '@/stores/auth';
+
+import { SafeAreaView } from './safe-area-view';
 
 export function DrawerContent(props: DrawerContentComponentProps) {
   const session = useSession((s) => s.session);
+
+  const colors = useTheme();
 
   const userEmail = session?.user?.email ?? '';
   const userName = session?.user?.user_metadata?.full_name ?? userEmail.split('@')[0] ?? '';
 
   return (
-    <View className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background">
       {/* ── Header: Logo + App Name ── */}
-      <View className="flex-row items-center gap-3 px-6 pt-16 pb-6">
+      <View className="flex-row items-center gap-3 px-4">
         <Image
           source={require('@/assets/images/fenrir-logo.png')}
           style={styles.image}
           className="h-9 w-9"
-          tintColor="var(--color-foreground)"
+          tintColor={colors.text}
           contentFit="contain"
           accessibilityIgnoresInvertColors
         />
@@ -30,7 +35,7 @@ export function DrawerContent(props: DrawerContentComponentProps) {
       </View>
 
       {/* ── Drawer Items ── */}
-      <DrawerContentScrollView {...props} contentContainerClassName="px-3 py-2">
+      <DrawerContentScrollView {...props} contentContainerClassName="px-3">
         {props.state.routes.map((route, index) => {
           const { options } = props.descriptors[route.key];
           const label = options.drawerLabel ?? options.title ?? route.name;
@@ -72,7 +77,7 @@ export function DrawerContent(props: DrawerContentComponentProps) {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,97 +1,73 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 import { ActivityIndicator } from '@/components/activity-indicator';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+import { SafeAreaView } from '@/components/safe-area-view';
 import { getAllProjects } from '@/lib/supabase/projects';
 import type { Project } from '@/types/project';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const theme = useTheme();
 
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchProjects = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await getAllProjects();
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load projects');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+  const {
+    data: projects = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['projects'],
+    queryFn: getAllProjects,
+  });
 
   const renderProject = useCallback(
     ({ item }: { item: Project }) => (
-      <ThemedView type="backgroundElement" style={styles.projectCard}>
-        <View style={styles.projectHeader}>
-          <View style={[styles.projectAvatar, { backgroundColor: theme.primary }]}>
-            <ThemedText style={styles.projectAvatarText}>
+      <View className="flex-row items-center justify-between rounded-xl bg-background-element px-4 py-4">
+        <View className="flex-1 flex-row items-center gap-4">
+          <View className="h-10 w-10 items-center justify-center rounded-full bg-primary">
+            <Text className="text-lg font-bold text-primary-foreground">
               {item.name.charAt(0).toUpperCase()}
-            </ThemedText>
+            </Text>
           </View>
-          <View style={styles.projectInfo}>
-            <ThemedText type="default" style={styles.projectName}>
-              {item.name}
-            </ThemedText>
-            <ThemedText type="small" themeColor="textSecondary">
-              {item.slug}
-            </ThemedText>
+          <View className="flex-1 gap-0.5">
+            <Text className="text-base font-semibold text-foreground">{item.name}</Text>
+            <Text className="text-sm text-foreground-secondary">{item.slug}</Text>
           </View>
         </View>
-        <ThemedText type="small" themeColor="textSecondary">
+        <Text className="text-sm text-foreground-secondary">
           {new Date(item.created_at).toLocaleDateString()}
-        </ThemedText>
-      </ThemedView>
+        </Text>
+      </View>
     ),
-    [theme],
+    [],
   );
 
   const renderEmpty = useCallback(() => {
-    if (loading) return null;
+    if (isLoading) return null;
     return (
-      <View style={styles.emptyContainer}>
-        <ThemedText type="default" themeColor="textSecondary">
-          {t('home.noProjects', { defaultValue: 'No projects yet' })}
-        </ThemedText>
+      <View className="flex-1 items-center justify-center py-16">
+        <Text className="text-base text-foreground-secondary">{t('home.noProjects')}</Text>
       </View>
     );
-  }, [loading, t]);
+  }, [isLoading, t]);
 
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.headerSection}>
-          <ThemedText type="subtitle">{t('home.title')}</ThemedText>
+    <SafeAreaView className="flex-1 bg-background">
+      <View className="max-w-[800px] flex-1 px-6 pb-safe-offset-0">
+        <View className="py-6">
+          <Text className="text-3xl font-semibold text-foreground">{t('home.title')}</Text>
         </View>
 
         {error ? (
-          <ThemedView type="backgroundElement" style={styles.errorContainer}>
-            <ThemedText type="small" style={{ color: '#ef4444' }}>
-              {error}
-            </ThemedText>
-          </ThemedView>
+          <View className="mb-4 rounded-lg bg-background-element px-4 py-2">
+            <Text className="text-sm text-error">{error.message}</Text>
+          </View>
         ) : null}
 
-        {loading ? (
-          <View style={styles.loadingContainer}>
+        {isLoading ? (
+          <View className="flex-1 items-center justify-center">
             <ActivityIndicator size="large" />
           </View>
         ) : (
@@ -99,83 +75,12 @@ export default function HomeScreen() {
             data={projects}
             renderItem={renderProject}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContent}
+            contentContainerClassName="gap-2 pb-6"
             ListEmptyComponent={renderEmpty}
             showsVerticalScrollIndicator={false}
           />
         )}
-      </SafeAreaView>
-    </ThemedView>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    maxWidth: MaxContentWidth,
-    paddingBottom: BottomTabInset,
-  },
-  headerSection: {
-    paddingVertical: Spacing.four,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorContainer: {
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.two,
-    marginBottom: Spacing.three,
-  },
-  listContent: {
-    gap: Spacing.two,
-    paddingBottom: Spacing.four,
-  },
-  projectCard: {
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.three,
-    borderRadius: Spacing.three,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  projectHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.three,
-    flex: 1,
-  },
-  projectAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  projectAvatarText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#fff',
-  },
-  projectInfo: {
-    flex: 1,
-    gap: 2,
-  },
-  projectName: {
-    fontWeight: '600',
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: Spacing.six,
-  },
-});
