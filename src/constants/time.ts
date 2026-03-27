@@ -1,0 +1,6 @@
+export const ONE_SECOND_IN_MS = 1000;
+export const ONE_MINUTE_IN_MS = 60 * ONE_SECOND_IN_MS;
+export const FIVE_MINUTES_IN_MS = 5 * ONE_MINUTE_IN_MS;
+export const ONE_HOUR_IN_MS = 60 * ONE_MINUTE_IN_MS;
+export const ONE_DAY_IN_MS = 24 * ONE_HOUR_IN_MS;
+export const ONE_WEEK_IN_MS = 7 * ONE_DAY_IN_MS;

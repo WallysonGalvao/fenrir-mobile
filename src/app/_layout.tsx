@@ -13,7 +13,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 
 import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
+import { UpdateRequiredModal } from '@/components/update-required-modal';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
+import { useVersionCheck } from '@/hooks/use-version-check';
 import i18n from '@/i18n';
 import { initAuth } from '@/services/auth';
 import { useSession } from '@/stores/auth';
@@ -26,6 +28,9 @@ function RootLayout() {
 
   const [fontsLoaded] = useFonts({ BebasNeue_400Regular });
 
+  const { currentVersion, latestVersion, needsUpdate, isLoading, isForceUpdate, openStore } =
+    useVersionCheck();
+
   useEffect(() => initAuth(), []);
 
   useEffect(() => {
@@ -36,11 +41,20 @@ function RootLayout() {
 
   if (!fontsLoaded) return null;
 
+  const showUpdateModal = needsUpdate && !isLoading;
+
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRootView}>
       <GluestackUIProvider mode="system">
         <I18nextProvider i18n={i18n}>
           <RootNavigator />
+          <UpdateRequiredModal
+            visible={showUpdateModal}
+            currentVersion={currentVersion}
+            latestVersion={latestVersion}
+            isRequired={isForceUpdate}
+            onUpdate={openStore}
+          />
         </I18nextProvider>
       </GluestackUIProvider>
     </GestureHandlerRootView>
