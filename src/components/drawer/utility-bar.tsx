@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Pressable, Text, View } from 'react-native';
 
+import { Tooltip, TooltipContent, TooltipText } from '@/components/tooltip';
 import { useTheme } from '@/hooks/use-theme';
 
 import { type DrawerEntry, isInternalItemActive } from './types';
@@ -28,8 +29,9 @@ export function DrawerUtilityBar({
       {entries.map((item) => {
         const isActive = isInternalItemActive(pathname, item.href);
 
-        return (
+        const button = (triggerProps = {}) => (
           <Pressable
+            {...triggerProps}
             key={item.key}
             onPress={() => onPress(item)}
             className={`rounded-xl px-3 py-2.5 active:opacity-80 ${
@@ -43,6 +45,20 @@ export function DrawerUtilityBar({
             <SymbolView name={item.icon} size={18} tintColor={colors.textSecondary} />
             {!isCollapsed ? <Text className="text-sm text-foreground">{item.label}</Text> : null}
           </Pressable>
+        );
+
+        if (!isCollapsed) return button();
+
+        return (
+          <Tooltip
+            key={item.key}
+            trigger={(triggerProps) => button(triggerProps)}
+            placement="right"
+          >
+            <TooltipContent>
+              <TooltipText>{item.label}</TooltipText>
+            </TooltipContent>
+          </Tooltip>
         );
       })}
     </View>

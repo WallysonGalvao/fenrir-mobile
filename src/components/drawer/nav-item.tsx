@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Pressable, Text, View } from 'react-native';
 
+import { Tooltip, TooltipContent, TooltipText } from '@/components/tooltip';
 import { useTheme } from '@/hooks/use-theme';
 
 import { type DrawerEntry, isInternalItemActive } from './types';
@@ -19,8 +20,9 @@ export function DrawerNavItem({ item, isCollapsed, pathname, onPress }: DrawerNa
   const colors = useTheme();
   const isActive = isInternalItemActive(pathname, item.href);
 
-  return (
+  const pressable = (triggerProps = {}) => (
     <Pressable
+      {...triggerProps}
       onPress={onPress}
       className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
         isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
@@ -51,5 +53,15 @@ export function DrawerNavItem({ item, isCollapsed, pathname, onPress }: DrawerNa
         </View>
       ) : null}
     </Pressable>
+  );
+
+  if (!isCollapsed) return pressable();
+
+  return (
+    <Tooltip trigger={(triggerProps) => pressable(triggerProps)} placement="right">
+      <TooltipContent>
+        <TooltipText>{item.label}</TooltipText>
+      </TooltipContent>
+    </Tooltip>
   );
 }
