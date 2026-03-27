@@ -22,7 +22,7 @@ export function DrawerContent(props: DrawerContentComponentProps) {
   return (
     <SafeAreaView className="flex-1 bg-background">
       {/* ── Header: Logo + App Name ── */}
-      <View className="flex-row items-center gap-3 px-4">
+      <View className="flex-row items-center gap-3 px-4 web:py-4">
         <Image
           source={require('@/assets/images/fenrir-logo.png')}
           style={styles.image}

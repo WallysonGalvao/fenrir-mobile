@@ -1,26 +1,48 @@
 import { useCallback } from 'react';
 
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigation } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';
 
 import { FlatList, Text, View } from 'react-native';
 
 import { ActivityIndicator } from '@/components/activity-indicator';
+import type { IconButton } from '@/components/header';
+import { Header } from '@/components/header';
 import { SafeAreaView } from '@/components/safe-area-view';
+import { useTheme } from '@/hooks/use-theme';
 import { getAllProjects } from '@/lib/supabase/projects';
 import type { Project } from '@/types/project';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const theme = useTheme();
 
-  const {
-    data: projects = [],
-    isLoading,
-    error,
-  } = useQuery({
+  const { openDrawer } = useNavigation<DrawerNavigationProp<Record<string, undefined>>>();
+
+  const { data: projects = [], isLoading } = useQuery({
     queryKey: ['projects'],
     queryFn: getAllProjects,
   });
+
+  const handleDrawer = useCallback(() => openDrawer(), [openDrawer]);
+
+  const leftIcons: IconButton[] = [
+    {
+      icon: (
+        <SymbolView
+          name={{ ios: 'line.3.horizontal', android: 'menu', web: 'menu' }}
+          size={22}
+          tintColor={theme.text}
+        />
+      ),
+      onPress: handleDrawer,
+      accessibilityLabel: t('auth.backToLanding'),
+      accessibilityHint: t('auth.backToLanding'),
+    },
+  ];
 
   const renderProject = useCallback(
     ({ item }: { item: Project }) => (
@@ -55,17 +77,8 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
+      <Header title={t('home.title')} leftIcons={leftIcons} />
       <View className="max-w-[800px] flex-1 px-6 pb-safe-offset-0">
-        <View className="py-6">
-          <Text className="text-3xl font-semibold text-foreground">{t('home.title')}</Text>
-        </View>
-
-        {error ? (
-          <View className="mb-4 rounded-lg bg-background-element px-4 py-2">
-            <Text className="text-sm text-error">{error.message}</Text>
-          </View>
-        ) : null}
-
         {isLoading ? (
           <View className="flex-1 items-center justify-center">
             <ActivityIndicator size="large" />
