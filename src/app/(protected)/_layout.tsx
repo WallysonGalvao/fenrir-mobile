@@ -1,51 +1,20 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { usePathname, useRouter } from 'expo-router';
-import { Drawer } from 'expo-router/drawer';
-
-import { Platform } from 'react-native';
+import { Slot } from 'expo-router';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { DrawerContent, drawerWidths } from '@/components/drawer/content';
 import { DrawerLayoutProvider } from '@/components/drawer/layout-context';
-import { getProjectDrawerEntries } from '@/features/project/get-drawer-entries';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
-
-const PROJECT_ROUTE_RE = /^\/([^/]+)\/(dashboard|settings)/;
 
 export default function ProtectedLayout() {
   const colorScheme = useColorScheme();
   const colors = useTheme();
+
   const isDark = colorScheme === 'dark';
-  const isWeb = Platform.OS === 'web';
-  const [isDrawerCollapsed, setIsDrawerCollapsed] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
 
-  const projectMatch = PROJECT_ROUTE_RE.exec(pathname);
-  const projectSlug = projectMatch ? projectMatch[1] : null;
-
-  const projectEntries = useMemo(
-    () => (projectSlug ? getProjectDrawerEntries(projectSlug) : undefined),
-    [projectSlug],
-  );
-
-  const handleProjectBack = useCallback(() => {
-    router.push('/');
-  }, [router]);
-
-  const drawerWidth = isWeb
-    ? isDrawerCollapsed
-      ? drawerWidths.collapsed
-      : drawerWidths.expanded
-    : undefined;
-
-  const handleToggleDrawerCollapse = useCallback(() => {
-    setIsDrawerCollapsed((currentState) => !currentState);
-  }, []);
+  const toggleCollapse = useCallback(() => {}, []);
 
   const navigationTheme = useMemo(
     () => ({
@@ -62,55 +31,11 @@ export default function ProtectedLayout() {
     [isDark, colors],
   );
 
-  const renderDrawerContent = useCallback(
-    (props: DrawerContentComponentProps) => (
-      <DrawerContent
-        {...props}
-        isCollapsed={isDrawerCollapsed}
-        onToggleCollapse={isWeb ? handleToggleDrawerCollapse : undefined}
-        entries={projectEntries}
-        title={projectSlug ?? undefined}
-        onBack={projectEntries ? handleProjectBack : undefined}
-      />
-    ),
-    [
-      handleProjectBack,
-      handleToggleDrawerCollapse,
-      isDrawerCollapsed,
-      isWeb,
-      projectEntries,
-      projectSlug,
-    ],
-  );
-
   return (
     <ThemeProvider value={navigationTheme}>
       <AnimatedSplashOverlay />
-      <DrawerLayoutProvider
-        isCollapsed={isDrawerCollapsed}
-        toggleCollapse={handleToggleDrawerCollapse}
-      >
-        <Drawer
-          drawerContent={renderDrawerContent}
-          screenOptions={{
-            headerShown: false,
-            drawerType: isWeb ? 'permanent' : 'front',
-            drawerStyle: drawerWidth
-              ? {
-                  width: drawerWidth,
-                  backgroundColor: 'transparent',
-                  borderRightWidth: 0,
-                }
-              : undefined,
-            overlayColor: isWeb ? 'transparent' : undefined,
-            swipeEdgeWidth: isWeb ? 0 : 32,
-            sceneStyle: {
-              backgroundColor: 'transparent',
-            },
-          }}
-        >
-          <Drawer.Screen name="(drawer)" options={{ drawerLabel: 'Home', title: 'Home' }} />
-        </Drawer>
+      <DrawerLayoutProvider isCollapsed={false} toggleCollapse={toggleCollapse}>
+        <Slot />
       </DrawerLayoutProvider>
     </ThemeProvider>
   );
