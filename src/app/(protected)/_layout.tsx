@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
@@ -15,6 +15,14 @@ export default function ProtectedLayout() {
   const colorScheme = useColorScheme();
   const colors = useTheme();
   const isDark = colorScheme === 'dark';
+  const isWeb = Platform.OS === 'web';
+  const [isDrawerCollapsed, setIsDrawerCollapsed] = useState(false);
+
+  const drawerWidth = isWeb ? (isDrawerCollapsed ? 88 : 280) : undefined;
+
+  const handleToggleDrawerCollapse = useCallback(() => {
+    setIsDrawerCollapsed((currentState) => !currentState);
+  }, []);
 
   const navigationTheme = useMemo(
     () => ({
@@ -32,11 +40,15 @@ export default function ProtectedLayout() {
   );
 
   const renderDrawerContent = useCallback(
-    (props: DrawerContentComponentProps) => <DrawerContent {...props} />,
-    [],
+    (props: DrawerContentComponentProps) => (
+      <DrawerContent
+        {...props}
+        isCollapsed={isDrawerCollapsed}
+        onToggleCollapse={isWeb ? handleToggleDrawerCollapse : undefined}
+      />
+    ),
+    [handleToggleDrawerCollapse, isDrawerCollapsed, isWeb],
   );
-
-  const isWeb = Platform.OS === 'web';
 
   return (
     <ThemeProvider value={navigationTheme}>
@@ -46,7 +58,7 @@ export default function ProtectedLayout() {
         screenOptions={{
           headerShown: false,
           drawerType: isWeb ? 'permanent' : 'front',
-          drawerStyle: isWeb ? { width: 280 } : undefined,
+          drawerStyle: drawerWidth ? { width: drawerWidth } : undefined,
         }}
       >
         <Drawer.Screen name="(drawer)" options={{ drawerLabel: 'Home', title: 'Home' }} />
