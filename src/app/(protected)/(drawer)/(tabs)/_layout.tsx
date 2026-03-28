@@ -30,6 +30,10 @@ export default function AppTabs() {
 
   const labelSelectedStyle = Platform.OS === 'ios' ? { color: tintColor } : undefined;
 
+  if (Platform.OS === 'web') {
+    return <Slot />;
+  }
+
   if (!isIOS26OrLater) {
     return (
       <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
@@ -61,10 +65,6 @@ export default function AppTabs() {
         />
       </Tabs>
     );
-  }
-
-  if (Platform.OS === 'web') {
-    return <Slot />;
   }
 
   return (
