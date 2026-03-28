@@ -1,10 +1,46 @@
-import 'dotenv/config';
-
+import { config as loadEnv } from 'dotenv';
 import type { ConfigContext, ExpoConfig } from 'expo/config';
+
+type AppVariant = 'development' | 'preview' | 'production';
+
+function getAppVariant(): AppVariant {
+  const raw = process.env.APP_VARIANT;
+  if (raw === 'development' || raw === 'preview' || raw === 'production') return raw;
+  return 'development';
+}
+
+const variant = getAppVariant();
+
+// Load flavor-specific env first, then fall back to base .env
+loadEnv({ path: `.env.${variant}`, override: false });
+loadEnv({ path: '.env', override: false });
+
+const variantConfig: Record<
+  AppVariant,
+  { name: string; iosBundleIdentifier: string; androidPackage: string }
+> = {
+  development: {
+    name: 'Fenrir (Dev)',
+    iosBundleIdentifier: 'com.threewolves.fenrir.development',
+    androidPackage: 'com.threewolves.fenrir.development',
+  },
+  preview: {
+    name: 'Fenrir (Preview)',
+    iosBundleIdentifier: 'com.threewolves.fenrir.preview',
+    androidPackage: 'com.threewolves.fenrir.preview',
+  },
+  production: {
+    name: 'Fenrir',
+    iosBundleIdentifier: 'com.threewolves.fenrir',
+    androidPackage: 'com.threewolves.fenrir',
+  },
+};
+
+const configForVariant = variantConfig[variant];
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'fenrir',
+  name: configForVariant.name,
   slug: 'fenrir',
   version: '1.0.0',
   orientation: 'portrait',
@@ -13,10 +49,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: 'automatic',
   ios: {
     icon: './assets/expo.icon',
-    bundleIdentifier: 'com.threewolves.fenrir',
+    bundleIdentifier: configForVariant.iosBundleIdentifier,
   },
   android: {
-    package: 'com.threewolves.fenrir',
+    package: configForVariant.androidPackage,
     adaptiveIcon: {
       backgroundColor: '#CFE8F7',
       foregroundImage: './assets/images/android-icon-foreground.png',
@@ -62,6 +98,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     reactCompiler: true,
   },
   extra: {
+    appVariant: variant,
     sentryDNS: process.env.SENTRY_DSN,
     supabaseUrl: process.env.VITE_SUPABASE_URL,
     supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY,

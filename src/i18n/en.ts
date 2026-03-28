@@ -1,4 +1,12 @@
 const en = {
+  tabs: {
+    home: 'Home',
+    explore: 'Explore',
+  },
+  quickAction: {
+    settings: { title: 'Settings', subtitle: 'Open settings' },
+    feedback: { title: 'Send Feedback', subtitle: 'Share your thoughts with us' },
+  },
   common: {
     learnMore: 'Learn more',
     headerLeftAction: 'Left action',
@@ -132,6 +140,23 @@ const en = {
       'Your password has been updated successfully. You can now sign in with your new password.',
     agreeTerms:
       'By clicking Sign in, you agree with our <1>Terms and Conditions</1> and <2>Privacy Policy</2>.',
+  },
+  update: {
+    requiredTitle: 'Update Required',
+    availableTitle: 'Update Available',
+    requiredDescription:
+      'A new version of the app is required to continue. Please update to the latest version.',
+    availableDescription:
+      'A new version of the app is available. Update now to get the latest features and improvements.',
+    currentVersion: 'Current version',
+    latestVersion: 'Latest version',
+    updateNow: 'Update now',
+    later: 'Later',
+  },
+  security: {
+    compromisedTitle: 'Security Alert',
+    compromisedDescription:
+      'This device appears to be rooted or jailbroken. For your security, the app cannot run on compromised devices.',
   },
 } as const;
 

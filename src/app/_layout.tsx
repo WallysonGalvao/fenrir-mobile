@@ -13,10 +13,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { StyleSheet } from 'react-native';
 
+import { DeviceCompromisedModal } from '@/components/device-compromised-modal';
 import { GluestackUIProvider } from '@/components/gluestack-ui-provider';
+import { UpdateRequiredModal } from '@/components/update-required-modal';
 import { queryClient } from '@/config/react-query';
 import { useRozeniteDevTools } from '@/hooks/use-rozenite-dev-tools';
+import { useVersionCheck } from '@/hooks/use-version-check';
 import i18n from '@/i18n';
+import { useQuickActionRouting } from '@/quick-actions/use-quick-action-routing';
+import { useQuickActions } from '@/quick-actions/use-quick-actions';
 import { initAuth } from '@/services/auth';
 import { useSession } from '@/stores/auth';
 
@@ -28,6 +33,12 @@ function RootLayout() {
 
   const [fontsLoaded] = useFonts({ BebasNeue_400Regular });
 
+  const { currentVersion, latestVersion, needsUpdate, isLoading, isForceUpdate, openStore } =
+    useVersionCheck();
+
+  useQuickActions();
+  useQuickActionRouting();
+
   useEffect(() => initAuth(), []);
 
   useEffect(() => {
@@ -38,12 +49,22 @@ function RootLayout() {
 
   if (!fontsLoaded) return null;
 
+  const showUpdateModal = needsUpdate && !isLoading;
+
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRootView}>
       <GluestackUIProvider mode="system">
         <QueryClientProvider client={queryClient}>
           <I18nextProvider i18n={i18n}>
             <RootNavigator />
+            <UpdateRequiredModal
+              visible={showUpdateModal}
+              currentVersion={currentVersion}
+              latestVersion={latestVersion}
+              isRequired={isForceUpdate}
+              onUpdate={openStore}
+            />
+            <DeviceCompromisedModal />
           </I18nextProvider>
         </QueryClientProvider>
       </GluestackUIProvider>

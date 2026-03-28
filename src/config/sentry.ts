@@ -4,13 +4,16 @@ import Constants from 'expo-constants';
 
 import { Platform } from 'react-native';
 
+import { getAppVariant } from '@/utils/flavor';
+
 const isDev = __DEV__;
+const appVariant = getAppVariant();
 
 const dsn = Constants.expoConfig?.extra?.sentryDNS;
 
 Sentry.init({
   dsn,
-  environment: isDev ? 'development' : 'production',
+  environment: appVariant,
 
   // Adds more context data to events (IP address, cookies, user, etc.)
   // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
