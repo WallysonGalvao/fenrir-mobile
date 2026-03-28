@@ -2,17 +2,13 @@ import { type PropsWithChildren } from 'react';
 
 import { SymbolView } from 'expo-symbols';
 
-import { Platform, Pressable, Text, View } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
 
 import { useDrawerLayout } from './drawer/layout-context';
 
-type ProtectedPageShellProps = PropsWithChildren<{
-  title: string;
-}>;
-
-export function ProtectedPageShell({ children, title }: ProtectedPageShellProps) {
+export function ProtectedPageShell({ children }: PropsWithChildren) {
   const { isCollapsed, toggleCollapse } = useDrawerLayout();
   const colors = useTheme();
 
@@ -41,10 +37,6 @@ export function ProtectedPageShell({ children, title }: ProtectedPageShellProps)
               tintColor={colors.text}
             />
           </Pressable>
-
-          <View className="h-4 w-px bg-border" />
-
-          <Text className="text-xl font-semibold text-foreground">{title}</Text>
         </View>
 
         <View className="flex-1 overflow-hidden">{children}</View>
