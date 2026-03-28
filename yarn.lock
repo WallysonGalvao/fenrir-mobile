@@ -3390,6 +3390,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-primitive@npm:2.1.4":
+  version: 2.1.4
+  resolution: "@radix-ui/react-primitive@npm:2.1.4"
+  dependencies:
+    "@radix-ui/react-slot": 1.2.4
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 8b4cf865b4d4d135c9c6768856fdad0f62cbe43a2819471eb682061d2076222c3368ae0b771516426b264afcaf0a0032943408b3a789cbb77273152dd4a06d05
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-roving-focus@npm:1.1.11":
   version: 1.1.11
   resolution: "@radix-ui/react-roving-focus@npm:1.1.11"
@@ -3417,6 +3436,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-separator@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "@radix-ui/react-separator@npm:1.1.8"
+  dependencies:
+    "@radix-ui/react-primitive": 2.1.4
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 6333e501e8bd8ce750c7f666cb1fa76454681424ceb33f77602bbb46abfaccfeafc01d5153973678e844fdb1363800fcbc0b2ab822db37924ffd0ccb04eeb1d0
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-slot@npm:1.2.3":
   version: 1.2.3
   resolution: "@radix-ui/react-slot@npm:1.2.3"
@@ -3432,7 +3470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-slot@npm:^1.2.0":
+"@radix-ui/react-slot@npm:1.2.4, @radix-ui/react-slot@npm:^1.2.0":
   version: 1.2.4
   resolution: "@radix-ui/react-slot@npm:1.2.4"
   dependencies:
@@ -5526,6 +5564,58 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
   checksum: 7e1e86cc4686a9f624d3bc3182c29e371df79a37ad31078968fde3a980dafeb3ac44f9d3c423fb1047d0d4f8929d51a69351193eee7584dbc99a9150342cb6ff
+  languageName: node
+  linkType: hard
+
+"@rn-primitives/separator@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@rn-primitives/separator@npm:1.4.0"
+  dependencies:
+    "@radix-ui/react-separator": ^1.1.8
+    "@rn-primitives/slot": 1.4.0
+    "@rn-primitives/types": 1.4.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native:
+      optional: true
+    react-native-web:
+      optional: true
+  checksum: bfecd9eededd2dc5dc19b2d936dd0b6dcffec7191ea0c13e7ebef39f35a02e6f480bbe833fba99efc55439f955d8f67d590638af4aba3f8bec4e15eb7ed35e81
+  languageName: node
+  linkType: hard
+
+"@rn-primitives/slot@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@rn-primitives/slot@npm:1.4.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native:
+      optional: true
+    react-native-web:
+      optional: true
+  checksum: 528fec68cc327cda5238d36d0f6dedf6846c64738967e0c2f98c6ac3be37386b414ac7618a4a03b8203e9b37aaa94e14ccb30baf7f5bcb92e1e9a656a85a8c20
+  languageName: node
+  linkType: hard
+
+"@rn-primitives/types@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@rn-primitives/types@npm:1.4.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native:
+      optional: true
+    react-native-web:
+      optional: true
+  checksum: 41b3d24205c66dced726bf18f33f78a3db477c180c0b134f3320630dca072a373cbddf66be9f0243aea87fc5ad89708fbe33e712a4261c3a2329ab75517bad0c
   languageName: node
   linkType: hard
 
@@ -10031,6 +10121,7 @@ __metadata:
     "@react-navigation/drawer": ^7.9.7
     "@react-navigation/elements": ^2.9.10
     "@react-navigation/native": ^7.1.33
+    "@rn-primitives/separator": ^1.4.0
     "@rozenite/expo-atlas-plugin": ^1.6.0
     "@rozenite/metro": ^1.5.1
     "@rozenite/mmkv-plugin": ^1.6.0

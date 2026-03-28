@@ -4,13 +4,16 @@ import { SymbolView } from 'expo-symbols';
 
 import { Platform, Pressable, View } from 'react-native';
 
+import { Breadcrumb, useBreadcrumbs } from '@/components/breadcrumb';
 import { useTheme } from '@/hooks/use-theme';
 
 import { useDrawerLayout } from '../drawer/layout-context';
+import { Separator } from '../separator';
 
 export function WebShell({ children }: PropsWithChildren) {
   const { isCollapsed, toggleCollapse } = useDrawerLayout();
   const colors = useTheme();
+  const breadcrumbs = useBreadcrumbs();
 
   if (Platform.OS !== 'web') {
     return <>{children}</>;
@@ -37,6 +40,8 @@ export function WebShell({ children }: PropsWithChildren) {
               tintColor={colors.text}
             />
           </Pressable>
+          <Separator orientation="vertical" className="h-4" />
+          <Breadcrumb entries={breadcrumbs} />
         </View>
 
         <View className="flex-1 overflow-hidden">{children}</View>
