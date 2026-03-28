@@ -6,9 +6,9 @@ import { Platform, Pressable, View } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
 
-import { useDrawerLayout } from './drawer/layout-context';
+import { useDrawerLayout } from '../drawer/layout-context';
 
-export function ProtectedPageShell({ children }: PropsWithChildren) {
+export function WebShell({ children }: PropsWithChildren) {
   const { isCollapsed, toggleCollapse } = useDrawerLayout();
   const colors = useTheme();
 

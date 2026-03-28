@@ -1,14 +1,14 @@
 import { Stack } from 'expo-router';
 
-import { ProtectedPageShell } from '@/components/protected-page-shell';
+import { WebShell } from '@/components/layout/web-shell';
 
 export default function DrawerGroupWebLayout() {
   return (
-    <ProtectedPageShell>
+    <WebShell>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="[slug]" />
       </Stack>
-    </ProtectedPageShell>
+    </WebShell>
   );
 }

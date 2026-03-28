@@ -11,7 +11,7 @@ export default function ProjectSettingsScreen() {
   const { slug } = useGlobalSearchParams<{ slug: string }>();
 
   return (
-    <SafeAreaView className="flex-1 bg-transparent">
+    <SafeAreaView className="flex-1 bg-background">
       <Header title={t('project.settings')} />
       <ScrollView
         contentContainerClassName="gap-6 px-6 py-6 pb-safe-offset-6 web:px-8"

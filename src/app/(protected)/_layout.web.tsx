@@ -8,7 +8,7 @@ import { Drawer } from 'expo-router/drawer';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { DrawerContent, drawerWidths } from '@/components/drawer/content';
 import { DrawerLayoutProvider } from '@/components/drawer/layout-context';
-import { getProjectDrawerEntries } from '@/features/project/get-drawer-entries';
+import { getProjectDrawerEntries } from '@/components/drawer/project-entries';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
 

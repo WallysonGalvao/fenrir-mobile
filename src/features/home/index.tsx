@@ -59,7 +59,7 @@ export default function HomeScreen() {
   }, [isLoading, t]);
 
   return (
-    <SafeAreaView className="flex-1 bg-transparent">
+    <SafeAreaView className="flex-1 bg-background">
       <Header title={t('home.title')} />
       <View className="flex-1 px-6 pb-safe-offset-0 pt-6 web:px-8">
         <View className="max-w-240 flex-1 self-center">

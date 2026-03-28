@@ -32,7 +32,7 @@ export default function ProjectDashboardScreen() {
   const title = project?.name ?? slug;
 
   return (
-    <SafeAreaView className="flex-1 bg-transparent">
+    <SafeAreaView className="flex-1 bg-background">
       <Header title={title} />
       <View className="h-14 flex-row items-center gap-2 border-b border-border px-4 web:hidden">
         <Pressable
