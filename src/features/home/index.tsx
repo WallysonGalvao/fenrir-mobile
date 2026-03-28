@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 import { FlatList, Pressable, Text, View } from 'react-native';
 
-import { ActivityIndicator } from '@/components/activity-indicator';
 import { Header } from '@/components/header';
 import { SafeAreaView } from '@/components/safe-area-view';
 import { getAllProjects } from '@/lib/supabase/projects';
@@ -61,24 +60,15 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className="flex-1 bg-background">
       <Header title={t('home.title')} />
-      <View className="flex-1 px-6 pb-safe-offset-0 pt-6 web:px-8">
-        <View className="max-w-240 flex-1 self-center">
-          {isLoading ? (
-            <View className="flex-1 items-center justify-center">
-              <ActivityIndicator size="large" />
-            </View>
-          ) : (
-            <FlatList
-              data={projects}
-              renderItem={renderProject}
-              keyExtractor={(item) => item.id}
-              contentContainerClassName="gap-2 pb-6"
-              ListEmptyComponent={renderEmpty}
-              showsVerticalScrollIndicator={false}
-            />
-          )}
-        </View>
-      </View>
+
+      <FlatList
+        data={projects}
+        renderItem={renderProject}
+        keyExtractor={(item) => item.id}
+        contentContainerClassName="gap-2 pb-6 p-4"
+        ListEmptyComponent={renderEmpty}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 }
