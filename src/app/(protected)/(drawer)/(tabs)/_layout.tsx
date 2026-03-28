@@ -1,8 +1,7 @@
-/* eslint-disable react-native/split-platform-components */
 import React from 'react';
 
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
-import { Tabs } from 'expo-router';
+import { Slot, Tabs } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { SymbolView } from 'expo-symbols';
 import { useTranslation } from 'react-i18next';

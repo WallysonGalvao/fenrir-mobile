@@ -2,6 +2,8 @@ const pt = {
   tabs: {
     home: 'Início',
     explore: 'Explorar',
+    dashboard: 'Dashboard',
+    settings: 'Configurações',
   },
   quickAction: {
     feedback: { title: 'Enviar Feedback', subtitle: 'Compartilhe sua opinião conosco' },

@@ -2,6 +2,8 @@ const en = {
   tabs: {
     home: 'Home',
     explore: 'Explore',
+    dashboard: 'Dashboard',
+    settings: 'Settings',
   },
   quickAction: {
     settings: { title: 'Settings', subtitle: 'Open settings' },
