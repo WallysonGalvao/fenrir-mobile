@@ -53,6 +53,7 @@ export default function HomeScreen() {
         className="flex-row items-center justify-between rounded-xl bg-background-element px-4 py-4 active:opacity-80 web:hover:bg-foreground/5"
         accessibilityRole="button"
         accessibilityLabel={item.name}
+        accessibilityHint={t('home.navigateToProject', { project: item.name })}
       >
         <View className="flex-1 flex-row items-center gap-4">
           <View className="h-10 w-10 items-center justify-center rounded-full bg-primary">
@@ -70,7 +71,7 @@ export default function HomeScreen() {
         </Text>
       </Pressable>
     ),
-    [router],
+    [router, t],
   );
 
   const renderEmpty = useCallback(() => {

@@ -29,6 +29,8 @@ const pt = {
     devTools: 'Ferramentas de dev',
     freshStart: 'Começar do zero',
     noProjects: 'Nenhum projeto encontrado ainda.',
+    navigateToProject: 'Navegar para {{project}}',
+
     devMenu: {
       web: 'use as ferramentas de desenvolvedor do navegador',
       deviceStart: 'agite o dispositivo ou pressione',

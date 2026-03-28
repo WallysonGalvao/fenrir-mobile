@@ -30,6 +30,8 @@ const en = {
     devTools: 'Dev tools',
     freshStart: 'Fresh start',
     noProjects: 'No projects yet.',
+    navigateToProject: 'Navigate to {{project}}',
+
     devMenu: {
       web: 'use browser devtools',
       deviceStart: 'shake device or press',
