@@ -4,6 +4,7 @@ import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-
 
 import { Pressable, Text, View } from 'react-native';
 
+import { Tooltip, TooltipContent, TooltipText } from '@/components/tooltip';
 import { useTheme } from '@/hooks/use-theme';
 
 import { type DrawerEntry, type DrawerLeafItem, isInternalItemActive } from './types';
@@ -33,44 +34,59 @@ export function DrawerNavGroup({
     group.items?.some((item) => isInternalItemActive(pathname, item.href)),
   );
 
+  const button = (triggerProps = {}) => (
+    <Pressable
+      {...triggerProps}
+      onPress={onToggle}
+      className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
+        isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
+      } ${
+        hasActiveChild || isOpen
+          ? 'border-primary/35 bg-background-element'
+          : 'border-transparent bg-transparent web:hover:bg-foreground/5'
+      } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
+      accessibilityRole="button"
+      accessibilityLabel={group.label}
+      accessibilityHint={t('drawer.actions.toggleGroup')}
+      accessibilityState={{ expanded: isOpen }}
+    >
+      <View
+        className={`items-center justify-center rounded-xl ${
+          isCollapsed ? 'h-10 w-10' : 'h-10 w-10 bg-background-element'
+        }`}
+      >
+        <SymbolView name={group.icon} size={20} tintColor={colors.text} />
+      </View>
+
+      {!isCollapsed ? (
+        <>
+          <Text className="flex-1 text-sm font-semibold text-foreground">{group.label}</Text>
+          <SymbolView
+            name={{ ios: 'chevron.down', android: 'expand_more', web: 'expand_more' }}
+            size={18}
+            tintColor={colors.text}
+            style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
+          />
+        </>
+      ) : null}
+    </Pressable>
+  );
+
+  if (isCollapsed) {
+    return (
+      <Tooltip trigger={(triggerProps) => button(triggerProps)} placement="right">
+        <TooltipContent>
+          <TooltipText>{group.label}</TooltipText>
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
   return (
     <>
-      <Pressable
-        onPress={onToggle}
-        className={`rounded-2xl border px-3 py-3 active:opacity-80 ${
-          isCollapsed ? 'items-center justify-center px-0 py-0' : 'flex-row items-center gap-3'
-        } ${
-          hasActiveChild || isOpen
-            ? 'border-primary/35 bg-background-element'
-            : 'border-transparent bg-transparent web:hover:bg-foreground/5'
-        } ${isCollapsed ? 'h-14 w-14 self-center' : ''}`}
-        accessibilityRole="button"
-        accessibilityLabel={group.label}
-        accessibilityHint={t('drawer.actions.toggleGroup')}
-        accessibilityState={{ expanded: isOpen }}
-      >
-        <View
-          className={`items-center justify-center rounded-xl ${
-            isCollapsed ? 'h-10 w-10' : 'h-10 w-10 bg-background-element'
-          }`}
-        >
-          <SymbolView name={group.icon} size={20} tintColor={colors.text} />
-        </View>
+      {button()}
 
-        {!isCollapsed ? (
-          <>
-            <Text className="flex-1 text-sm font-semibold text-foreground">{group.label}</Text>
-            <SymbolView
-              name={{ ios: 'chevron.down', android: 'expand_more', web: 'expand_more' }}
-              size={18}
-              tintColor={colors.text}
-              style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
-            />
-          </>
-        ) : null}
-      </Pressable>
-
-      {!isCollapsed && isOpen && group.items?.length ? (
+      {isOpen && group.items?.length ? (
         <Animated.View
           layout={linearTransition}
           entering={FadeInDown.duration(180)}
