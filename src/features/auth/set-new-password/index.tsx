@@ -41,7 +41,13 @@ export default function SetNewPassword() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SetNewPasswordSchemaType>({ resolver: zodResolver(setNewPasswordSchema) });
+  } = useForm<SetNewPasswordSchemaType>({
+    resolver: zodResolver(setNewPasswordSchema),
+    defaultValues: {
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
   async function onSubmit({ password }: SetNewPasswordSchemaType) {
     Keyboard.dismiss();
