@@ -32,14 +32,14 @@ export default function TabTwoScreen() {
       paddingBottom: insets.bottom,
     },
     web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
+      paddingTop: Spacing.four,
+      paddingBottom: Spacing.five,
     },
   });
 
   return (
     <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
+      style={styles.scrollView}
       contentInset={insets}
       contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}
     >
@@ -92,6 +92,7 @@ export default function TabTwoScreen() {
               <Image
                 source={require('@/assets/images/tutorial-web.png')}
                 style={styles.imageTutorial}
+                accessibilityIgnoresInvertColors
               />
             </ThemedView>
           </Collapsible>
@@ -102,7 +103,11 @@ export default function TabTwoScreen() {
               <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
               screen densities.
             </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
+            <Image
+              source={require('@/assets/images/react-logo.png')}
+              style={styles.imageReact}
+              accessibilityIgnoresInvertColors
+            />
             <ExternalLink href="https://reactnative.dev/docs/images">
               <ThemedText type="linkPrimary">{t('common.learnMore')}</ThemedText>
             </ExternalLink>

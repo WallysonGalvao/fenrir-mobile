@@ -43,20 +43,28 @@ export default function SignUp() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpSchemaType>({ resolver: zodResolver(signUpSchema) });
+  } = useForm<SignUpSchemaType>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const leftIcons: IconButton = {
-    icon: (
-      <SymbolView
-        name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
-        size={22}
-        tintColor={theme.text}
-      />
-    ),
-    onPress: () => router.back(),
-    accessibilityLabel: t('auth.backToLanding'),
-    accessibilityHint: t('auth.backToLanding'),
-  };
+  const leftIcons: IconButton[] = [
+    {
+      icon: (
+        <SymbolView
+          name={{ ios: 'arrow.left', android: 'arrow_back', web: 'arrow_back' }}
+          size={22}
+          tintColor={theme.text}
+        />
+      ),
+      onPress: () => router.back(),
+      accessibilityLabel: t('auth.backToLanding'),
+      accessibilityHint: t('auth.backToLanding'),
+    },
+  ];
 
   async function onSubmit({ email, password }: SignUpSchemaType) {
     Keyboard.dismiss();
@@ -69,7 +77,7 @@ export default function SignUp() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <Header leftIcons={[leftIcons]} />
+      <Header leftIcons={leftIcons} />
       <KeyboardDismissWrapper>
         <View className="w-full flex-1 self-center px-6 py-4 md:mt-20 md:max-w-110">
           <Animated.View

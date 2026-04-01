@@ -21,8 +21,8 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
         accessibilityRole="scrollbar"
         className="flex-1"
         accessible
-        accessibilityLabel={t('AUTH_SCROLL_AREA')}
-        accessibilityHint={t('AUTH_SCROLL_AREA_HINT')}
+        accessibilityLabel={t('auth.scrollArea')}
+        accessibilityHint={t('auth.scrollAreaHint')}
       >
         <View className="min-h-screen flex-1 flex-row">
           <Animated.View
@@ -30,8 +30,8 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
             exiting={FadeOut.duration(400).easing(Easing.inOut(Easing.ease))}
             accessible
             accessibilityRole="image"
-            accessibilityLabel={t('SPORTIDIA_LOGO')}
-            accessibilityHint={t('SPORTIDIA_LOGO_HINT')}
+            accessibilityLabel={t('auth.logo')}
+            accessibilityHint={t('auth.logoHint')}
             className="hidden flex-1 items-center justify-center bg-primary dark:bg-primary md:flex"
           >
             <Image
@@ -39,8 +39,8 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
               source={logo}
               contentFit="contain"
               accessible
-              accessibilityLabel={t('SPORTIDIA_LOGO')}
-              accessibilityHint={t('SPORTIDIA_LOGO_HINT')}
+              accessibilityLabel={t('auth.logo')}
+              accessibilityHint={t('auth.logoHint')}
               accessibilityIgnoresInvertColors
             />
           </Animated.View>

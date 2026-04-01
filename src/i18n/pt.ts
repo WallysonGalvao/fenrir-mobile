@@ -1,17 +1,36 @@
 const pt = {
+  tabs: {
+    home: 'Início',
+    explore: 'Explorar',
+    dashboard: 'Dashboard',
+    settings: 'Configurações',
+  },
+  quickAction: {
+    feedback: { title: 'Enviar Feedback', subtitle: 'Compartilhe sua opinião conosco' },
+  },
   common: {
     learnMore: 'Saiba mais',
     headerLeftAction: 'Ação esquerda',
     headerRightAction: 'Ação direita',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Título da página atual',
+    back: 'Voltar',
+  },
+  project: {
+    notFound: 'Projeto não encontrado',
+    createdAt: 'Criado em',
+    repositories: 'Repositórios',
+    noRepositories: 'Nenhum repositório vinculado',
   },
   home: {
-    title: 'Bem-vindo ao Expo',
+    title: 'Projetos',
     getStarted: 'começar',
     tryEditing: 'Tente editar',
     devTools: 'Ferramentas de dev',
     freshStart: 'Começar do zero',
+    noProjects: 'Nenhum projeto encontrado ainda.',
+    navigateToProject: 'Navegar para {{project}}',
+
     devMenu: {
       web: 'use as ferramentas de desenvolvedor do navegador',
       deviceStart: 'agite o dispositivo ou pressione',
@@ -29,6 +48,44 @@ const pt = {
       images: 'Imagens',
       darkMode: 'Componentes de modo claro e escuro',
       animations: 'Animações',
+    },
+  },
+  drawer: {
+    eyebrow: 'Workspace',
+    sections: {
+      main: 'Visão geral',
+      collections: 'Coleções',
+    },
+    groups: {
+      workspace: 'Espaços de trabalho',
+      resources: 'Referências',
+    },
+    items: {
+      projects: 'Projetos',
+      explore: 'Explorar',
+      allProjects: 'Todos os projetos',
+      layoutReference: 'Referência de layout',
+      expoDocs: 'Documentação Expo',
+      routerGuide: 'Guia do Expo Router',
+      help: 'Ajuda',
+      search: 'Buscar',
+    },
+    descriptions: {
+      projects: 'Acompanhe seus espaços e ativos',
+      explore: 'Veja exemplos e padrões do app',
+    },
+    actions: {
+      collapse: 'Recolher drawer',
+      expand: 'Expandir drawer',
+      toggleGroup: 'Alterna a visibilidade do grupo',
+      openUserMenu: 'Menu do usuário',
+      signOut: 'Sair',
+    },
+    hints: {
+      navigate: 'Abre o destino selecionado',
+      toggleDrawer: 'Alterna o tamanho do drawer lateral',
+      openUserMenu: 'Abre o menu de opções do usuário',
+      signOut: 'Encerra a sessão atual',
     },
   },
   auth: {
@@ -86,6 +143,23 @@ const pt = {
       'Sua senha foi atualizada com sucesso. Agora você pode entrar com sua nova senha.',
     agreeTerms:
       'Ao clicar em Entrar, você concorda com nossos <1>Termos e Condições</1> e <2>Política de Privacidade</2>.',
+  },
+  update: {
+    requiredTitle: 'Atualização Obrigatória',
+    availableTitle: 'Atualização Disponível',
+    requiredDescription:
+      'Uma nova versão do app é necessária para continuar. Por favor, atualize para a versão mais recente.',
+    availableDescription:
+      'Uma nova versão do app está disponível. Atualize agora para ter os últimos recursos e melhorias.',
+    currentVersion: 'Versão atual',
+    latestVersion: 'Versão mais recente',
+    updateNow: 'Atualizar agora',
+    later: 'Agora não',
+  },
+  security: {
+    compromisedTitle: 'Alerta de Segurança',
+    compromisedDescription:
+      'Este dispositivo parece estar com root ou jailbreak. Por sua segurança, o app não pode ser executado em dispositivos comprometidos.',
   },
 } as const;
 

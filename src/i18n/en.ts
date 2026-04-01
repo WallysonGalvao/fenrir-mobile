@@ -1,17 +1,37 @@
 const en = {
+  tabs: {
+    home: 'Home',
+    explore: 'Explore',
+    dashboard: 'Dashboard',
+    settings: 'Settings',
+  },
+  quickAction: {
+    settings: { title: 'Settings', subtitle: 'Open settings' },
+    feedback: { title: 'Send Feedback', subtitle: 'Share your thoughts with us' },
+  },
   common: {
     learnMore: 'Learn more',
     headerLeftAction: 'Left action',
     headerRightAction: 'Right action',
     headerTitleLabel: '{{title}}',
     currentPageTitleHint: 'Current page title',
+    back: 'Back',
+  },
+  project: {
+    notFound: 'Project not found',
+    createdAt: 'Created at',
+    repositories: 'Repositories',
+    noRepositories: 'No repositories linked',
   },
   home: {
-    title: 'Welcome to Expo',
+    title: 'Projects',
     getStarted: 'get started',
     tryEditing: 'Try editing',
     devTools: 'Dev tools',
     freshStart: 'Fresh start',
+    noProjects: 'No projects yet.',
+    navigateToProject: 'Navigate to {{project}}',
+
     devMenu: {
       web: 'use browser devtools',
       deviceStart: 'shake device or press',
@@ -29,6 +49,44 @@ const en = {
       images: 'Images',
       darkMode: 'Light and dark mode components',
       animations: 'Animations',
+    },
+  },
+  drawer: {
+    eyebrow: 'Workspace',
+    sections: {
+      main: 'Overview',
+      collections: 'Collections',
+    },
+    groups: {
+      workspace: 'Workspaces',
+      resources: 'References',
+    },
+    items: {
+      projects: 'Projects',
+      explore: 'Explore',
+      allProjects: 'All projects',
+      layoutReference: 'Layout reference',
+      expoDocs: 'Expo docs',
+      routerGuide: 'Expo Router guide',
+      help: 'Help',
+      search: 'Search',
+    },
+    descriptions: {
+      projects: 'Track workspaces and generated assets',
+      explore: 'Browse examples and app patterns',
+    },
+    actions: {
+      collapse: 'Collapse drawer',
+      expand: 'Expand drawer',
+      toggleGroup: 'Toggle group visibility',
+      openUserMenu: 'User menu',
+      signOut: 'Sign out',
+    },
+    hints: {
+      navigate: 'Opens the selected destination',
+      toggleDrawer: 'Toggles the sidebar size',
+      openUserMenu: 'Opens the user options menu',
+      signOut: 'Signs out of the current session',
     },
   },
   auth: {
@@ -86,6 +144,23 @@ const en = {
       'Your password has been updated successfully. You can now sign in with your new password.',
     agreeTerms:
       'By clicking Sign in, you agree with our <1>Terms and Conditions</1> and <2>Privacy Policy</2>.',
+  },
+  update: {
+    requiredTitle: 'Update Required',
+    availableTitle: 'Update Available',
+    requiredDescription:
+      'A new version of the app is required to continue. Please update to the latest version.',
+    availableDescription:
+      'A new version of the app is available. Update now to get the latest features and improvements.',
+    currentVersion: 'Current version',
+    latestVersion: 'Latest version',
+    updateNow: 'Update now',
+    later: 'Later',
+  },
+  security: {
+    compromisedTitle: 'Security Alert',
+    compromisedDescription:
+      'This device appears to be rooted or jailbroken. For your security, the app cannot run on compromised devices.',
   },
 } as const;
 

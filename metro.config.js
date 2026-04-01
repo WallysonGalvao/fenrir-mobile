@@ -13,7 +13,7 @@ config.resolver = {
   unstable_enablePackageExports: true,
 };
 
-module.exports = withRozenite(withNativewind(config), {
+module.exports = withRozenite(withNativewind(config, { inlineRem: 14 }), {
   enabled: process.env.WITH_ROZENITE === 'true',
   enhanceMetroConfig: (c) => withRozeniteExpoAtlasPlugin(withRozeniteWeb(c)),
 });

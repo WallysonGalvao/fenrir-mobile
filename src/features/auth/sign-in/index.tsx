@@ -39,7 +39,13 @@ export default function SignIn() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignInSchemaType>({ resolver: zodResolver(signInSchema) });
+  } = useForm<SignInSchemaType>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const leftIcons: IconButton = {
     icon: (

@@ -37,7 +37,12 @@ export default function ResetPassword() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ResetPasswordSchemaType>({ resolver: zodResolver(resetPasswordSchema) });
+  } = useForm<ResetPasswordSchemaType>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
 
   const leftIcons: IconButton = {
     icon: (
